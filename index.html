@@ -9,19 +9,19 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
-    --ink:#0B2B2C;
-    --teal-deep:#0F3D3E;
-    --teal:#12595B;
-    --ice:#4FD9D4;
-    --ice-soft:#E4FBF9;
-    --amber:#F4A340;
-    --amber-deep:#D9862B;
-    --paper:#F6F5F1;
-    --card:#FFFFFF;
-    --line:#E4E1D8;
-    --muted:#6B7570;
+    --ink:#F3E7CE;
+    --teal-deep:#140D07;
+    --teal:#241708;
+    --ice:#E8B34D;
+    --ice-soft:#3A2A14;
+    --amber:#D9A339;
+    --amber-deep:#B8842A;
+    --paper:#0F0B07;
+    --card:#1C140B;
+    --line:#3A2D1A;
+    --muted:#B8A888;
     --radius:18px;
-    --shadow: 0 8px 24px rgba(15,61,62,0.08);
+    --shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -39,6 +39,7 @@
     overflow-x:hidden;
   }
   .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.5px; }
+  img{ max-width:100%; display:block; }
 
   /* ---------- SCREEN SWITCH ---------- */
   .screen{ display:none; animation:fadeIn .35s ease; }
@@ -47,29 +48,28 @@
 
   /* ---------- LOGIN SCREEN ---------- */
   .login-hero{
-    background: linear-gradient(160deg, var(--teal-deep) 0%, var(--teal) 55%, #1A7A78 100%);
+    background:
+      linear-gradient(180deg, rgba(15,11,7,0.55) 0%, rgba(15,11,7,0.92) 100%),
+      url('bbm-bg-main.jpg');
+    background-size:cover;
+    background-position:top center;
     padding:56px 28px 48px;
     border-radius: 0 0 32px 32px;
     color:#fff;
     position:relative;
     overflow:hidden;
-  }
-  .login-hero::after{
-    content:"";
-    position:absolute; left:-40px; top:-40px;
-    width:180px; height:180px; border-radius:50%;
-    background:radial-gradient(circle, rgba(79,217,212,0.35), transparent 70%);
+    min-height:280px;
   }
   .brand-mark{
     display:flex; align-items:center; gap:10px; margin-bottom:36px; position:relative;
   }
   .brand-icon{
     width:40px; height:40px; border-radius:12px;
-    background:var(--amber);
-    display:flex; align-items:center; justify-content:center;
-    font-size:20px;
+    overflow:hidden; flex-shrink:0;
+    box-shadow:0 2px 8px rgba(0,0,0,0.5);
   }
-  .brand-name{ font-weight:900; font-size:20px; letter-spacing:0.5px;}
+  .brand-icon img{ width:100%; height:100%; object-fit:cover; }
+  .brand-name{ font-weight:900; font-size:20px; letter-spacing:0.5px; color:var(--ice);}
   .login-title{ font-size:28px; font-weight:900; line-height:1.4; margin-bottom:8px; position:relative;}
   .login-sub{ font-size:14px; color:rgba(255,255,255,0.75); position:relative;}
 
@@ -81,28 +81,35 @@
     box-shadow:var(--shadow);
     position:relative;
     z-index:2;
+    border:1px solid var(--line);
   }
   .field{ margin-bottom:16px; }
   .field label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:700;}
-  .field input{
+  .field input, .field select{
     width:100%; padding:13px 14px; border-radius:12px;
     border:1.5px solid var(--line); font-family:inherit; font-size:15px;
-    background:#FBFAF7; transition:.2s;
+    background:#241A0F; color:var(--ink); transition:.2s;
   }
-  .field input:focus{ outline:none; border-color:var(--ice); background:#fff; }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--ice); background:#2A2013; }
+  .field input::placeholder{ color:#7A6D55; }
   .btn-primary{
     width:100%; padding:14px; border:none; border-radius:12px;
-    background:var(--amber); color:var(--teal-deep); font-weight:900; font-size:15px;
+    background:var(--amber); color:#1C1204; font-weight:900; font-size:15px;
     cursor:pointer; transition:.2s; font-family:inherit;
   }
   .btn-primary:active{ transform:scale(0.98); background:var(--amber-deep); }
+  .btn-secondary{
+    width:100%; padding:14px; border:1.5px solid var(--line); border-radius:12px;
+    background:transparent; color:var(--ink); font-weight:800; font-size:14px;
+    cursor:pointer; font-family:inherit; margin-bottom:10px;
+  }
   .divider{ display:flex; align-items:center; gap:10px; margin:18px 0; color:var(--muted); font-size:12px;}
   .divider::before,.divider::after{ content:""; flex:1; height:1px; background:var(--line);}
   .switch-link{ text-align:center; font-size:13px; color:var(--muted); margin-top:6px;}
-  .switch-link b{ color:var(--teal); cursor:pointer; }
+  .switch-link b{ color:var(--ice); cursor:pointer; }
   .msg{ font-size:13px; text-align:center; margin-bottom:12px; padding:10px; border-radius:10px; display:none; }
-  .msg.error{ background:#FDE8E8; color:#B3261E; display:block; }
-  .msg.success{ background:var(--ice-soft); color:var(--teal-deep); display:block; }
+  .msg.error{ background:rgba(255,90,90,0.12); color:#FF8A8A; display:block; }
+  .msg.success{ background:var(--ice-soft); color:var(--ice); display:block; }
   .btn-primary:disabled{ opacity:0.6; }
   .user-badge{ font-size:12px; color:var(--muted); }
 
@@ -111,11 +118,12 @@
     padding:20px 20px 14px;
     display:flex; align-items:center; justify-content:space-between;
   }
-  .topbar .brand-name{ color:var(--teal-deep); }
-  .topbar .brand-icon{ width:34px; height:34px; border-radius:10px; font-size:16px;}
+  .topbar .brand-name{ color:var(--ice); }
+  .topbar .brand-icon{ width:34px; height:34px; border-radius:10px;}
   .bell{
     width:38px; height:38px; border-radius:50%; background:var(--card);
     display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow); font-size:16px; position:relative;
+    border:1px solid var(--line); cursor:pointer;
   }
   .bell .dot{
     position:absolute; top:8px; left:9px; width:8px; height:8px; border-radius:50%;
@@ -128,23 +136,24 @@
     display:flex; align-items:center; gap:10px;
     background:var(--card); border-radius:14px; padding:13px 16px;
     box-shadow:var(--shadow); font-size:14px; color:var(--muted);
+    border:1px solid var(--line); cursor:pointer;
   }
   .loc-chip{
     margin-top:10px; display:inline-flex; align-items:center; gap:6px;
-    font-size:12px; color:var(--teal); background:var(--ice-soft);
-    padding:6px 12px; border-radius:20px; font-weight:700;
+    font-size:12px; color:var(--ice); background:var(--ice-soft);
+    padding:6px 12px; border-radius:20px; font-weight:700; cursor:pointer; border:none; font-family:inherit;
   }
 
   .section{ padding:6px 20px 22px; }
   .section-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px;}
   .section-head h3{ font-size:16px; font-weight:900;}
-  .section-head span{ font-size:12px; color:var(--muted); }
+  .section-head span{ font-size:12px; color:var(--ice); cursor:pointer; }
 
   .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
   .cat-card{
     background:var(--card); border-radius:16px; padding:16px 14px;
     box-shadow:var(--shadow); position:relative; overflow:hidden;
-    border:1px solid transparent; transition:.2s;
+    border:1px solid var(--line); transition:.2s;
   }
   .cat-card.live{ border-color:var(--ice); cursor:pointer; }
   .cat-card.live:active{ transform:scale(0.97); }
@@ -158,21 +167,26 @@
   }
   .live-badge{
     position:absolute; top:10px; left:10px;
-    background:var(--ice-soft); color:var(--teal); font-size:9px; font-weight:800;
+    background:var(--ice-soft); color:var(--ice); font-size:9px; font-weight:800;
     padding:3px 8px; border-radius:20px;
   }
 
   .promo-card{
-    background:linear-gradient(135deg, var(--teal-deep), var(--teal));
-    border-radius:18px; padding:20px; color:#fff; position:relative; overflow:hidden;
+    border-radius:18px; overflow:hidden; position:relative; color:#fff;
+    box-shadow:var(--shadow); transition:opacity .8s ease, transform .8s ease;
+    aspect-ratio: 900/400;
+    background-image:url('bbm-banner-ad.jpg');
+    background-size:cover; background-position:center;
   }
+  .promo-card.hide{ opacity:0; transform:scale(0.98); }
   .promo-card::after{
-    content:"❄️"; position:absolute; font-size:80px; opacity:0.15; left:-10px; bottom:-20px;
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(15,11,7,0) 40%, rgba(15,11,7,0.85) 100%);
   }
-  .promo-card h4{ font-size:16px; font-weight:900; margin-bottom:4px;}
-  .promo-card p{ font-size:12px; color:rgba(255,255,255,0.8); margin-bottom:14px; max-width:70%;}
+  .promo-card .promo-inner{ position:absolute; bottom:14px; right:16px; left:16px; z-index:2; }
+  .promo-card h4{ font-size:15px; font-weight:900; margin-bottom:8px;}
   .promo-btn{
-    background:var(--amber); color:var(--teal-deep); border:none; padding:9px 18px;
+    background:var(--amber); color:#1C1204; border:none; padding:9px 18px;
     border-radius:10px; font-weight:800; font-size:12px; font-family:inherit; cursor:pointer;
   }
 
@@ -181,13 +195,29 @@
     position:sticky; bottom:0; left:0; right:0;
     background:var(--card); border-top:1px solid var(--line);
     display:flex; justify-content:space-around; padding:10px 0 8px;
-    box-shadow:0 -6px 20px rgba(0,0,0,0.04);
+    box-shadow:0 -6px 20px rgba(0,0,0,0.3);
   }
   .navitem{ display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; color:var(--muted); font-weight:700;}
-  .navitem.active{ color:var(--teal); }
+  .navitem.active{ color:var(--ice); }
   .navitem .ic{ font-size:19px; }
 
   .spacer{ height:6px; }
+
+  .card-box{
+    background:var(--card); border-radius:16px; padding:16px; box-shadow:var(--shadow);
+    margin-bottom:12px; border:1px solid var(--line);
+  }
+  .list-item{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px; background:var(--card); border-radius:14px; margin-bottom:10px;
+    border:1px solid var(--line); cursor:pointer;
+  }
+  .list-item span.arrow{ color:var(--muted); }
+  .pay-method{
+    display:flex; align-items:center; gap:10px; padding:14px; border-radius:14px;
+    border:1.5px solid var(--line); margin-bottom:10px; cursor:pointer; background:var(--card);
+  }
+  .pay-method.selected{ border-color:var(--ice); background:var(--ice-soft); }
 </style>
 </head>
 <body>
@@ -197,7 +227,7 @@
   <section class="screen active" id="login">
     <div class="login-hero">
       <div class="brand-mark">
-        <div class="brand-icon">❄️</div>
+        <div class="brand-icon"><img src="bbm-icon.png" alt="BBM"></div>
         <div class="brand-name">BBM STORE</div>
       </div>
       <div class="login-title">كل ما تحتاجه،<br>أقرب إليك.</div>
@@ -216,7 +246,7 @@
       </div>
       <button class="btn-primary" id="loginBtn" onclick="handleLogin()">تسجيل الدخول</button>
       <div class="divider">أو</div>
-      <button class="btn-primary" style="background:var(--ice-soft); color:var(--teal-deep);" onclick="showScreen('signup')">إنشاء حساب جديد</button>
+      <button class="btn-secondary" onclick="showScreen('signup')">إنشاء حساب جديد</button>
     </div>
   </section>
 
@@ -224,7 +254,7 @@
   <section class="screen" id="signup">
     <div class="login-hero">
       <div class="brand-mark">
-        <div class="brand-icon">❄️</div>
+        <div class="brand-icon"><img src="bbm-icon.png" alt="BBM"></div>
         <div class="brand-name">BBM STORE</div>
       </div>
       <div class="login-title">إنشاء حساب جديد</div>
@@ -253,31 +283,32 @@
   <section class="screen" id="home">
     <div class="topbar">
       <div class="brand-mark" style="margin:0;">
-        <div class="brand-icon">❄️</div>
+        <div class="brand-icon"><img src="bbm-icon.png" alt="BBM"></div>
         <div class="brand-name">BBM STORE</div>
       </div>
       <div style="display:flex; align-items:center; gap:10px;">
         <span class="user-badge" id="userEmailLabel"></span>
-        <div class="bell">🔔<span class="dot"></span></div>
+        <div class="bell" onclick="showNotifications()">🔔<span class="dot" id="notifDot" style="display:none;"></span></div>
       </div>
     </div>
 
     <div class="search-block">
       <h2>🔍 ماذا تحتاج اليوم؟</h2>
-      <div class="search-box">🔎 ابحث عن خدمة، مهني، متجر...</div>
-      <div class="loc-chip">📍 الجزائر العاصمة — تغيير الموقع</div>
+      <div class="search-box" onclick="showScreen('search')">🔎 ابحث عن خدمة، مهني، متجر...</div>
+      <button class="loc-chip" onclick="detectLocation()">📍 <span id="locLabel">تحديد موقعي الحالي</span></button>
     </div>
 
     <div class="section" style="padding-top:0;">
-      <div class="promo-card">
-        <h4>صيانة المكيفات الآن</h4>
-        <p>احجز مهني موثّق خلال دقائق</p>
-        <button class="promo-btn" onclick="showScreen('pro')">احجز الآن</button>
+      <div class="promo-card" id="promoCard">
+        <div class="promo-inner">
+          <h4>صيانة المكيفات الآن — عروض حصرية</h4>
+          <button class="promo-btn" onclick="showScreen('pro')">احجز الآن</button>
+        </div>
       </div>
     </div>
 
     <div class="section" style="padding-top:0;">
-      <div class="section-head"><h3>الأقسام</h3><span>عرض الكل</span></div>
+      <div class="section-head"><h3>الأقسام</h3><span onclick="showScreen('allServices')">عرض الكل</span></div>
       <div class="grid">
         <div class="cat-card live" onclick="showScreen('pro')">
           <span class="live-badge">متاح الآن</span>
@@ -310,28 +341,165 @@
 
     <div class="bottomnav">
       <div class="navitem active" onclick="showScreen('home')" style="cursor:pointer;"><span class="ic">🏠</span>الرئيسية</div>
-      <div class="navitem"><span class="ic">🔎</span>البحث</div>
+      <div class="navitem" onclick="showScreen('search')" style="cursor:pointer;"><span class="ic">🔎</span>البحث</div>
       <div class="navitem" onclick="showOrders()" style="cursor:pointer;"><span class="ic">📋</span>طلباتي</div>
-      <div class="navitem"><span class="ic">💰</span>المحفظة</div>
+      <div class="navitem" onclick="showWallet()" style="cursor:pointer;"><span class="ic">💰</span>المحفظة</div>
       <div class="navitem" onclick="showAccount()" style="cursor:pointer;"><span class="ic">👤</span>حسابي</div>
     </div>
   </section>
 
-  <!-- ============ PROFESSIONAL PROFILE (preview) ============ -->
+  <!-- ============ ALL SERVICES ============ -->
+  <section class="screen" id="allServices">
+    <div class="topbar">
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
+      <div style="font-weight:900;">كل الخدمات</div>
+    </div>
+    <div class="section" style="padding-top:0;">
+      <div class="grid">
+        <div class="cat-card live" onclick="showScreen('pro')"><span class="live-badge">متاح</span><span class="cat-emoji">👨‍🔧</span><div class="cat-name">المهنيون</div><div class="cat-desc">صيانة مكيفات</div></div>
+        <div class="cat-card"><span class="soon-badge">قريبًا</span><span class="cat-emoji">🏪</span><div class="cat-name">المتاجر</div></div>
+        <div class="cat-card"><span class="soon-badge">قريبًا</span><span class="cat-emoji">🍔</span><div class="cat-name">المطاعم</div></div>
+        <div class="cat-card"><span class="soon-badge">قريبًا</span><span class="cat-emoji">☕</span><div class="cat-name">المقاهي</div></div>
+        <div class="cat-card"><span class="soon-badge">قريبًا</span><span class="cat-emoji">🚌</span><div class="cat-name">النقل</div></div>
+        <div class="cat-card"><span class="soon-badge">قريبًا</span><span class="cat-emoji">📱</span><div class="cat-name">فليكسي</div></div>
+        <div class="cat-card"><span class="soon-badge">قريبًا</span><span class="cat-emoji">🎮</span><div class="cat-name">شحن الألعاب</div></div>
+        <div class="cat-card"><span class="soon-badge">قريبًا</span><span class="cat-emoji">📲</span><div class="cat-name">الخدمات الرقمية</div></div>
+        <div class="cat-card"><span class="soon-badge">قريبًا</span><span class="cat-emoji">🛒</span><div class="cat-name">السوق المحلي</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SEARCH ============ -->
+  <section class="screen" id="search">
+    <div class="topbar">
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
+      <div style="font-weight:900;">البحث</div>
+    </div>
+    <div class="section" style="padding-top:0;">
+      <div class="field">
+        <input type="text" id="searchInput" placeholder="ابحث عن خدمة، مهني..." oninput="runSearch()">
+      </div>
+      <div id="searchResults"></div>
+    </div>
+  </section>
+
+  <!-- ============ NOTIFICATIONS ============ -->
+  <section class="screen" id="notifications">
+    <div class="topbar">
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
+      <div style="font-weight:900;">الإشعارات</div>
+    </div>
+    <div class="section" style="padding-top:0;" id="notifList">
+      <div style="text-align:center; color:var(--muted); font-size:13px; padding:30px 0;">جاري التحميل...</div>
+    </div>
+  </section>
+
+  <!-- ============ WALLET ============ -->
+  <section class="screen" id="wallet">
+    <div class="topbar">
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
+      <div style="font-weight:900;">المحفظة</div>
+    </div>
+    <div class="section" style="padding-top:0;">
+      <div class="card-box" style="text-align:center;">
+        <div style="font-size:12px; color:var(--muted); margin-bottom:6px;">الرصيد المتاح</div>
+        <div style="font-size:32px; font-weight:900; color:var(--ice);" id="walletBalance">0.00 دج</div>
+      </div>
+
+      <div class="section-head" style="margin-top:18px;"><h3>شحن المحفظة</h3></div>
+      <div id="payMethods">
+        <div class="pay-method" data-method="BaridiMob" onclick="selectPayMethod(this)"><span>📲</span><span>BaridiMob</span></div>
+        <div class="pay-method" data-method="CCP" onclick="selectPayMethod(this)"><span>🏦</span><span>CCP</span></div>
+        <div class="pay-method" data-method="Flexy" onclick="selectPayMethod(this)"><span>💳</span><span>Flexy</span></div>
+        <div class="pay-method" data-method="الدفع لدى الإدارة" onclick="selectPayMethod(this)"><span>🏢</span><span>الدفع لدى الإدارة</span></div>
+      </div>
+      <div class="field">
+        <label>المبلغ (دج)</label>
+        <input type="number" id="walletAmount" placeholder="مثال: 2000">
+      </div>
+      <div id="walletMsg" class="msg"></div>
+      <button class="btn-primary" id="walletSubmitBtn" onclick="submitWalletRequest()">إرسال طلب الشحن</button>
+      <div style="font-size:11px; color:var(--muted); text-align:center; margin-top:10px;">سيتم مراجعة الطلب يدويًا من الإدارة خلال 24 ساعة</div>
+
+      <div class="section-head" style="margin-top:22px;"><h3>سجل الطلبات</h3></div>
+      <div id="walletHistory"></div>
+    </div>
+  </section>
+
+  <!-- ============ MY ORDERS ============ -->
+  <section class="screen" id="orders">
+    <div class="topbar">
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
+      <div style="font-weight:900;">طلباتي</div>
+    </div>
+    <div class="section" style="padding-top:0;" id="ordersList">
+      <div style="text-align:center; color:var(--muted); font-size:13px; padding:30px 0;">جاري التحميل...</div>
+    </div>
+  </section>
+
+  <!-- ============ ACCOUNT ============ -->
+  <section class="screen" id="account">
+    <div class="topbar">
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
+      <div style="font-weight:900;">حسابي</div>
+    </div>
+    <div class="section" style="padding-top:0;">
+      <div class="card-box" style="text-align:center;">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--ice-soft);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px;">👤</div>
+        <div style="font-weight:900; font-size:16px;" id="accName">—</div>
+        <div style="font-size:13px; color:var(--muted); margin-top:4px;" id="accEmail">—</div>
+        <div style="font-size:13px; color:var(--muted); margin-top:2px;" id="accPhone"></div>
+      </div>
+
+      <div class="list-item" onclick="showEditProfile()"><span>✏️ تعديل الملف الشخصي</span><span class="arrow">‹</span></div>
+      <div class="list-item" onclick="showWallet()"><span>💰 المحفظة</span><span class="arrow">‹</span></div>
+      <div class="list-item" onclick="showOrders()"><span>📋 طلباتي</span><span class="arrow">‹</span></div>
+      <div class="list-item" onclick="showNotifications()"><span>🔔 الإشعارات</span><span class="arrow">‹</span></div>
+
+      <button class="btn-primary" style="background:rgba(255,90,90,0.15); color:#FF8A8A; margin-top:16px;" onclick="handleLogout()">تسجيل الخروج</button>
+    </div>
+  </section>
+
+  <!-- ============ EDIT PROFILE ============ -->
+  <section class="screen" id="editProfile">
+    <div class="topbar">
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showAccount()">→ رجوع</div>
+      <div style="font-weight:900;">تعديل الملف الشخصي</div>
+    </div>
+    <div class="section" style="padding-top:0;">
+      <div id="editMsg" class="msg"></div>
+      <div class="field">
+        <label>الاسم الكامل</label>
+        <input type="text" id="editName" placeholder="اسمك الكامل">
+      </div>
+      <div class="field">
+        <label>رقم الهاتف</label>
+        <input type="tel" id="editPhone" placeholder="0555 12 34 56">
+      </div>
+      <div class="field">
+        <label>العنوان</label>
+        <input type="text" id="editAddress" placeholder="الحي، المدينة">
+      </div>
+      <button class="btn-primary" id="editSaveBtn" onclick="saveProfile()">حفظ التغييرات</button>
+    </div>
+  </section>
+
+  <!-- ============ PROFESSIONAL PROFILE ============ -->
   <section class="screen" id="pro">
     <div class="topbar">
-      <div class="navitem mono" style="color:var(--teal);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
       <div class="bell">❤️</div>
     </div>
     <div class="section" style="padding-top:0;">
-      <div style="background:var(--card); border-radius:20px; padding:20px; box-shadow:var(--shadow); text-align:center;">
+      <div class="card-box" style="text-align:center;">
         <div style="width:72px;height:72px;border-radius:50%;background:var(--ice-soft);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px;">🧑‍🔧</div>
         <div style="font-weight:900; font-size:17px;">محمد نصاري</div>
         <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">فني صيانة مكيفات — 6 سنوات خبرة</div>
-        <div style="display:flex; justify-content:center; gap:8px; margin-bottom:14px;">
-          <span style="background:var(--ice-soft); color:var(--teal); font-size:11px; font-weight:800; padding:5px 10px; border-radius:20px;">✅ موثق</span>
-          <span style="background:#FFF4E4; color:var(--amber-deep); font-size:11px; font-weight:800; padding:5px 10px; border-radius:20px;">⭐ 4.9 (128 تقييم)</span>
+        <div style="display:flex; justify-content:center; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+          <span style="background:var(--ice-soft); color:var(--ice); font-size:11px; font-weight:800; padding:5px 10px; border-radius:20px;">✅ موثق</span>
+          <span style="background:rgba(217,163,57,0.15); color:var(--amber); font-size:11px; font-weight:800; padding:5px 10px; border-radius:20px;">⭐ 4.9 (128 تقييم)</span>
         </div>
+        <div style="font-size:11px; color:var(--muted); margin-bottom:14px;">السعر يُحدَّد من المهني حسب طبيعة العطل — بدون سقف ثابت</div>
         <button class="btn-primary" onclick="showScreen('booking')">احجز خدمة</button>
       </div>
     </div>
@@ -340,7 +508,7 @@
   <!-- ============ BOOKING FORM ============ -->
   <section class="screen" id="booking">
     <div class="topbar">
-      <div class="navitem mono" style="color:var(--teal);cursor:pointer;font-weight:900;" onclick="showScreen('pro')">→ رجوع</div>
+      <div class="navitem mono" style="color:var(--ice);cursor:pointer;font-weight:900;" onclick="showScreen('pro')">→ رجوع</div>
       <div style="font-weight:900;">طلب صيانة مكيف</div>
     </div>
     <div class="section" style="padding-top:0;">
@@ -355,7 +523,7 @@
       </div>
       <div class="field">
         <label>نوع المكيف</label>
-        <select id="bkAcType" style="width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--line); font-family:inherit; font-size:15px; background:#FBFAF7;">
+        <select id="bkAcType">
           <option value="Split">Split</option>
           <option value="Window">Window</option>
           <option value="Central">Central</option>
@@ -364,7 +532,7 @@
       </div>
       <div class="field">
         <label>المشكلة</label>
-        <select id="bkProblem" style="width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--line); font-family:inherit; font-size:15px; background:#FBFAF7;">
+        <select id="bkProblem">
           <option value="لا يبرد">لا يبرد</option>
           <option value="لا يعمل">لا يعمل</option>
           <option value="تسريب ماء">تسريب ماء</option>
@@ -399,33 +567,6 @@
     </div>
   </section>
 
-  <!-- ============ MY ORDERS ============ -->
-  <section class="screen" id="orders">
-    <div class="topbar">
-      <div class="navitem mono" style="color:var(--teal);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
-      <div style="font-weight:900;">طلباتي</div>
-    </div>
-    <div class="section" style="padding-top:0;" id="ordersList">
-      <div style="text-align:center; color:var(--muted); font-size:13px; padding:30px 0;">جاري التحميل...</div>
-    </div>
-  </section>
-
-  <!-- ============ ACCOUNT ============ -->
-  <section class="screen" id="account">
-    <div class="topbar">
-      <div class="navitem mono" style="color:var(--teal);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
-      <div style="font-weight:900;">حسابي</div>
-    </div>
-    <div class="section" style="padding-top:0;">
-      <div style="background:var(--card); border-radius:20px; padding:24px; box-shadow:var(--shadow); text-align:center; margin-bottom:16px;">
-        <div style="width:64px;height:64px;border-radius:50%;background:var(--ice-soft);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 12px;">👤</div>
-        <div style="font-weight:900; font-size:16px;" id="accName">—</div>
-        <div style="font-size:13px; color:var(--muted); margin-top:4px;" id="accEmail">—</div>
-      </div>
-      <button class="btn-primary" style="background:#FDE8E8; color:#B3261E;" onclick="handleLogout()">تسجيل الخروج</button>
-    </div>
-  </section>
-
 </div>
 
 <script>
@@ -433,6 +574,9 @@
 const SUPABASE_URL = "https://cgqkkfocgkiyxsshddxv.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3XImpdl41nPKfpPgmatvNg_ldTFmULV";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentUser = null;
+let currentProfile = null;
 
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -446,6 +590,7 @@ function showMsg(elId, text, type){
   el.className = 'msg ' + type;
 }
 
+// ---------- AUTH ----------
 async function handleSignup(){
   const name = document.getElementById('signupName').value.trim();
   const email = document.getElementById('signupEmail').value.trim();
@@ -462,23 +607,16 @@ async function handleSignup(){
   }
 
   btn.disabled = true; btn.textContent = 'جاري الإنشاء...';
-
   const { data, error } = await sb.auth.signUp({
-    email: email,
-    password: password,
+    email: email, password: password,
     options: { data: { full_name: name } }
   });
-
   btn.disabled = false; btn.textContent = 'إنشاء الحساب';
 
-  if(error){
-    showMsg('signupMsg', 'خطأ: ' + error.message, 'error');
-    return;
-  }
+  if(error){ showMsg('signupMsg', 'خطأ: ' + error.message, 'error'); return; }
 
   if(data.session){
-    // auto-confirmed, logged in directly
-    goToHome(data.session.user);
+    await loadUserContext(data.session.user);
   } else {
     showMsg('signupMsg', 'تم إنشاء الحساب! تحقق من بريدك الإلكتروني لتأكيد الحساب ثم سجّل دخولك.', 'success');
   }
@@ -493,34 +631,92 @@ async function handleLogin(){
     showMsg('loginMsg', 'الرجاء إدخال البريد الإلكتروني وكلمة المرور', 'error');
     return;
   }
-
   btn.disabled = true; btn.textContent = 'جاري الدخول...';
-
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
-
   btn.disabled = false; btn.textContent = 'تسجيل الدخول';
 
-  if(error){
-    showMsg('loginMsg', 'خطأ: ' + error.message, 'error');
-    return;
-  }
-
-  goToHome(data.user);
+  if(error){ showMsg('loginMsg', 'خطأ: ' + error.message, 'error'); return; }
+  await loadUserContext(data.user);
 }
 
 async function handleLogout(){
   await sb.auth.signOut();
+  currentUser = null; currentProfile = null;
   showScreen('login');
 }
 
-function goToHome(user){
+async function loadUserContext(user){
   currentUser = user;
   document.getElementById('userEmailLabel').textContent = user.email;
+
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).maybeSingle();
+  currentProfile = profile;
+
   showScreen('home');
 }
 
-let currentUser = null;
+// Restore session on page load
+(async function checkSession(){
+  const { data: { session } } = await sb.auth.getSession();
+  if(session){ await loadUserContext(session.user); }
+})();
 
+// ---------- BANNER AD (appears / fades periodically) ----------
+setInterval(()=>{
+  const promo = document.getElementById('promoCard');
+  if(!promo) return;
+  promo.classList.toggle('hide');
+}, 4000);
+
+// ---------- SMART LOCATION ----------
+function detectLocation(){
+  const label = document.getElementById('locLabel');
+  if(!navigator.geolocation){
+    label.textContent = 'الموقع غير مدعوم على هذا المتصفح';
+    return;
+  }
+  label.textContent = 'جاري تحديد موقعك...';
+  navigator.geolocation.getCurrentPosition(async (pos)=>{
+    const { latitude, longitude } = pos.coords;
+    try{
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=ar`);
+      const data = await res.json();
+      label.textContent = data.display_name ? data.display_name.split(',').slice(0,3).join(',') : `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+    }catch(e){
+      label.textContent = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+    }
+  }, ()=>{
+    label.textContent = 'تعذّر الوصول للموقع، فعّل صلاحية الموقع';
+  });
+}
+
+// ---------- SEARCH ----------
+const ALL_ITEMS = [
+  {name:'صيانة المكيفات', type:'خدمة متاحة', screen:'pro', keywords:'مكيف صيانة تبريد فني'},
+  {name:'المتاجر', type:'قريبًا', screen:null, keywords:'متجر تسوق'},
+  {name:'المطاعم', type:'قريبًا', screen:null, keywords:'مطعم اكل طعام'},
+  {name:'فليكسي', type:'قريبًا', screen:null, keywords:'فليكسي شحن رصيد'},
+  {name:'شحن الألعاب', type:'قريبًا', screen:null, keywords:'العاب شحن جيمز'},
+];
+
+function runSearch(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const results = document.getElementById('searchResults');
+  if(!q){ results.innerHTML=''; return; }
+  const matches = ALL_ITEMS.filter(i => i.name.toLowerCase().includes(q) || i.keywords.includes(q));
+  if(matches.length === 0){
+    results.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:13px; padding:20px 0;">لا توجد نتائج</div>';
+    return;
+  }
+  results.innerHTML = matches.map(m => `
+    <div class="list-item" ${m.screen ? `onclick="showScreen('${m.screen}')"` : ''}>
+      <span>${m.name}</span>
+      <span style="font-size:11px; color:var(--muted);">${m.type}</span>
+    </div>
+  `).join('');
+}
+
+// ---------- BOOKING ----------
 async function submitBooking(){
   const btn = document.getElementById('bkSubmitBtn');
   const name = document.getElementById('bkName').value.trim();
@@ -545,24 +741,21 @@ async function submitBooking(){
   btn.disabled = true; btn.textContent = 'جاري الإرسال...';
 
   const { error } = await sb.from('bookings').insert({
-    user_id: currentUser.id,
-    full_name: name,
-    phone: phone,
-    ac_type: acType,
-    problem_type: problem,
-    description: description,
-    address: address,
-    preferred_date: date || null,
-    preferred_time: time || null,
+    user_id: currentUser.id, full_name: name, phone: phone,
+    ac_type: acType, problem_type: problem, description: description,
+    address: address, preferred_date: date || null, preferred_time: time || null,
     notes: notes
   });
 
   btn.disabled = false; btn.textContent = 'إرسال طلب الصيانة';
 
-  if(error){
-    showMsg('bookingMsg', 'خطأ: ' + error.message, 'error');
-    return;
-  }
+  if(error){ showMsg('bookingMsg', 'خطأ: ' + error.message, 'error'); return; }
+
+  await sb.from('notifications').insert({
+    user_id: currentUser.id,
+    title: 'تم استلام طلبك',
+    body: 'تم إرسال طلب صيانة المكيف بنجاح، سنقوم بمراجعته قريبًا.'
+  });
 
   showMsg('bookingMsg', 'تم إرسال طلبك بنجاح! سيتواصل معك المهني قريبًا.', 'success');
   setTimeout(()=> showOrders(), 1200);
@@ -573,46 +766,129 @@ async function showOrders(){
   const list = document.getElementById('ordersList');
   list.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:13px; padding:30px 0;">جاري التحميل...</div>';
 
-  const { data, error } = await sb.from('bookings')
-    .select('*')
-    .order('created_at', { ascending: false });
+  const { data, error } = await sb.from('bookings').select('*').order('created_at', { ascending:false });
 
-  if(error){
-    list.innerHTML = '<div style="text-align:center; color:#B3261E; font-size:13px; padding:30px 0;">خطأ في التحميل: ' + error.message + '</div>';
-    return;
-  }
-
-  if(!data || data.length === 0){
-    list.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:13px; padding:30px 0;">لا توجد طلبات بعد</div>';
-    return;
-  }
+  if(error){ list.innerHTML = '<div style="text-align:center; color:#FF8A8A; font-size:13px; padding:30px 0;">خطأ: ' + error.message + '</div>'; return; }
+  if(!data || data.length === 0){ list.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:13px; padding:30px 0;">لا توجد طلبات بعد</div>'; return; }
 
   list.innerHTML = data.map(b => `
-    <div style="background:var(--card); border-radius:16px; padding:16px; box-shadow:var(--shadow); margin-bottom:12px;">
+    <div class="card-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
         <span style="font-weight:800; font-size:14px;">❄️ ${b.problem_type || 'صيانة مكيف'}</span>
-        <span style="font-size:11px; background:var(--ice-soft); color:var(--teal); padding:4px 10px; border-radius:20px; font-weight:800;">${b.status}</span>
+        <span style="font-size:11px; background:var(--ice-soft); color:var(--ice); padding:4px 10px; border-radius:20px; font-weight:800;">${b.status}</span>
       </div>
       <div style="font-size:12px; color:var(--muted);">${b.full_name} — ${b.phone}</div>
       <div style="font-size:12px; color:var(--muted); margin-top:4px;">${b.address || ''}</div>
+      <div style="font-size:12px; color:var(--amber); margin-top:6px; font-weight:800;">${b.price != null ? 'السعر: ' + b.price + ' دج' : 'السعر: لم يُحدَّد بعد'}</div>
     </div>
   `).join('');
 }
 
-function showAccount(){
-  showScreen('account');
-  document.getElementById('accName').textContent = currentUser?.user_metadata?.full_name || 'مستخدم';
-  document.getElementById('accEmail').textContent = currentUser?.email || '';
+// ---------- NOTIFICATIONS ----------
+async function showNotifications(){
+  showScreen('notifications');
+  const list = document.getElementById('notifList');
+  list.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:13px; padding:30px 0;">جاري التحميل...</div>';
+
+  const { data, error } = await sb.from('notifications').select('*').order('created_at', { ascending:false });
+  if(error){ list.innerHTML = '<div style="text-align:center; color:#FF8A8A; font-size:13px; padding:30px 0;">خطأ: ' + error.message + '</div>'; return; }
+  if(!data || data.length === 0){ list.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:13px; padding:30px 0;">لا توجد إشعارات</div>'; return; }
+
+  list.innerHTML = data.map(n => `
+    <div class="card-box">
+      <div style="font-weight:800; font-size:13px; margin-bottom:4px;">🔔 ${n.title}</div>
+      <div style="font-size:12px; color:var(--muted);">${n.body}</div>
+    </div>
+  `).join('');
 }
 
-// Check if already logged in on page load
-(async function checkSession(){
-  const { data: { session } } = await sb.auth.getSession();
-  if(session){
-    currentUser = session.user;
-    goToHome(session.user);
+// ---------- WALLET ----------
+let selectedPayMethod = null;
+
+function selectPayMethod(el){
+  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPayMethod = el.getAttribute('data-method');
+}
+
+async function submitWalletRequest(){
+  const amount = document.getElementById('walletAmount').value;
+  const btn = document.getElementById('walletSubmitBtn');
+
+  if(!selectedPayMethod){ showMsg('walletMsg', 'اختر طريقة الدفع أولاً', 'error'); return; }
+  if(!amount || Number(amount) <= 0){ showMsg('walletMsg', 'أدخل مبلغًا صحيحًا', 'error'); return; }
+
+  btn.disabled = true; btn.textContent = 'جاري الإرسال...';
+  const { error } = await sb.from('wallet_requests').insert({
+    user_id: currentUser.id, method: selectedPayMethod, amount: Number(amount)
+  });
+  btn.disabled = false; btn.textContent = 'إرسال طلب الشحن';
+
+  if(error){ showMsg('walletMsg', 'خطأ: ' + error.message, 'error'); return; }
+
+  showMsg('walletMsg', 'تم إرسال طلب الشحن، بانتظار مراجعة الإدارة.', 'success');
+  document.getElementById('walletAmount').value = '';
+  loadWalletHistory();
+}
+
+async function loadWalletHistory(){
+  const hist = document.getElementById('walletHistory');
+  const { data, error } = await sb.from('wallet_requests').select('*').order('created_at', { ascending:false });
+  if(error || !data || data.length === 0){
+    hist.innerHTML = '<div style="text-align:center; color:var(--muted); font-size:13px; padding:16px 0;">لا توجد عمليات بعد</div>';
+    return;
   }
-})();
+  const approvedTotal = data.filter(r=>r.status==='approved').reduce((s,r)=>s+Number(r.amount),0);
+  document.getElementById('walletBalance').textContent = approvedTotal.toFixed(2) + ' دج';
+
+  hist.innerHTML = data.map(r => `
+    <div class="list-item" style="cursor:default;">
+      <span>${r.method} — ${r.amount} دج</span>
+      <span style="font-size:11px; color:var(--muted);">${r.status === 'approved' ? '✅ مقبول' : r.status === 'rejected' ? '❌ مرفوض' : '⏳ قيد المراجعة'}</span>
+    </div>
+  `).join('');
+}
+
+function showWallet(){
+  showScreen('wallet');
+  selectedPayMethod = null;
+  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('selected'));
+  loadWalletHistory();
+}
+
+// ---------- ACCOUNT / PROFILE ----------
+function showAccount(){
+  showScreen('account');
+  document.getElementById('accName').textContent = currentProfile?.full_name || currentUser?.user_metadata?.full_name || 'مستخدم';
+  document.getElementById('accEmail').textContent = currentUser?.email || '';
+  document.getElementById('accPhone').textContent = currentProfile?.phone || '';
+}
+
+function showEditProfile(){
+  showScreen('editProfile');
+  document.getElementById('editName').value = currentProfile?.full_name || '';
+  document.getElementById('editPhone').value = currentProfile?.phone || '';
+  document.getElementById('editAddress').value = currentProfile?.address || '';
+}
+
+async function saveProfile(){
+  const name = document.getElementById('editName').value.trim();
+  const phone = document.getElementById('editPhone').value.trim();
+  const address = document.getElementById('editAddress').value.trim();
+  const btn = document.getElementById('editSaveBtn');
+
+  btn.disabled = true; btn.textContent = 'جاري الحفظ...';
+  const { error } = await sb.from('profiles').update({
+    full_name: name, phone: phone, address: address
+  }).eq('id', currentUser.id);
+  btn.disabled = false; btn.textContent = 'حفظ التغييرات';
+
+  if(error){ showMsg('editMsg', 'خطأ: ' + error.message, 'error'); return; }
+
+  currentProfile = { ...currentProfile, full_name:name, phone:phone, address:address };
+  showMsg('editMsg', 'تم حفظ التغييرات بنجاح', 'success');
+  setTimeout(()=> showAccount(), 900);
+}
 </script>
 </body>
-</html>
+  </html>
