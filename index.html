@@ -6,6 +6,7 @@
 <title>BBM STORE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
     --ink:#0B2B2C;
@@ -99,6 +100,11 @@
   .divider::before,.divider::after{ content:""; flex:1; height:1px; background:var(--line);}
   .switch-link{ text-align:center; font-size:13px; color:var(--muted); margin-top:6px;}
   .switch-link b{ color:var(--teal); cursor:pointer; }
+  .msg{ font-size:13px; text-align:center; margin-bottom:12px; padding:10px; border-radius:10px; display:none; }
+  .msg.error{ background:#FDE8E8; color:#B3261E; display:block; }
+  .msg.success{ background:var(--ice-soft); color:var(--teal-deep); display:block; }
+  .btn-primary:disabled{ opacity:0.6; }
+  .user-badge{ font-size:12px; color:var(--muted); }
 
   /* ---------- HOME SCREEN ---------- */
   .topbar{
@@ -199,18 +205,47 @@
     </div>
 
     <div class="login-form">
+      <div id="loginMsg" class="msg"></div>
       <div class="field">
-        <label>رقم الهاتف</label>
-        <input type="tel" placeholder="0555 12 34 56">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="loginEmail" placeholder="example@email.com">
       </div>
       <div class="field">
         <label>كلمة المرور</label>
-        <input type="password" placeholder="••••••••">
+        <input type="password" id="loginPassword" placeholder="••••••••">
       </div>
-      <button class="btn-primary" onclick="showScreen('home')">تسجيل الدخول</button>
+      <button class="btn-primary" id="loginBtn" onclick="handleLogin()">تسجيل الدخول</button>
       <div class="divider">أو</div>
-      <button class="btn-primary" style="background:var(--ice-soft); color:var(--teal-deep);" onclick="showScreen('home')">إنشاء حساب جديد</button>
-      <div class="switch-link">هل نسيت كلمة المرور؟ <b>استعادة</b></div>
+      <button class="btn-primary" style="background:var(--ice-soft); color:var(--teal-deep);" onclick="showScreen('signup')">إنشاء حساب جديد</button>
+    </div>
+  </section>
+
+  <!-- ============ SIGNUP SCREEN ============ -->
+  <section class="screen" id="signup">
+    <div class="login-hero">
+      <div class="brand-mark">
+        <div class="brand-icon">❄️</div>
+        <div class="brand-name">BBM STORE</div>
+      </div>
+      <div class="login-title">إنشاء حساب جديد</div>
+      <div class="login-sub">انضم إلينا وابدأ باستخدام خدماتنا</div>
+    </div>
+    <div class="login-form">
+      <div id="signupMsg" class="msg"></div>
+      <div class="field">
+        <label>الاسم الكامل</label>
+        <input type="text" id="signupName" placeholder="محمد نصاري">
+      </div>
+      <div class="field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="signupEmail" placeholder="example@email.com">
+      </div>
+      <div class="field">
+        <label>كلمة المرور</label>
+        <input type="password" id="signupPassword" placeholder="6 أحرف على الأقل">
+      </div>
+      <button class="btn-primary" id="signupBtn" onclick="handleSignup()">إنشاء الحساب</button>
+      <div class="switch-link">لديك حساب بالفعل؟ <b onclick="showScreen('login')">تسجيل الدخول</b></div>
     </div>
   </section>
 
@@ -221,7 +256,10 @@
         <div class="brand-icon">❄️</div>
         <div class="brand-name">BBM STORE</div>
       </div>
-      <div class="bell">🔔<span class="dot"></span></div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="user-badge" id="userEmailLabel"></span>
+        <div class="bell">🔔<span class="dot"></span></div>
+      </div>
     </div>
 
     <div class="search-block">
@@ -275,7 +313,7 @@
       <div class="navitem"><span class="ic">🔎</span>البحث</div>
       <div class="navitem"><span class="ic">📋</span>طلباتي</div>
       <div class="navitem"><span class="ic">💰</span>المحفظة</div>
-      <div class="navitem"><span class="ic">👤</span>حسابي</div>
+      <div class="navitem" onclick="handleLogout()" style="cursor:pointer;"><span class="ic">👤</span>حسابي</div>
     </div>
   </section>
 
@@ -302,11 +340,102 @@
 </div>
 
 <script>
+// ==== Supabase config ====
+const SUPABASE_URL = "https://cgqkkfocgkiyxsshddxv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3XImpdl41nPKfpPgmatvNg_ldTFmULV";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
+
+function showMsg(elId, text, type){
+  const el = document.getElementById(elId);
+  el.textContent = text;
+  el.className = 'msg ' + type;
+}
+
+async function handleSignup(){
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const btn = document.getElementById('signupBtn');
+
+  if(!name || !email || !password){
+    showMsg('signupMsg', 'الرجاء تعبئة جميع الحقول', 'error');
+    return;
+  }
+  if(password.length < 6){
+    showMsg('signupMsg', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
+    return;
+  }
+
+  btn.disabled = true; btn.textContent = 'جاري الإنشاء...';
+
+  const { data, error } = await sb.auth.signUp({
+    email: email,
+    password: password,
+    options: { data: { full_name: name } }
+  });
+
+  btn.disabled = false; btn.textContent = 'إنشاء الحساب';
+
+  if(error){
+    showMsg('signupMsg', 'خطأ: ' + error.message, 'error');
+    return;
+  }
+
+  if(data.session){
+    // auto-confirmed, logged in directly
+    goToHome(data.session.user);
+  } else {
+    showMsg('signupMsg', 'تم إنشاء الحساب! تحقق من بريدك الإلكتروني لتأكيد الحساب ثم سجّل دخولك.', 'success');
+  }
+}
+
+async function handleLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginBtn');
+
+  if(!email || !password){
+    showMsg('loginMsg', 'الرجاء إدخال البريد الإلكتروني وكلمة المرور', 'error');
+    return;
+  }
+
+  btn.disabled = true; btn.textContent = 'جاري الدخول...';
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+  btn.disabled = false; btn.textContent = 'تسجيل الدخول';
+
+  if(error){
+    showMsg('loginMsg', 'خطأ: ' + error.message, 'error');
+    return;
+  }
+
+  goToHome(data.user);
+}
+
+async function handleLogout(){
+  await sb.auth.signOut();
+  showScreen('login');
+}
+
+function goToHome(user){
+  document.getElementById('userEmailLabel').textContent = user.email;
+  showScreen('home');
+}
+
+// Check if already logged in on page load
+(async function checkSession(){
+  const { data: { session } } = await sb.auth.getSession();
+  if(session){
+    goToHome(session.user);
+  }
+})();
 </script>
 </body>
-</html>
+        </html>
