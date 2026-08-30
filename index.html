@@ -271,6 +271,13 @@
         <input type="email" id="signupEmail" placeholder="example@email.com">
       </div>
       <div class="field">
+        <label>نوع الحساب</label>
+        <select id="signupRole">
+          <option value="customer">زبون (أبحث عن خدمات)</option>
+          <option value="professional">مهني (أقدّم خدمات)</option>
+        </select>
+      </div>
+      <div class="field">
         <label>كلمة المرور</label>
         <input type="password" id="signupPassword" placeholder="6 أحرف على الأقل">
       </div>
@@ -595,6 +602,7 @@ async function handleSignup(){
   const name = document.getElementById('signupName').value.trim();
   const email = document.getElementById('signupEmail').value.trim();
   const password = document.getElementById('signupPassword').value;
+  const role = document.getElementById('signupRole').value;
   const btn = document.getElementById('signupBtn');
 
   if(!name || !email || !password){
@@ -609,7 +617,7 @@ async function handleSignup(){
   btn.disabled = true; btn.textContent = 'جاري الإنشاء...';
   const { data, error } = await sb.auth.signUp({
     email: email, password: password,
-    options: { data: { full_name: name } }
+    options: { data: { full_name: name, role: role } }
   });
   btn.disabled = false; btn.textContent = 'إنشاء الحساب';
 
@@ -679,15 +687,24 @@ function detectLocation(){
   navigator.geolocation.getCurrentPosition(async (pos)=>{
     const { latitude, longitude } = pos.coords;
     try{
-      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=ar`);
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1&accept-language=ar`);
       const data = await res.json();
-      label.textContent = data.display_name ? data.display_name.split(',').slice(0,3).join(',') : `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+      const a = data.address || {};
+      const parts = [
+        a.house_number,
+        a.road,
+        a.neighbourhood || a.suburb || a.quarter,
+        a.city_district,
+        a.town || a.city || a.village || a.municipality,
+        a.state
+      ].filter(Boolean);
+      label.textContent = parts.length ? parts.join('، ') : (data.display_name || `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`);
     }catch(e){
-      label.textContent = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+      label.textContent = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
     }
   }, ()=>{
     label.textContent = 'تعذّر الوصول للموقع، فعّل صلاحية الموقع';
-  });
+  }, { enableHighAccuracy: true, timeout: 10000 });
 }
 
 // ---------- SEARCH ----------
@@ -891,4 +908,4 @@ async function saveProfile(){
 }
 </script>
 </body>
-  </html>
+        </html>
