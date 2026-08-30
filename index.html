@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>BBM STORE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B2B2C;
+    --teal-deep:#0F3D3E;
+    --teal:#12595B;
+    --ice:#4FD9D4;
+    --ice-soft:#E4FBF9;
+    --amber:#F4A340;
+    --amber-deep:#D9862B;
+    --paper:#F6F5F1;
+    --card:#FFFFFF;
+    --line:#E4E1D8;
+    --muted:#6B7570;
+    --radius:18px;
+    --shadow: 0 8px 24px rgba(15,61,62,0.08);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Tajawal', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .device{
+    max-width:430px;
+    margin:0 auto;
+    min-height:100vh;
+    background:var(--paper);
+    position:relative;
+    overflow-x:hidden;
+  }
+  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.5px; }
+
+  /* ---------- SCREEN SWITCH ---------- */
+  .screen{ display:none; animation:fadeIn .35s ease; }
+  .screen.active{ display:block; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)} }
+
+  /* ---------- LOGIN SCREEN ---------- */
+  .login-hero{
+    background: linear-gradient(160deg, var(--teal-deep) 0%, var(--teal) 55%, #1A7A78 100%);
+    padding:56px 28px 48px;
+    border-radius: 0 0 32px 32px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .login-hero::after{
+    content:"";
+    position:absolute; left:-40px; top:-40px;
+    width:180px; height:180px; border-radius:50%;
+    background:radial-gradient(circle, rgba(79,217,212,0.35), transparent 70%);
+  }
+  .brand-mark{
+    display:flex; align-items:center; gap:10px; margin-bottom:36px; position:relative;
+  }
+  .brand-icon{
+    width:40px; height:40px; border-radius:12px;
+    background:var(--amber);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+  }
+  .brand-name{ font-weight:900; font-size:20px; letter-spacing:0.5px;}
+  .login-title{ font-size:28px; font-weight:900; line-height:1.4; margin-bottom:8px; position:relative;}
+  .login-sub{ font-size:14px; color:rgba(255,255,255,0.75); position:relative;}
+
+  .login-form{
+    background:var(--card);
+    margin:-28px 20px 0;
+    border-radius:var(--radius);
+    padding:24px 20px 28px;
+    box-shadow:var(--shadow);
+    position:relative;
+    z-index:2;
+  }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:700;}
+  .field input{
+    width:100%; padding:13px 14px; border-radius:12px;
+    border:1.5px solid var(--line); font-family:inherit; font-size:15px;
+    background:#FBFAF7; transition:.2s;
+  }
+  .field input:focus{ outline:none; border-color:var(--ice); background:#fff; }
+  .btn-primary{
+    width:100%; padding:14px; border:none; border-radius:12px;
+    background:var(--amber); color:var(--teal-deep); font-weight:900; font-size:15px;
+    cursor:pointer; transition:.2s; font-family:inherit;
+  }
+  .btn-primary:active{ transform:scale(0.98); background:var(--amber-deep); }
+  .divider{ display:flex; align-items:center; gap:10px; margin:18px 0; color:var(--muted); font-size:12px;}
+  .divider::before,.divider::after{ content:""; flex:1; height:1px; background:var(--line);}
+  .switch-link{ text-align:center; font-size:13px; color:var(--muted); margin-top:6px;}
+  .switch-link b{ color:var(--teal); cursor:pointer; }
+
+  /* ---------- HOME SCREEN ---------- */
+  .topbar{
+    padding:20px 20px 14px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .topbar .brand-name{ color:var(--teal-deep); }
+  .topbar .brand-icon{ width:34px; height:34px; border-radius:10px; font-size:16px;}
+  .bell{
+    width:38px; height:38px; border-radius:50%; background:var(--card);
+    display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow); font-size:16px; position:relative;
+  }
+  .bell .dot{
+    position:absolute; top:8px; left:9px; width:8px; height:8px; border-radius:50%;
+    background:var(--amber); border:2px solid var(--paper);
+  }
+
+  .search-block{ padding:6px 20px 18px; }
+  .search-block h2{ font-size:19px; font-weight:900; margin-bottom:12px; }
+  .search-box{
+    display:flex; align-items:center; gap:10px;
+    background:var(--card); border-radius:14px; padding:13px 16px;
+    box-shadow:var(--shadow); font-size:14px; color:var(--muted);
+  }
+  .loc-chip{
+    margin-top:10px; display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; color:var(--teal); background:var(--ice-soft);
+    padding:6px 12px; border-radius:20px; font-weight:700;
+  }
+
+  .section{ padding:6px 20px 22px; }
+  .section-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px;}
+  .section-head h3{ font-size:16px; font-weight:900;}
+  .section-head span{ font-size:12px; color:var(--muted); }
+
+  .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+  .cat-card{
+    background:var(--card); border-radius:16px; padding:16px 14px;
+    box-shadow:var(--shadow); position:relative; overflow:hidden;
+    border:1px solid transparent; transition:.2s;
+  }
+  .cat-card.live{ border-color:var(--ice); cursor:pointer; }
+  .cat-card.live:active{ transform:scale(0.97); }
+  .cat-emoji{ font-size:26px; margin-bottom:10px; display:block; }
+  .cat-name{ font-weight:800; font-size:14px; margin-bottom:3px; }
+  .cat-desc{ font-size:11px; color:var(--muted); }
+  .soon-badge{
+    position:absolute; top:10px; left:10px;
+    background:var(--paper); color:var(--muted); font-size:9px; font-weight:800;
+    padding:3px 8px; border-radius:20px; border:1px solid var(--line);
+  }
+  .live-badge{
+    position:absolute; top:10px; left:10px;
+    background:var(--ice-soft); color:var(--teal); font-size:9px; font-weight:800;
+    padding:3px 8px; border-radius:20px;
+  }
+
+  .promo-card{
+    background:linear-gradient(135deg, var(--teal-deep), var(--teal));
+    border-radius:18px; padding:20px; color:#fff; position:relative; overflow:hidden;
+  }
+  .promo-card::after{
+    content:"❄️"; position:absolute; font-size:80px; opacity:0.15; left:-10px; bottom:-20px;
+  }
+  .promo-card h4{ font-size:16px; font-weight:900; margin-bottom:4px;}
+  .promo-card p{ font-size:12px; color:rgba(255,255,255,0.8); margin-bottom:14px; max-width:70%;}
+  .promo-btn{
+    background:var(--amber); color:var(--teal-deep); border:none; padding:9px 18px;
+    border-radius:10px; font-weight:800; font-size:12px; font-family:inherit; cursor:pointer;
+  }
+
+  /* ---------- BOTTOM NAV ---------- */
+  .bottomnav{
+    position:sticky; bottom:0; left:0; right:0;
+    background:var(--card); border-top:1px solid var(--line);
+    display:flex; justify-content:space-around; padding:10px 0 8px;
+    box-shadow:0 -6px 20px rgba(0,0,0,0.04);
+  }
+  .navitem{ display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; color:var(--muted); font-weight:700;}
+  .navitem.active{ color:var(--teal); }
+  .navitem .ic{ font-size:19px; }
+
+  .spacer{ height:6px; }
+</style>
+</head>
+<body>
+<div class="device">
+
+  <!-- ============ LOGIN SCREEN ============ -->
+  <section class="screen active" id="login">
+    <div class="login-hero">
+      <div class="brand-mark">
+        <div class="brand-icon">❄️</div>
+        <div class="brand-name">BBM STORE</div>
+      </div>
+      <div class="login-title">كل ما تحتاجه،<br>أقرب إليك.</div>
+      <div class="login-sub">سجّل دخولك للوصول إلى خدماتك وطلباتك</div>
+    </div>
+
+    <div class="login-form">
+      <div class="field">
+        <label>رقم الهاتف</label>
+        <input type="tel" placeholder="0555 12 34 56">
+      </div>
+      <div class="field">
+        <label>كلمة المرور</label>
+        <input type="password" placeholder="••••••••">
+      </div>
+      <button class="btn-primary" onclick="showScreen('home')">تسجيل الدخول</button>
+      <div class="divider">أو</div>
+      <button class="btn-primary" style="background:var(--ice-soft); color:var(--teal-deep);" onclick="showScreen('home')">إنشاء حساب جديد</button>
+      <div class="switch-link">هل نسيت كلمة المرور؟ <b>استعادة</b></div>
+    </div>
+  </section>
+
+  <!-- ============ HOME SCREEN ============ -->
+  <section class="screen" id="home">
+    <div class="topbar">
+      <div class="brand-mark" style="margin:0;">
+        <div class="brand-icon">❄️</div>
+        <div class="brand-name">BBM STORE</div>
+      </div>
+      <div class="bell">🔔<span class="dot"></span></div>
+    </div>
+
+    <div class="search-block">
+      <h2>🔍 ماذا تحتاج اليوم؟</h2>
+      <div class="search-box">🔎 ابحث عن خدمة، مهني، متجر...</div>
+      <div class="loc-chip">📍 الجزائر العاصمة — تغيير الموقع</div>
+    </div>
+
+    <div class="section" style="padding-top:0;">
+      <div class="promo-card">
+        <h4>صيانة المكيفات الآن</h4>
+        <p>احجز مهني موثّق خلال دقائق</p>
+        <button class="promo-btn" onclick="showScreen('pro')">احجز الآن</button>
+      </div>
+    </div>
+
+    <div class="section" style="padding-top:0;">
+      <div class="section-head"><h3>الأقسام</h3><span>عرض الكل</span></div>
+      <div class="grid">
+        <div class="cat-card live" onclick="showScreen('pro')">
+          <span class="live-badge">متاح الآن</span>
+          <span class="cat-emoji">👨‍🔧</span>
+          <div class="cat-name">المهنيون</div>
+          <div class="cat-desc">صيانة مكيفات وأكثر</div>
+        </div>
+        <div class="cat-card">
+          <span class="soon-badge">قريبًا</span>
+          <span class="cat-emoji">🏪</span>
+          <div class="cat-name">المتاجر</div>
+          <div class="cat-desc">تسوّق محلي</div>
+        </div>
+        <div class="cat-card">
+          <span class="soon-badge">قريبًا</span>
+          <span class="cat-emoji">🍔</span>
+          <div class="cat-name">المطاعم</div>
+          <div class="cat-desc">اطلب طعامك</div>
+        </div>
+        <div class="cat-card">
+          <span class="soon-badge">قريبًا</span>
+          <span class="cat-emoji">📱</span>
+          <div class="cat-name">فليكسي</div>
+          <div class="cat-desc">شحن سريع</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="bottomnav">
+      <div class="navitem active"><span class="ic">🏠</span>الرئيسية</div>
+      <div class="navitem"><span class="ic">🔎</span>البحث</div>
+      <div class="navitem"><span class="ic">📋</span>طلباتي</div>
+      <div class="navitem"><span class="ic">💰</span>المحفظة</div>
+      <div class="navitem"><span class="ic">👤</span>حسابي</div>
+    </div>
+  </section>
+
+  <!-- ============ PROFESSIONAL PROFILE (preview) ============ -->
+  <section class="screen" id="pro">
+    <div class="topbar">
+      <div class="navitem mono" style="color:var(--teal);cursor:pointer;font-weight:900;" onclick="showScreen('home')">→ رجوع</div>
+      <div class="bell">❤️</div>
+    </div>
+    <div class="section" style="padding-top:0;">
+      <div style="background:var(--card); border-radius:20px; padding:20px; box-shadow:var(--shadow); text-align:center;">
+        <div style="width:72px;height:72px;border-radius:50%;background:var(--ice-soft);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px;">🧑‍🔧</div>
+        <div style="font-weight:900; font-size:17px;">محمد نصاري</div>
+        <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">فني صيانة مكيفات — 6 سنوات خبرة</div>
+        <div style="display:flex; justify-content:center; gap:8px; margin-bottom:14px;">
+          <span style="background:var(--ice-soft); color:var(--teal); font-size:11px; font-weight:800; padding:5px 10px; border-radius:20px;">✅ موثق</span>
+          <span style="background:#FFF4E4; color:var(--amber-deep); font-size:11px; font-weight:800; padding:5px 10px; border-radius:20px;">⭐ 4.9 (128 تقييم)</span>
+        </div>
+        <button class="btn-primary" onclick="alert('نموذج الحجز — الخطوة التالية في البناء الفعلي')">احجز خدمة</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
