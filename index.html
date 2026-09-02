@@ -1,8 +1,12 @@
 <!DOCTYPE html>  <html lang="ar" dir="rtl">  
 <head>  
 <meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">  <title>BBM STORE</title>  <link rel="preconnect" href="https://fonts.googleapis.com">  
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <style>  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">  
+<title>BBM STORE</title>  
+<link rel="preconnect" href="https://fonts.googleapis.com">  
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">  
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  
+<style>  
 :root{  
   --bg:#160f08;  
   --card:#241708;  
@@ -17,1225 +21,1225 @@
   --success:#75d99a;  
   --radius:18px;  
   --shadow:0 8px 24px rgba(0,0,0,.35);  
-}  
-  
-*{  
-  box-sizing:border-box;  
-  margin:0;  
-  padding:0;  
-}  
-  
-html{  
-  scroll-behavior:smooth;  
-}  
-  
-body{  
-  font-family:'Tajawal',sans-serif;  
-  background:#050403;  
-  color:var(--text);  
-  min-height:100vh;  
-  -webkit-font-smoothing:antialiased;  
-}  
-  
-button,  
-input,  
-select,  
-textarea{  
-  font-family:inherit;  
-}  
-  
-button{  
-  cursor:pointer;  
-}  
-  
-img{  
-  max-width:100%;  
-  display:block;  
-}  
-  
-.device{  
-  width:100%;  
-  max-width:480px;  
-  min-height:100vh;  
-  margin:auto;  
-  background:var(--bg);  
-  position:relative;  
-  overflow-x:hidden;  
-}  
-  
-.screen{  
-  display:none;  
-  min-height:100vh;  
-  animation:fade .25s ease;  
-}  
-  
-.screen.active{  
-  display:block;  
-}  
-  
-@keyframes fade{  
-  from{  
-    opacity:0;  
-    transform:translateY(5px);  
-  }  
-  to{  
-    opacity:1;  
-    transform:translateY(0);  
-  }  
-}  
-  
-/* =========================  
-   GENERAL  
-========================= */  
-  
-.topbar{  
-  min-height:70px;  
-  padding:16px 20px;  
-  display:flex;  
-  align-items:center;  
-  justify-content:space-between;  
-  border-bottom:1px solid var(--line);  
-  background:rgba(15,11,7,.96);  
-  position:sticky;  
-  top:0;  
-  z-index:20;  
-}  
-  
-.brand{  
-  display:flex;  
-  align-items:center;  
-  gap:10px;  
-}  
-  
-.brand-icon{  
-  width:40px;  
-  height:40px;  
-  border-radius:12px;  
-  overflow:hidden;  
-  background:var(--gold-soft);  
-  border:1px solid var(--line);  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-}  
-  
-.brand-icon img{  
-  width:100%;  
-  height:100%;  
-  object-fit:cover;  
-}  
-  
-.brand-fallback{  
-  font-weight:900;  
-  color:var(--gold);  
-  font-size:14px;  
-}  
-  
-.brand-name{  
-  font-size:20px;  
-  font-weight:900;  
-  color:var(--gold);  
-}  
-  
-.container{  
-  padding:20px;  
-}  
-  
-.section{  
-  padding:0 20px 22px;  
-}  
-  
-.card{  
-  background:var(--card);  
-  border:1px solid var(--line);  
-  border-radius:var(--radius);  
-  box-shadow:var(--shadow);  
-}  
-  
-.empty{  
-  text-align:center;  
-  padding:45px 20px;  
-  color:var(--muted);  
-}  
-  
-.empty-icon{  
-  font-size:42px;  
-  margin-bottom:12px;  
-}  
-  
-.empty-title{  
-  color:var(--text);  
-  font-size:16px;  
-  font-weight:900;  
-  margin-bottom:7px;  
-}  
-  
-.empty-text{  
-  font-size:12px;  
-  line-height:1.8;  
-}  
-  
-.msg{  
-  display:none;  
-  padding:11px 12px;  
-  border-radius:12px;  
-  font-size:13px;  
-  margin-bottom:14px;  
-  text-align:center;  
-}  
-  
-.msg.show{  
-  display:block;  
-}  
-  
-.msg.error{  
-  background:rgba(255,80,80,.12);  
-  color:#ff9999;  
-  border:1px solid rgba(255,80,80,.2);  
-}  
-  
-.msg.success{  
-  background:rgba(70,200,120,.1);  
-  color:var(--success);  
-  border:1px solid rgba(70,200,120,.2);  
-}  
-  
-.msg.info{  
-  background:var(--gold-soft);  
-  color:var(--gold);  
-  border:1px solid var(--line);  
-}  
-  
-.btn{  
-  border:none;  
-  border-radius:13px;  
-  padding:13px 16px;  
-  font-size:14px;  
-  font-weight:900;  
-  transition:.15s;  
-}  
-  
-.btn:active{  
-  transform:scale(.98);  
-}  
-  
-.btn-primary{  
-  width:100%;  
-  background:var(--gold2);  
-  color:#211505;  
-}  
-  
-.btn-secondary{  
-  width:100%;  
-  background:transparent;  
-  border:1px solid var(--line);  
-  color:var(--text);  
-}  
-  
-.btn-danger{  
-  background:rgba(255,80,80,.12);  
-  color:#ff9999;  
-  border:1px solid rgba(255,80,80,.2);  
-}  
-  
-.btn-small{  
-  padding:9px 12px;  
-  font-size:12px;  
-}  
-  
-.field{  
-  margin-bottom:15px;  
-}  
-  
-.field label{  
-  display:block;  
-  color:var(--muted);  
-  font-size:12px;  
-  font-weight:800;  
-  margin-bottom:7px;  
-}  
-  
-.field input,  
-.field select,  
-.field textarea{  
-  width:100%;  
-  background:var(--card2);  
-  color:var(--text);  
-  border:1px solid var(--line);  
-  border-radius:12px;  
-  padding:13px;  
-  outline:none;  
-  font-size:14px;  
-}  
-  
-.field textarea{  
-  min-height:100px;  
-  resize:vertical;  
-}  
-  
-.field input:focus,  
-.field select:focus,  
-.field textarea:focus{  
-  border-color:var(--gold);  
-}  
-  
-.field input::placeholder,  
-.field textarea::placeholder{  
-  color:#766b57;  
-}  
-  
-.back{  
-  color:var(--gold);  
-  font-size:13px;  
-  font-weight:900;  
-  cursor:pointer;  
-}  
-  
-.page-title{  
-  font-size:19px;  
-  font-weight:900;  
-}  
-  
-/* =========================  
-   AUTH  
-========================= */  
-  
-.auth-hero{  
-  min-height:300px;  
-  padding:55px 25px 45px;  
-  background:  
-    linear-gradient(  
-      180deg,  
-      rgba(15,11,7,.25),  
-      rgba(15,11,7,.95)  
-    ),  
-    url('bbm-bg-main.jpg');  
-  background-size:cover;  
-  background-position:center;  
-  border-radius:0 0 32px 32px;  
-}  
-  
-.auth-title{  
-  margin-top:45px;  
-  font-size:29px;  
-  font-weight:900;  
-  line-height:1.45;  
-}  
-  
-.auth-sub{  
-  margin-top:8px;  
-  color:rgba(255,255,255,.7);  
-  font-size:13px;  
-}  
-  
-.auth-box{  
-  margin:-25px 20px 30px;  
-  position:relative;  
-  z-index:2;  
-  padding:22px;  
-}  
-  
-.divider{  
-  display:flex;  
-  align-items:center;  
-  gap:10px;  
-  color:var(--muted);  
-  font-size:11px;  
-  margin:18px 0;  
-}  
-  
-.divider:before,  
-.divider:after{  
-  content:"";  
-  flex:1;  
-  height:1px;  
-  background:var(--line);  
-}  
-  
-.switch{  
-  text-align:center;  
-  margin-top:15px;  
-  color:var(--muted);  
-  font-size:13px;  
-}  
-  
-.switch b{  
-  color:var(--gold);  
-  cursor:pointer;  
-}  
-  
-/* =========================  
-   HOME  
-========================= */  
-  
-.home-head{  
-  padding:20px;  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-}  
-  
-.notification-btn{  
-  width:42px;  
-  height:42px;  
-  border-radius:50%;  
-  border:1px solid var(--line);  
-  background:var(--card);  
-  color:var(--text);  
-  position:relative;  
-  font-size:18px;  
-}  
-  
-.notification-dot{  
-  width:8px;  
-  height:8px;  
-  background:var(--gold);  
-  border-radius:50%;  
-  position:absolute;  
-  top:8px;  
-  left:8px;  
-  display:none;  
-}  
-  
-.welcome{  
-  padding:0 20px 18px;  
-}  
-  
-.welcome h1{  
-  font-size:23px;  
-  font-weight:900;  
-}  
-  
-.welcome p{  
-  color:var(--muted);  
-  font-size:13px;  
-  margin-top:5px;  
-}  
-  
-.search{  
-  margin:0 20px 20px;  
-  background:var(--card);  
-  border:1px solid var(--line);  
-  border-radius:14px;  
-  padding:14px;  
-  color:var(--muted);  
-  cursor:pointer;  
-}  
-  
-.location-chip{  
-  margin:-8px 20px 22px;  
-  display:inline-flex;  
-  background:var(--gold-soft);  
-  border:1px solid var(--line);  
-  color:var(--gold);  
-  padding:8px 12px;  
-  border-radius:30px;  
-  font-size:11px;  
-  font-weight:800;  
-  cursor:pointer;  
-}  
-  
-.home-section{  
-  padding:0 20px 22px;  
-}  
-  
-.section-head{  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-  margin-bottom:13px;  
-}  
-  
-.section-head h2{  
-  font-size:17px;  
-  font-weight:900;  
-}  
-  
-.section-head span{  
-  color:var(--gold);  
-  font-size:12px;  
-  font-weight:800;  
-  cursor:pointer;  
-}  
-  
-.categories{  
-  display:grid;  
-  grid-template-columns:repeat(2,1fr);  
-  gap:12px;  
-}  
-  
-.category{  
-  padding:18px 15px;  
-  min-height:120px;  
-  cursor:pointer;  
-  transition:.15s;  
-}  
-  
-.category:active{  
-  transform:scale(.98);  
-}  
-  
-.category-icon{  
-  font-size:28px;  
-  margin-bottom:12px;  
-}  
-  
-.category-title{  
-  font-weight:900;  
-  font-size:14px;  
-}  
-  
-.category-desc{  
-  color:var(--muted);  
-  font-size:11px;  
-  margin-top:4px;  
-}  
-  
-.category.disabled{  
-  opacity:.65;  
-  cursor:default;  
-}  
-  
-.soon{  
-  display:inline-block;  
-  color:var(--muted);  
-  border:1px solid var(--line);  
-  border-radius:20px;  
-  font-size:9px;  
-  padding:3px 8px;  
-  margin-top:8px;  
-}  
-  
-/* =========================  
-   BOTTOM NAV  
-========================= */  
-  
-.bottom-nav{  
-  position:sticky;  
-  bottom:0;  
-  z-index:30;  
-  display:grid;  
-  grid-template-columns:repeat(5,1fr);  
-  background:rgba(28,20,11,.98);  
-  border-top:1px solid var(--line);  
-  padding:9px 4px 8px;  
-  backdrop-filter:blur(10px);  
-}  
-  
-.nav-item{  
-  display:flex;  
-  flex-direction:column;  
-  align-items:center;  
-  gap:3px;  
-  color:var(--muted);  
-  font-size:10px;  
-  font-weight:800;  
-  cursor:pointer;  
-}  
-  
-.nav-item.active{  
-  color:var(--gold);  
-}  
-  
-.nav-icon{  
-  font-size:18px;  
-}  
-  
-/* =========================  
-   SEARCH  
-========================= */  
-  
-.search-form{  
-  margin-bottom:15px;  
-}  
-  
-.result-item{  
-  padding:15px;  
-  margin-bottom:10px;  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-}  
-  
-.result-main{  
-  min-width:0;  
-}  
-  
-.result-name{  
-  font-weight:900;  
-  font-size:14px;  
-}  
-  
-.result-meta{  
-  color:var(--muted);  
-  font-size:11px;  
-  margin-top:4px;  
-}  
-  
-/* =========================  
-   PRODUCTS  
-========================= */  
-  
-.product-grid{  
-  display:grid;  
-  grid-template-columns:repeat(2,1fr);  
-  gap:12px;  
-}  
-  
-.product-card{  
-  overflow:hidden;  
-}  
-  
-.product-image{  
-  height:150px;  
-  background:var(--card2);  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  color:var(--muted);  
-  overflow:hidden;  
-}  
-  
-.product-image img{  
-  width:100%;  
-  height:100%;  
-  object-fit:cover;  
-}  
-  
-.product-info{  
-  padding:12px;  
-}  
-  
-.product-name{  
-  font-size:14px;  
-  font-weight:900;  
-  line-height:1.5;  
-}  
-  
-.product-description{  
-  font-size:11px;  
-  color:var(--muted);  
-  margin-top:4px;  
-  min-height:32px;  
-}  
-  
-.product-price{  
-  color:var(--gold);  
-  font-size:14px;  
-  font-weight:900;  
-  margin-top:8px;  
-}  
-  
-.product-stock{  
-  color:var(--muted);  
-  font-size:10px;  
-  margin-top:4px;  
-}  
-  
-.product-actions{  
-  margin-top:10px;  
-  display:flex;  
-  gap:6px;  
-}  
-  
-.product-actions button{  
-  flex:1;  
-}  
-  
-/* =========================  
-   ADMIN / PRODUCTS  
-========================= */  
-  
-.admin-tools{  
-  display:flex;  
-  gap:8px;  
-  margin-bottom:15px;  
-}  
-  
-.admin-tools button{  
-  flex:1;  
-}  
-  
-.admin-product{  
-  padding:13px;  
-  margin-bottom:10px;  
-  display:flex;  
-  gap:10px;  
-  align-items:center;  
-}  
-  
-.admin-product-img{  
-  width:55px;  
-  height:55px;  
-  border-radius:10px;  
-  overflow:hidden;  
-  background:var(--card2);  
-  flex-shrink:0;  
-}  
-  
-.admin-product-img img{  
-  width:100%;  
-  height:100%;  
-  object-fit:cover;  
-}  
-  
-.admin-product-main{  
-  flex:1;  
-  min-width:0;  
-}  
-  
-.admin-product-name{  
-  font-weight:900;  
-  font-size:13px;  
-}  
-  
-.admin-product-price{  
-  color:var(--gold);  
-  font-size:11px;  
-  margin-top:3px;  
-}  
-  
-.admin-actions{  
-  display:flex;  
-  gap:5px;  
-}  
-  
-/* =========================  
-   UPLOAD  
-========================= */  
-  
-.upload-box{  
-  border:1px dashed var(--line);  
-  border-radius:14px;  
-  padding:18px;  
-  text-align:center;  
-  color:var(--muted);  
-  cursor:pointer;  
-  background:var(--card2);  
-}  
-  
-.preview{  
-  margin-top:10px;  
-  display:none;  
-  width:100%;  
-  height:180px;  
-  border-radius:14px;  
-  overflow:hidden;  
-}  
-  
-.preview img{  
-  width:100%;  
-  height:100%;  
-  object-fit:cover;  
-}  
-  
-/* =========================  
-   ORDERS  
-========================= */  
-  
-.order{  
-  padding:16px;  
-  margin-bottom:12px;  
-}  
-  
-.order-head{  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-  gap:8px;  
-}  
-  
-.order-title{  
-  font-size:14px;  
-  font-weight:900;  
-}  
-  
-.status{  
-  padding:4px 9px;  
-  border-radius:20px;  
-  font-size:10px;  
-  font-weight:900;  
-  background:var(--gold-soft);  
-  color:var(--gold);  
-}  
-  
-.order-meta{  
-  color:var(--muted);  
-  font-size:11px;  
-  margin-top:8px;  
-  line-height:1.7;  
-}  
-  
-/* =========================  
-   WALLET  
-========================= */  
-  
-.balance{  
-  padding:25px;  
-  text-align:center;  
-  margin-bottom:15px;  
-}  
-  
-.balance-label{  
-  color:var(--muted);  
-  font-size:12px;  
-}  
-  
-.balance-number{  
-  color:var(--gold);  
-  font-size:32px;  
-  font-weight:900;  
-  margin-top:5px;  
-}  
-  
-.payment-method{  
-  display:flex;  
-  align-items:center;  
-  gap:10px;  
-  padding:14px;  
-  margin-bottom:9px;  
-  border:1px solid var(--line);  
-  border-radius:13px;  
-  background:var(--card);  
-  cursor:pointer;  
-}  
-  
-.payment-method.selected{  
-  border-color:var(--gold);  
-  background:var(--gold-soft);  
-}  
-  
-/* =========================  
-   PROFILE  
-========================= */  
-  
-.profile-card{  
-  padding:22px;  
-  text-align:center;  
-  margin-bottom:15px;  
-}  
-  
-.avatar{  
-  width:72px;  
-  height:72px;  
-  border-radius:50%;  
-  margin:auto auto 10px;  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  background:var(--gold-soft);  
-  font-size:30px;  
-}  
-  
-.profile-name{  
-  font-size:17px;  
-  font-weight:900;  
-}  
-  
-.profile-email{  
-  color:var(--muted);  
-  font-size:12px;  
-  margin-top:4px;  
-}  
-  
-.profile-item{  
-  padding:15px;  
-  margin-bottom:9px;  
-  display:flex;  
-  justify-content:space-between;  
-  align-items:center;  
-  cursor:pointer;  
-}  
-  
-.avatar-wrap{  
-  position:relative;  
-  width:84px;  
-  margin:auto auto 12px;  
-}  
-  
-.avatar-lg{  
-  width:84px;  
-  height:84px;  
-  border-radius:50%;  
-  overflow:hidden;  
-  background:var(--gold-soft);  
-  border:2px solid var(--gold);  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  font-size:34px;  
-}  
-  
-.avatar-lg img{  
-  width:100%;  
-  height:100%;  
-  object-fit:cover;  
-}  
-  
-.avatar-edit-btn{  
-  position:absolute;  
-  bottom:-2px;  
-  left:-2px;  
-  width:28px;  
-  height:28px;  
-  border-radius:50%;  
-  background:var(--gold2);  
-  color:#211505;  
-  border:2px solid var(--bg);  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  font-size:13px;  
-  cursor:pointer;  
-}  
-  
-.name-row{  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  gap:6px;  
-}  
-  
-.verified-badge{  
-  color:var(--gold);  
-  font-size:14px;  
-}  
-  
-.badge-row{  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  gap:6px;  
-  flex-wrap:wrap;  
-  margin-top:8px;  
-}  
-  
-.role-pill{  
-  display:inline-block;  
-  background:var(--gold-soft);  
-  color:var(--gold);  
-  border:1px solid var(--line);  
-  font-size:10px;  
-  font-weight:900;  
-  padding:4px 10px;  
-  border-radius:20px;  
-}  
-  
-.profile-bio{  
-  color:var(--muted);  
-  font-size:12px;  
-  line-height:1.7;  
-  margin-top:10px;  
-  padding:0 6px;  
-}  
-  
-.stat-row{  
-  display:grid;  
-  grid-template-columns:repeat(3,1fr);  
-  gap:8px;  
-  margin-top:16px;  
-  padding-top:16px;  
-  border-top:1px solid var(--line);  
-}  
-  
-.stat-chip{  
-  text-align:center;  
-}  
-  
-.stat-chip .num{  
-  color:var(--gold);  
-  font-size:15px;  
-  font-weight:900;  
-}  
-  
-.stat-chip .lbl{  
-  color:var(--muted);  
-  font-size:10px;  
-  margin-top:3px;  
-}  
-  
-.referral-box{  
-  display:flex;  
-  align-items:center;  
-  justify-content:space-between;  
-  gap:8px;  
-  background:var(--gold-soft);  
-  border:1px dashed var(--gold);  
-  border-radius:12px;  
-  padding:11px 13px;  
-  margin-top:14px;  
-}  
-  
-.referral-code{  
-  font-family:'IBM Plex Mono',monospace;  
-  color:var(--gold);  
-  font-weight:700;  
-  font-size:14px;  
-  letter-spacing:1px;  
-}  
-  
-.avatar-upload-row{  
-  display:flex;  
-  align-items:center;  
-  gap:14px;  
-  margin-bottom:18px;  
-}  
-  
-.avatar-upload-preview{  
-  width:64px;  
-  height:64px;  
-  border-radius:50%;  
-  overflow:hidden;  
-  background:var(--card2);  
-  border:1px solid var(--line);  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  font-size:26px;  
-  flex-shrink:0;  
-}  
-  
-.avatar-upload-preview img{  
-  width:100%;  
-  height:100%;  
-  object-fit:cover;  
-}  
-  
-.avatar-upload-btn{  
-  flex:1;  
-}  
-  
-.field-row2{  
-  display:grid;  
-  grid-template-columns:1fr 1fr;  
-  gap:10px;  
-}  
-  
-.location-status{  
-  display:flex;  
-  align-items:center;  
-  justify-content:space-between;  
-  gap:10px;  
-  background:var(--card2);  
-  border:1px solid var(--line);  
-  border-radius:12px;  
-  padding:12px 14px;  
-  margin-bottom:15px;  
-  font-size:12px;  
-  color:var(--muted);  
-}  
-  
-.location-status b{  
-  color:var(--text);  
-}  
-  
-.category-status{  
-  display:inline-block;  
-  font-size:9px;  
-  font-weight:800;  
-  padding:4px 10px;  
-  border-radius:20px;  
-  margin-bottom:10px;  
-}  
-  
-.category-status.ready{  
-  background:rgba(117,217,154,.12);  
-  color:var(--success);  
-}  
-  
-.category-status.soon2{  
-  background:var(--gold-soft);  
-  color:var(--gold);  
-}  
-  
-.category-status.empty2{  
-  background:var(--card2);  
-  color:var(--muted);  
-}  
-  
-.header-actions{  
-  display:flex;  
-  gap:8px;  
-  align-items:center;  
-}  
-  
-.search-row{  
-  display:flex;  
-  gap:8px;  
-  margin:0 20px 12px;  
-}  
-  
-.search-row .search{  
-  margin:0;  
-  flex:1;  
-}  
-  
-.filter-btn{  
-  width:52px;  
-  flex-shrink:0;  
-  background:var(--card);  
-  border:1px solid var(--line);  
-  border-radius:14px;  
-  color:var(--gold);  
-  font-size:18px;  
-}  
-  
-.wilaya-item{  
-  display:flex;  
-  align-items:center;  
-  justify-content:space-between;  
-  padding:16px;  
-  margin-bottom:10px;  
-  cursor:pointer;  
-}  
-  
-.wilaya-item.selected{  
-  border-color:var(--gold);  
-  background:var(--gold-soft);  
-}  
-  
-.wilaya-name{  
-  font-weight:900;  
-  font-size:14px;  
-}  
-  
-.wilaya-sub{  
-  color:var(--muted);  
-  font-size:11px;  
-  margin-top:2px;  
-}  
-  
-.chip-toggle-row{  
-  display:grid;  
-  grid-template-columns:1fr 1fr;  
-  gap:10px;  
-  margin-bottom:15px;  
-}  
-  
-.chip-toggle{  
-  padding:13px;  
-  text-align:center;  
-  border:1px solid var(--line);  
-  border-radius:12px;  
-  background:var(--card2);  
-  color:var(--text);  
-  font-size:13px;  
-  font-weight:800;  
-  cursor:pointer;  
-}  
-  
-.chip-toggle.active{  
-  border-color:var(--gold);  
-  background:var(--gold-soft);  
-  color:var(--gold);  
-}  
-  
-.partner-banner{  
-  padding:20px;  
-  margin-bottom:15px;  
-}  
-  
-.partner-banner .kicker{  
-  color:var(--gold);  
-  font-size:11px;  
-  font-weight:800;  
-}  
-  
-.partner-banner h3{  
-  font-size:17px;  
-  font-weight:900;  
-  margin-top:6px;  
-}  
-  
-.partner-banner p{  
-  color:var(--muted);  
-  font-size:12px;  
-  line-height:1.7;  
-  margin-top:8px;  
-}  
-  
-/* =========================  
-   MAP  
-========================= */  
-  
-.map-placeholder{  
-  min-height:280px;  
-  border-radius:18px;  
-  border:1px solid var(--line);  
-  background:  
-    radial-gradient(circle at 20% 30%, #342716 0 2px, transparent 3px),  
-    radial-gradient(circle at 70% 60%, #342716 0 2px, transparent 3px),  
-    var(--card2);  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  text-align:center;  
-  color:var(--muted);  
-  padding:20px;  
-}  
-  
-.route-info{  
-  margin-top:12px;  
-  padding:15px;  
-}  
-  
-/* =========================  
-   LOADING  
-========================= */  
-  
-.loading{  
-  text-align:center;  
-  color:var(--muted);  
-  padding:30px;  
-}  
-  
-.spinner{  
-  width:28px;  
-  height:28px;  
-  border:3px solid var(--line);  
-  border-top-color:var(--gold);  
-  border-radius:50%;  
-  animation:spin .8s linear infinite;  
-  margin:auto auto 10px;  
-}  
-  
-@keyframes spin{  
-  to{  
-    transform:rotate(360deg);  
-  }  
-}  
-  
-/* =========================  
-   RESPONSIVE  
-========================= */  
-  
-@media(max-width:360px){  
-  .product-grid,  
-  .categories{  
-    grid-template-columns:1fr;  
-  }  
-  
-  .auth-title{  
-    font-size:25px;  
-  }  
-}  
-</style>  </head>  <body>  <div class="device">  <!-- =====================================================  
+}  *{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Tajawal',sans-serif;
+background:#050403;
+color:var(--text);
+min-height:100vh;
+-webkit-font-smoothing:antialiased;
+}
+
+button,
+input,
+select,
+textarea{
+font-family:inherit;
+}
+
+button{
+cursor:pointer;
+}
+
+img{
+max-width:100%;
+display:block;
+}
+
+.device{
+width:100%;
+max-width:480px;
+min-height:100vh;
+margin:auto;
+background:var(--bg);
+position:relative;
+overflow-x:hidden;
+}
+
+.screen{
+display:none;
+min-height:100vh;
+animation:fade .25s ease;
+}
+
+.screen.active{
+display:block;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(5px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* =========================
+GENERAL
+========================= */
+
+.topbar{
+min-height:70px;
+padding:16px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid var(--line);
+background:rgba(15,11,7,.96);
+position:sticky;
+top:0;
+z-index:20;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.brand-icon{
+width:40px;
+height:40px;
+border-radius:12px;
+overflow:hidden;
+background:var(--gold-soft);
+border:1px solid var(--line);
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.brand-icon img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.brand-fallback{
+font-weight:900;
+color:var(--gold);
+font-size:14px;
+}
+
+.brand-name{
+font-size:20px;
+font-weight:900;
+color:var(--gold);
+}
+
+.container{
+padding:20px;
+}
+
+.section{
+padding:0 20px 22px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:var(--radius);
+box-shadow:var(--shadow);
+}
+
+.empty{
+text-align:center;
+padding:45px 20px;
+color:var(--muted);
+}
+
+.empty-icon{
+font-size:42px;
+margin-bottom:12px;
+}
+
+.empty-title{
+color:var(--text);
+font-size:16px;
+font-weight:900;
+margin-bottom:7px;
+}
+
+.empty-text{
+font-size:12px;
+line-height:1.8;
+}
+
+.msg{
+display:none;
+padding:11px 12px;
+border-radius:12px;
+font-size:13px;
+margin-bottom:14px;
+text-align:center;
+}
+
+.msg.show{
+display:block;
+}
+
+.msg.error{
+background:rgba(255,80,80,.12);
+color:#ff9999;
+border:1px solid rgba(255,80,80,.2);
+}
+
+.msg.success{
+background:rgba(70,200,120,.1);
+color:var(--success);
+border:1px solid rgba(70,200,120,.2);
+}
+
+.msg.info{
+background:var(--gold-soft);
+color:var(--gold);
+border:1px solid var(--line);
+}
+
+.btn{
+border:none;
+border-radius:13px;
+padding:13px 16px;
+font-size:14px;
+font-weight:900;
+transition:.15s;
+}
+
+.btn:active{
+transform:scale(.98);
+}
+
+.btn-primary{
+width:100%;
+background:var(--gold2);
+color:#211505;
+}
+
+.btn-secondary{
+width:100%;
+background:transparent;
+border:1px solid var(--line);
+color:var(--text);
+}
+
+.btn-danger{
+background:rgba(255,80,80,.12);
+color:#ff9999;
+border:1px solid rgba(255,80,80,.2);
+}
+
+.btn-small{
+padding:9px 12px;
+font-size:12px;
+}
+
+.field{
+margin-bottom:15px;
+}
+
+.field label{
+display:block;
+color:var(--muted);
+font-size:12px;
+font-weight:800;
+margin-bottom:7px;
+}
+
+.field input,
+.field select,
+.field textarea{
+width:100%;
+background:var(--card2);
+color:var(--text);
+border:1px solid var(--line);
+border-radius:12px;
+padding:13px;
+outline:none;
+font-size:14px;
+}
+
+.field textarea{
+min-height:100px;
+resize:vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+border-color:var(--gold);
+}
+
+.field input::placeholder,
+.field textarea::placeholder{
+color:#766b57;
+}
+
+.back{
+color:var(--gold);
+font-size:13px;
+font-weight:900;
+cursor:pointer;
+}
+
+.page-title{
+font-size:19px;
+font-weight:900;
+}
+
+/* =========================
+AUTH
+========================= */
+
+.auth-hero{
+min-height:300px;
+padding:55px 25px 45px;
+background:
+linear-gradient(
+180deg,
+rgba(15,11,7,.25),
+rgba(15,11,7,.95)
+),
+url('bbm-bg-main.jpg');
+background-size:cover;
+background-position:center;
+border-radius:0 0 32px 32px;
+}
+
+.auth-title{
+margin-top:45px;
+font-size:29px;
+font-weight:900;
+line-height:1.45;
+}
+
+.auth-sub{
+margin-top:8px;
+color:rgba(255,255,255,.7);
+font-size:13px;
+}
+
+.auth-box{
+margin:-25px 20px 30px;
+position:relative;
+z-index:2;
+padding:22px;
+}
+
+.divider{
+display:flex;
+align-items:center;
+gap:10px;
+color:var(--muted);
+font-size:11px;
+margin:18px 0;
+}
+
+.divider:before,
+.divider:after{
+content:"";
+flex:1;
+height:1px;
+background:var(--line);
+}
+
+.switch{
+text-align:center;
+margin-top:15px;
+color:var(--muted);
+font-size:13px;
+}
+
+.switch b{
+color:var(--gold);
+cursor:pointer;
+}
+
+/* =========================
+HOME
+========================= */
+
+.home-head{
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.notification-btn{
+width:42px;
+height:42px;
+border-radius:50%;
+border:1px solid var(--line);
+background:var(--card);
+color:var(--text);
+position:relative;
+font-size:18px;
+}
+
+.notification-dot{
+width:8px;
+height:8px;
+background:var(--gold);
+border-radius:50%;
+position:absolute;
+top:8px;
+left:8px;
+display:none;
+}
+
+.welcome{
+padding:0 20px 18px;
+}
+
+.welcome h1{
+font-size:23px;
+font-weight:900;
+}
+
+.welcome p{
+color:var(--muted);
+font-size:13px;
+margin-top:5px;
+}
+
+.search{
+margin:0 20px 20px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+padding:14px;
+color:var(--muted);
+cursor:pointer;
+}
+
+.location-chip{
+margin:-8px 20px 22px;
+display:inline-flex;
+background:var(--gold-soft);
+border:1px solid var(--line);
+color:var(--gold);
+padding:8px 12px;
+border-radius:30px;
+font-size:11px;
+font-weight:800;
+cursor:pointer;
+}
+
+.home-section{
+padding:0 20px 22px;
+}
+
+.section-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:13px;
+}
+
+.section-head h2{
+font-size:17px;
+font-weight:900;
+}
+
+.section-head span{
+color:var(--gold);
+font-size:12px;
+font-weight:800;
+cursor:pointer;
+}
+
+.categories{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.category{
+padding:18px 15px;
+min-height:120px;
+cursor:pointer;
+transition:.15s;
+}
+
+.category:active{
+transform:scale(.98);
+}
+
+.category-icon{
+font-size:28px;
+margin-bottom:12px;
+}
+
+.category-title{
+font-weight:900;
+font-size:14px;
+}
+
+.category-desc{
+color:var(--muted);
+font-size:11px;
+margin-top:4px;
+}
+
+.category.disabled{
+opacity:.65;
+cursor:default;
+}
+
+.soon{
+display:inline-block;
+color:var(--muted);
+border:1px solid var(--line);
+border-radius:20px;
+font-size:9px;
+padding:3px 8px;
+margin-top:8px;
+}
+
+/* =========================
+BOTTOM NAV
+========================= */
+
+.bottom-nav{
+position:sticky;
+bottom:0;
+z-index:30;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+background:rgba(28,20,11,.98);
+border-top:1px solid var(--line);
+padding:9px 4px 8px;
+backdrop-filter:blur(10px);
+}
+
+.nav-item{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:3px;
+color:var(--muted);
+font-size:10px;
+font-weight:800;
+cursor:pointer;
+}
+
+.nav-item.active{
+color:var(--gold);
+}
+
+.nav-icon{
+font-size:18px;
+}
+
+/* =========================
+SEARCH
+========================= */
+
+.search-form{
+margin-bottom:15px;
+}
+
+.result-item{
+padding:15px;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.result-main{
+min-width:0;
+}
+
+.result-name{
+font-weight:900;
+font-size:14px;
+}
+
+.result-meta{
+color:var(--muted);
+font-size:11px;
+margin-top:4px;
+}
+
+/* =========================
+PRODUCTS
+========================= */
+
+.product-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.product-card{
+overflow:hidden;
+}
+
+.product-image{
+height:150px;
+background:var(--card2);
+display:flex;
+align-items:center;
+justify-content:center;
+color:var(--muted);
+overflow:hidden;
+}
+
+.product-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.product-info{
+padding:12px;
+}
+
+.product-name{
+font-size:14px;
+font-weight:900;
+line-height:1.5;
+}
+
+.product-description{
+font-size:11px;
+color:var(--muted);
+margin-top:4px;
+min-height:32px;
+}
+
+.product-price{
+color:var(--gold);
+font-size:14px;
+font-weight:900;
+margin-top:8px;
+}
+
+.product-stock{
+color:var(--muted);
+font-size:10px;
+margin-top:4px;
+}
+
+.product-actions{
+margin-top:10px;
+display:flex;
+gap:6px;
+}
+
+.product-actions button{
+flex:1;
+}
+
+/* =========================
+ADMIN / PRODUCTS
+========================= */
+
+.admin-tools{
+display:flex;
+gap:8px;
+margin-bottom:15px;
+}
+
+.admin-tools button{
+flex:1;
+}
+
+.admin-product{
+padding:13px;
+margin-bottom:10px;
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.admin-product-img{
+width:55px;
+height:55px;
+border-radius:10px;
+overflow:hidden;
+background:var(--card2);
+flex-shrink:0;
+}
+
+.admin-product-img img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.admin-product-main{
+flex:1;
+min-width:0;
+}
+
+.admin-product-name{
+font-weight:900;
+font-size:13px;
+}
+
+.admin-product-price{
+color:var(--gold);
+font-size:11px;
+margin-top:3px;
+}
+
+.admin-actions{
+display:flex;
+gap:5px;
+}
+
+/* =========================
+UPLOAD
+========================= */
+
+.upload-box{
+border:1px dashed var(--line);
+border-radius:14px;
+padding:18px;
+text-align:center;
+color:var(--muted);
+cursor:pointer;
+background:var(--card2);
+}
+
+.preview{
+margin-top:10px;
+display:none;
+width:100%;
+height:180px;
+border-radius:14px;
+overflow:hidden;
+}
+
+.preview img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* =========================
+ORDERS
+========================= */
+
+.order{
+padding:16px;
+margin-bottom:12px;
+}
+
+.order-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:8px;
+}
+
+.order-title{
+font-size:14px;
+font-weight:900;
+}
+
+.status{
+padding:4px 9px;
+border-radius:20px;
+font-size:10px;
+font-weight:900;
+background:var(--gold-soft);
+color:var(--gold);
+}
+
+.order-meta{
+color:var(--muted);
+font-size:11px;
+margin-top:8px;
+line-height:1.7;
+}
+
+/* =========================
+WALLET
+========================= */
+
+.balance{
+padding:25px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.balance-label{
+color:var(--muted);
+font-size:12px;
+}
+
+.balance-number{
+color:var(--gold);
+font-size:32px;
+font-weight:900;
+margin-top:5px;
+}
+
+.payment-method{
+display:flex;
+align-items:center;
+gap:10px;
+padding:14px;
+margin-bottom:9px;
+border:1px solid var(--line);
+border-radius:13px;
+background:var(--card);
+cursor:pointer;
+}
+
+.payment-method.selected{
+border-color:var(--gold);
+background:var(--gold-soft);
+}
+
+/* =========================
+PROFILE
+========================= */
+
+.profile-card{
+padding:22px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.avatar{
+width:72px;
+height:72px;
+border-radius:50%;
+margin:auto auto 10px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:var(--gold-soft);
+font-size:30px;
+}
+
+.profile-name{
+font-size:17px;
+font-weight:900;
+}
+
+.profile-email{
+color:var(--muted);
+font-size:12px;
+margin-top:4px;
+}
+
+.profile-item{
+padding:15px;
+margin-bottom:9px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+}
+
+.avatar-wrap{
+position:relative;
+width:84px;
+margin:auto auto 12px;
+}
+
+.avatar-lg{
+width:84px;
+height:84px;
+border-radius:50%;
+overflow:hidden;
+background:var(--gold-soft);
+border:2px solid var(--gold);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+}
+
+.avatar-lg img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.avatar-edit-btn{
+position:absolute;
+bottom:-2px;
+left:-2px;
+width:28px;
+height:28px;
+border-radius:50%;
+background:var(--gold2);
+color:#211505;
+border:2px solid var(--bg);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:13px;
+cursor:pointer;
+}
+
+.name-row{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+}
+
+.verified-badge{
+color:var(--gold);
+font-size:14px;
+}
+
+.badge-row{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+flex-wrap:wrap;
+margin-top:8px;
+}
+
+.role-pill{
+display:inline-block;
+background:var(--gold-soft);
+color:var(--gold);
+border:1px solid var(--line);
+font-size:10px;
+font-weight:900;
+padding:4px 10px;
+border-radius:20px;
+}
+
+.profile-bio{
+color:var(--muted);
+font-size:12px;
+line-height:1.7;
+margin-top:10px;
+padding:0 6px;
+}
+
+.stat-row{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:16px;
+padding-top:16px;
+border-top:1px solid var(--line);
+}
+
+.stat-chip{
+text-align:center;
+}
+
+.stat-chip .num{
+color:var(--gold);
+font-size:15px;
+font-weight:900;
+}
+
+.stat-chip .lbl{
+color:var(--muted);
+font-size:10px;
+margin-top:3px;
+}
+
+.referral-box{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:8px;
+background:var(--gold-soft);
+border:1px dashed var(--gold);
+border-radius:12px;
+padding:11px 13px;
+margin-top:14px;
+}
+
+.referral-code{
+font-family:'IBM Plex Mono',monospace;
+color:var(--gold);
+font-weight:700;
+font-size:14px;
+letter-spacing:1px;
+}
+
+.avatar-upload-row{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:18px;
+}
+
+.avatar-upload-preview{
+width:64px;
+height:64px;
+border-radius:50%;
+overflow:hidden;
+background:var(--card2);
+border:1px solid var(--line);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+flex-shrink:0;
+}
+
+.avatar-upload-preview img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.avatar-upload-btn{
+flex:1;
+}
+
+.field-row2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.location-status{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+background:var(--card2);
+border:1px solid var(--line);
+border-radius:12px;
+padding:12px 14px;
+margin-bottom:15px;
+font-size:12px;
+color:var(--muted);
+}
+
+.location-status b{
+color:var(--text);
+}
+
+.category-status{
+display:inline-block;
+font-size:9px;
+font-weight:800;
+padding:4px 10px;
+border-radius:20px;
+margin-bottom:10px;
+}
+
+.category-status.ready{
+background:rgba(117,217,154,.12);
+color:var(--success);
+}
+
+.category-status.soon2{
+background:var(--gold-soft);
+color:var(--gold);
+}
+
+.category-status.empty2{
+background:var(--card2);
+color:var(--muted);
+}
+
+.header-actions{
+display:flex;
+gap:8px;
+align-items:center;
+}
+
+.search-row{
+display:flex;
+gap:8px;
+margin:0 20px 12px;
+}
+
+.search-row .search{
+margin:0;
+flex:1;
+}
+
+.filter-btn{
+width:52px;
+flex-shrink:0;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:14px;
+color:var(--gold);
+font-size:18px;
+}
+
+.wilaya-item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:16px;
+margin-bottom:10px;
+cursor:pointer;
+}
+
+.wilaya-item.selected{
+border-color:var(--gold);
+background:var(--gold-soft);
+}
+
+.wilaya-name{
+font-weight:900;
+font-size:14px;
+}
+
+.wilaya-sub{
+color:var(--muted);
+font-size:11px;
+margin-top:2px;
+}
+
+.chip-toggle-row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:15px;
+}
+
+.chip-toggle{
+padding:13px;
+text-align:center;
+border:1px solid var(--line);
+border-radius:12px;
+background:var(--card2);
+color:var(--text);
+font-size:13px;
+font-weight:800;
+cursor:pointer;
+}
+
+.chip-toggle.active{
+border-color:var(--gold);
+background:var(--gold-soft);
+color:var(--gold);
+}
+
+.partner-banner{
+padding:20px;
+margin-bottom:15px;
+}
+
+.partner-banner .kicker{
+color:var(--gold);
+font-size:11px;
+font-weight:800;
+}
+
+.partner-banner h3{
+font-size:17px;
+font-weight:900;
+margin-top:6px;
+}
+
+.partner-banner p{
+color:var(--muted);
+font-size:12px;
+line-height:1.7;
+margin-top:8px;
+}
+
+/* =========================
+MAP
+========================= */
+
+.map-placeholder{
+min-height:280px;
+border-radius:18px;
+border:1px solid var(--line);
+background:
+radial-gradient(circle at 20% 30%, #342716 0 2px, transparent 3px),
+radial-gradient(circle at 70% 60%, #342716 0 2px, transparent 3px),
+var(--card2);
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:var(--muted);
+padding:20px;
+}
+
+.route-info{
+margin-top:12px;
+padding:15px;
+}
+
+/* =========================
+LOADING
+========================= */
+
+.loading{
+text-align:center;
+color:var(--muted);
+padding:30px;
+}
+
+.spinner{
+width:28px;
+height:28px;
+border:3px solid var(--line);
+border-top-color:var(--gold);
+border-radius:50%;
+animation:spin .8s linear infinite;
+margin:auto auto 10px;
+}
+
+@keyframes spin{
+to{
+transform:rotate(360deg);
+}
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:360px){
+.product-grid,
+.categories{
+grid-template-columns:1fr;
+}
+
+.auth-title{
+font-size:25px;
+}
+}
+</style>
+
+</head>  
+<body>  
+<div class="device">  <!-- =====================================================  
      LOGIN  
-===================================================== -->  <section id="loginScreen" class="screen active">    <div class="auth-hero">  <div class="brand">  
-  <div class="brand-icon">  
-    <img  
-      src="bbm-icon.png"  
-      alt="BBM"  
-      onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
-    >  
-  </div>  
-
-  <div class="brand-name">  
-    BBM STORE  
-  </div>  
-</div>  
-
-<div class="auth-title">  
+===================================================== -->  <section id="loginScreen" class="screen active">    <div class="auth-hero">  
+    <div class="brand">  
+      <div class="brand-icon">  
+        <img  
+          src="bbm-icon.png"  
+          alt="BBM"  
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
+        >  
+      </div>  
+      <div class="brand-name">  
+        BBM STORE  
+      </div>  
+    </div>  <div class="auth-title">  
   كل ما تحتاجه،<br>  
   أقرب إليك.  
 </div>  
@@ -1244,1138 +1248,477 @@ img{
   منصة BBM STORE للخدمات والتجارة المحلية  
 </div>
 
-  </div>    <div class="card auth-box">  <div id="loginMsg" class="msg"></div>  
-
-<div class="field">  
+  </div>    <div class="card auth-box">  
+    <div id="loginMsg" class="msg"></div>  <div class="field">  
   <label>البريد الإلكتروني</label>  
-  <input  
-    id="loginEmail"  
-    type="email"  
-    placeholder="example@email.com"  
-    autocomplete="email"  
-  >  
+  <input id="loginEmail" type="email" placeholder="example@email.com" autocomplete="email">  
 </div>  
 
 <div class="field">  
   <label>كلمة المرور</label>  
-  <input  
-    id="loginPassword"  
-    type="password"  
-    placeholder="••••••••"  
-    autocomplete="current-password"  
-  >  
+  <input id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password">  
 </div>  
 
-<button  
-  id="loginBtn"  
-  class="btn btn-primary"  
-  onclick="login()"  
->  
+<button id="loginBtn" class="btn btn-primary" onclick="login()">  
   تسجيل الدخول  
 </button>  
 
-<div class="divider">  
-  أو  
-</div>  
+<div class="divider">أو</div>  
 
-<button  
-  class="btn btn-secondary"  
-  onclick="showScreen('signupScreen')"  
->  
+<button class="btn btn-secondary" onclick="showScreen('signupScreen')">  
   إنشاء حساب جديد  
 </button>
 
   </div>  </section>  <!-- =====================================================  
      SIGNUP  
-===================================================== -->  <section id="signupScreen" class="screen">    <div class="auth-hero">  <div class="brand">  
-  <div class="brand-icon">  
-    <img  
-      src="bbm-icon.png"  
-      alt="BBM"  
-      onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
-    >  
-  </div>  
+===================================================== -->  <section id="signupScreen" class="screen">    <div class="auth-hero">  
+    <div class="brand">  
+      <div class="brand-icon">  
+        <img  
+          src="bbm-icon.png"  
+          alt="BBM"  
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
+        >  
+      </div>  
+      <div class="brand-name">  
+        BBM STORE  
+      </div>  
+    </div>  <div class="auth-title">إنشاء حساب</div>  
+<div class="auth-sub">أنشئ حسابك وابدأ باستخدام BBM STORE</div>
 
-  <div class="brand-name">  
-    BBM STORE  
-  </div>  
-</div>  
-
-<div class="auth-title">  
-  إنشاء حساب  
-</div>  
-
-<div class="auth-sub">  
-  أنشئ حسابك وابدأ باستخدام BBM STORE  
-</div>
-
-  </div>    <div class="card auth-box">  <div id="signupMsg" class="msg"></div>  
-
-<div class="field">  
+  </div>    <div class="card auth-box">  
+    <div id="signupMsg" class="msg"></div>  <div class="field">  
   <label>الاسم الكامل</label>  
-  <input  
-    id="signupName"  
-    type="text"  
-    placeholder="اسمك الكامل"  
-  >  
+  <input id="signupName" type="text" placeholder="اسمك الكامل">  
 </div>  
 
 <div class="field">  
   <label>البريد الإلكتروني</label>  
-  <input  
-    id="signupEmail"  
-    type="email"  
-    placeholder="example@email.com"  
-  >  
+  <input id="signupEmail" type="email" placeholder="example@email.com">  
 </div>  
 
 <div class="field">  
   <label>رقم الهاتف</label>  
-  <input  
-    id="signupPhone"  
-    type="tel"  
-    placeholder="05XXXXXXXX"  
-  >  
+  <input id="signupPhone" type="tel" placeholder="05XXXXXXXX">  
 </div>  
 
 <div class="field">  
   <label>نوع الحساب</label>  
-
   <select id="signupRole">  
-
-    <option value="customer">  
-      عميل  
-    </option>  
-
-    <option value="professional">  
-      مهني  
-    </option>  
-
-    <option value="seller">  
-      بائع / متجر  
-    </option>  
-
+    <option value="customer">عميل</option>  
+    <option value="professional">مهني</option>  
+    <option value="seller">بائع / متجر</option>  
   </select>  
-
 </div>  
 
 <div class="field">  
   <label>كلمة المرور</label>  
-
-  <input  
-    id="signupPassword"  
-    type="password"  
-    placeholder="6 أحرف على الأقل"  
-  >  
+  <input id="signupPassword" type="password" placeholder="6 أحرف على الأقل">  
 </div>  
 
-<button  
-  id="signupBtn"  
-  class="btn btn-primary"  
-  onclick="signup()"  
->  
+<button id="signupBtn" class="btn btn-primary" onclick="signup()">  
   إنشاء الحساب  
 </button>  
 
 <div class="switch">  
   لديك حساب بالفعل؟  
-  <b onclick="showScreen('loginScreen')">  
-    تسجيل الدخول  
-  </b>  
+  <b onclick="showScreen('loginScreen')">تسجيل الدخول</b>  
 </div>
 
   </div>  </section>  <!-- =====================================================  
      HOME  
-===================================================== -->  <section id="homeScreen" class="screen">    <div class="home-head">  <div class="brand">  
-
-  <div class="brand-icon">  
-    <img  
-      src="bbm-icon.png"  
-      alt="BBM"  
-      onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
-    >  
-  </div>  
-
-  <div class="brand-name">  
-    BBM STORE  
-  </div>  
-
-</div>  
-
-<button  
-  class="notification-btn"  
-  onclick="openNotifications()"  
->  
+===================================================== -->  <section id="homeScreen" class="screen">    <div class="home-head">  
+    <div class="brand">  
+      <div class="brand-icon">  
+        <img  
+          src="bbm-icon.png"  
+          alt="BBM"  
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
+        >  
+      </div>  
+      <div class="brand-name">BBM STORE</div>  
+    </div>  <button class="notification-btn" onclick="openNotifications()">  
   🔔  
-  <span  
-    id="notificationDot"  
-    class="notification-dot"  
-  ></span>  
+  <span id="notificationDot" class="notification-dot"></span>  
 </button>
 
-  </div>    <div class="welcome">  <h1 id="welcomeName">  
-  مرحبًا بك  
-</h1>  
-
-<p>  
-  ابحث عن ما تحتاجه بالقرب منك  
-</p>
-
-  </div>    <div class="search-row">  <div  
-  class="search"  
-  onclick="openSearch()"  
->  
-  🔎 ابحث عن خدمة أو منتج أو متجر...  
-</div>  
-
-<button class="filter-btn" onclick="showScreen('filterScreen')">  
-  ⚙️  
-</button>
-
-  </div>  <button
-class="location-chip"
-onclick="openWilayaScreen()"
-
-> 
-
-📍  
-<span id="locationLabel">  
-  تحديد موقعي الحالي  
-</span>
-
-  </button>    <div class="home-section">  <div class="section-head">  
-
-  <h2>  
-    الأقسام  
-  </h2>  
-
-  <span onclick="openAllServices()">  
-    عرض الكل  
-  </span>  
-
-</div>  
-
-
-<div class="categories">  
-
-  <div  
-    class="card category"  
-    onclick="openProducts('all')"  
-  >  
-
+  </div>    <div class="welcome">  
+    <h1 id="welcomeName">مرحبًا بك</h1>  
+    <p>ابحث عن ما تحتاجه بالقرب منك</p>  
+  </div>    <div class="search-row">  
+    <div class="search" onclick="openSearch()">  
+      🔎 ابحث عن خدمة أو منتج أو متجر...  
+    </div>  
+    <button class="filter-btn" onclick="showScreen('filterScreen')">⚙️</button>  
+  </div>    <button class="location-chip" onclick="openWilayaScreen()">  
+    📍  
+    <span id="locationLabel">تحديد موقعي الحالي</span>  
+  </button>    <div class="home-section">  
+    <div class="section-head">  
+      <h2>الأقسام</h2>  
+      <span onclick="openAllServices()">عرض الكل</span>  
+    </div>  <div class="categories">  
+  <div class="card category" onclick="openProducts('all')">  
     <span class="category-status ready">جاهز للتعبئة</span>  
-
-    <div class="category-icon">  
-      🛍️  
-    </div>  
-
-    <div class="category-title">  
-      المنتجات  
-    </div>  
-
-    <div class="category-desc">  
-      المنتجات التي تضيفها أنت  
-    </div>  
-
+    <div class="category-icon">🛍️</div>  
+    <div class="category-title">المنتجات</div>  
+    <div class="category-desc">المنتجات التي تضيفها أنت</div>  
   </div>  
 
-
-  <div  
-    class="card category"  
-    onclick="openServices()"  
-  >  
-
+  <div class="card category" onclick="openServices()">  
     <span class="category-status empty2">فارغ حاليًا</span>  
-
-    <div class="category-icon">  
-      👨‍🔧  
-    </div>  
-
-    <div class="category-title">  
-      الخدمات  
-    </div>  
-
-    <div class="category-desc">  
-      الخدمات التي تضيفها لاحقًا  
-    </div>  
-
+    <div class="category-icon">👨‍🔧</div>  
+    <div class="category-title">الخدمات</div>  
+    <div class="category-desc">الخدمات التي تضيفها لاحقًا</div>  
   </div>  
-
 
   <div class="card category disabled">  
-
     <span class="category-status soon2">قريبًا</span>  
-
-    <div class="category-icon">  
-      🏪  
-    </div>  
-
-    <div class="category-title">  
-      المتاجر  
-    </div>  
-
+    <div class="category-icon">🏪</div>  
+    <div class="category-title">المتاجر</div>  
   </div>  
-
 
   <div class="card category disabled">  
-
     <span class="category-status soon2">قريبًا</span>  
-
-    <div class="category-icon">  
-      🍔  
-    </div>  
-
-    <div class="category-title">  
-      المطاعم  
-    </div>  
-
+    <div class="category-icon">🍔</div>  
+    <div class="category-title">المطاعم</div>  
   </div>  
-
 
   <div class="card category disabled">  
-
     <span class="category-status soon2">قريبًا</span>  
-
-    <div class="category-icon">  
-      ☕  
-    </div>  
-
-    <div class="category-title">  
-      المقاهي  
-    </div>  
-
+    <div class="category-icon">☕</div>  
+    <div class="category-title">المقاهي</div>  
   </div>  
-
 
   <div class="card category disabled">  
-
     <span class="category-status soon2">قريبًا</span>  
-
-    <div class="category-icon">  
-      🚗  
-    </div>  
-
-    <div class="category-title">  
-      النقل  
-    </div>  
-
+    <div class="category-icon">🚗</div>  
+    <div class="category-title">النقل</div>  
   </div>  
-
 </div>
 
-  </div>    <div class="home-section">  <div class="card partner-banner">  
-  <div class="kicker">✨ فرصة تجارية</div>  
-  <h3>كن شريكًا معنا في BBM STORE</h3>  
-  <p>انضم كتاجر أو مزود خدمة معتمد لتوسيع نطاق أعمالك مع لوحة تحكم خاصة بك.</p>  
-  <button class="btn btn-primary" style="margin-top:14px;" onclick="showScreen('becomeProviderScreen')">  
-    انضم الآن كتاجر أو مزود خدمة  
-  </button>  
-</div>
-
-  </div>    <div class="home-section">  <div class="section-head">  
-
-  <h2>  
-    المنتجات  
-  </h2>  
-
-  <span onclick="openProducts('all')">  
-    عرض الكل  
-  </span>  
-
-</div>  
-
-<div id="homeProducts">  
-
+  </div>    <div class="home-section">  
+    <div class="card partner-banner">  
+      <div class="kicker">✨ فرصة تجارية</div>  
+      <h3>كن شريكًا معنا في BBM STORE</h3>  
+      <p>انضم كتاجر أو مزود خدمة معتمد لتوسيع نطاق أعمالك مع لوحة تحكم خاصة بك.</p>  
+      <button class="btn btn-primary" style="margin-top:14px;" onclick="showScreen('becomeProviderScreen')">  
+        انضم الآن كتاجر أو مزود خدمة  
+      </button>  
+    </div>  
+  </div>    <div class="home-section">  
+    <div class="section-head">  
+      <h2>المنتجات</h2>  
+      <span onclick="openProducts('all')">عرض الكل</span>  
+    </div>  <div id="homeProducts">  
   <div class="empty">  
-
-    <div class="empty-icon">  
-      🛒  
-    </div>  
-
-    <div class="empty-title">  
-      لا توجد منتجات بعد  
-    </div>  
-
-    <div class="empty-text">  
-      ستظهر هنا المنتجات التي تتم إضافتها إلى BBM STORE.  
-    </div>  
-
+    <div class="empty-icon">🛒</div>  
+    <div class="empty-title">لا توجد منتجات بعد</div>  
+    <div class="empty-text">ستظهر هنا المنتجات التي تتم إضافتها إلى BBM STORE.</div>  
   </div>  
-
 </div>
 
-  </div>    <div class="bottom-nav">  <div  
-  class="nav-item active"  
-  onclick="showScreen('homeScreen')"  
->  
-  <span class="nav-icon">🏠</span>  
-  الرئيسية  
-</div>  
-
-<div  
-  class="nav-item"  
-  onclick="openSearch()"  
->  
-  <span class="nav-icon">🔎</span>  
-  البحث  
-</div>  
-
-<div  
-  class="nav-item"  
-  onclick="openOrders()"  
->  
-  <span class="nav-icon">📋</span>  
-  طلباتي  
-</div>  
-
-<div  
-  class="nav-item"  
-  onclick="openWallet()"  
->  
-  <span class="nav-icon">💰</span>  
-  المحفظة  
-</div>  
-
-<div  
-  class="nav-item"  
-  onclick="openAccount()"  
->  
-  <span class="nav-icon">👤</span>  
-  حسابي  
-</div>
-
+  </div>    <div class="bottom-nav">  
+    <div class="nav-item active" onclick="showScreen('homeScreen')">  
+      <span class="nav-icon">🏠</span>  
+      الرئيسية  
+    </div>  
+    <div class="nav-item" onclick="openSearch()">  
+      <span class="nav-icon">🔎</span>  
+      البحث  
+    </div>  
+    <div class="nav-item" onclick="openOrders()">  
+      <span class="nav-icon">📋</span>  
+      طلباتي  
+    </div>  
+    <div class="nav-item" onclick="openWallet()">  
+      <span class="nav-icon">💰</span>  
+      المحفظة  
+    </div>  
+    <div class="nav-item" onclick="openAccount()">  
+      <span class="nav-icon">👤</span>  
+      حسابي  
+    </div>  
   </div>  </section>  <!-- =====================================================  
      ALL SERVICES  
-===================================================== -->  <section id="servicesScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="showScreen('homeScreen')"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  الخدمات  
-</span>  
-
-<span></span>
-
-  </div>    <div class="section">  <div id="servicesList">  
-
-  <div class="empty">  
-
-    <div class="empty-icon">  
-      👨‍🔧  
+===================================================== -->  <section id="servicesScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
+    <span class="page-title">الخدمات</span>  
+    <span></span>  
+  </div>    <div class="section">  
+    <div id="servicesList">  
+      <div class="empty">  
+        <div class="empty-icon">👨‍🔧</div>  
+        <div class="empty-title">لا توجد خدمات بعد</div>  
+        <div class="empty-text">لم تتم إضافة أي خدمة حتى الآن.</div>  
+      </div>  
     </div>  
-
-    <div class="empty-title">  
-      لا توجد خدمات بعد  
-    </div>  
-
-    <div class="empty-text">  
-      لم تتم إضافة أي خدمة حتى الآن.  
-    </div>  
-
-  </div>  
-
-</div>
-
   </div>  </section>  <!-- =====================================================  
      PRODUCTS  
-===================================================== -->  <section id="productsScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="showScreen('homeScreen')"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  المنتجات  
-</span>  
-
-<span></span>
-
-  </div>    <div class="section">  <div class="field">  
-
-  <input  
-    id="productSearch"  
-    type="search"  
-    placeholder="ابحث عن منتج..."  
-    oninput="filterProducts()"  
-  >  
-
-</div>  
-
-<div id="productsList">  
-
+===================================================== -->  <section id="productsScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
+    <span class="page-title">المنتجات</span>  
+    <span></span>  
+  </div>    <div class="section">  
+    <div class="field">  
+      <input id="productSearch" type="search" placeholder="ابحث عن منتج..." oninput="filterProducts()">  
+    </div>  <div id="productsList">  
   <div class="empty">  
-
-    <div class="empty-icon">  
-      🛒  
-    </div>  
-
-    <div class="empty-title">  
-      لا توجد منتجات  
-    </div>  
-
-    <div class="empty-text">  
-      ستظهر المنتجات هنا بعد إضافتها.  
-    </div>  
-
+    <div class="empty-icon">🛒</div>  
+    <div class="empty-title">لا توجد منتجات</div>  
+    <div class="empty-text">ستظهر المنتجات هنا بعد إضافتها.</div>  
   </div>  
-
 </div>
 
   </div>  </section>  <!-- =====================================================  
      ADD PRODUCT  
-===================================================== -->  <section id="addProductScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="openMyProducts()"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  إضافة منتج  
-</span>  
-
-<span></span>
-
-  </div>    <div class="container">  <div id="productMsg" class="msg"></div>  
-
-<div class="card" style="padding:18px;">  
-
+===================================================== -->  <section id="addProductScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="openMyProducts()">→ رجوع</span>  
+    <span class="page-title">إضافة منتج</span>  
+    <span></span>  
+  </div>    <div class="container">  
+    <div id="productMsg" class="msg"></div>  <div class="card" style="padding:18px;">  
   <div class="field">  
-
-    <label>  
-      اسم المنتج *  
-    </label>  
-
-    <input  
-      id="productName"  
-      type="text"  
-      placeholder="اسم المنتج"  
-    >  
-
+    <label>اسم المنتج *</label>  
+    <input id="productName" type="text" placeholder="اسم المنتج">  
   </div>  
 
-
   <div class="field">  
-
-    <label>  
-      وصف المنتج  
-    </label>  
-
-    <textarea  
-      id="productDescription"  
-      placeholder="وصف المنتج"  
-    ></textarea>  
-
+    <label>وصف المنتج</label>  
+    <textarea id="productDescription" placeholder="وصف المنتج"></textarea>  
   </div>  
 
-
   <div class="field">  
-
-    <label>  
-      السعر بالدينار الجزائري *  
-    </label>  
-
-    <input  
-      id="productPrice"  
-      type="number"  
-      min="0"  
-      step="0.01"  
-      placeholder="0"  
-    >  
-
+    <label>السعر بالدينار الجزائري *</label>  
+    <input id="productPrice" type="number" min="0" step="0.01" placeholder="0">  
   </div>  
 
-
   <div class="field">  
-
-    <label>  
-      الكمية  
-    </label>  
-
-    <input  
-      id="productStock"  
-      type="number"  
-      min="0"  
-      step="1"  
-      value="0"  
-    >  
-
+    <label>الكمية</label>  
+    <input id="productStock" type="number" min="0" step="1" value="0">  
   </div>  
 
-
   <div class="field">  
-
-    <label>  
-      التصنيف  
-    </label>  
-
-    <input  
-      id="productCategory"  
-      type="text"  
-      placeholder="مثال: إلكترونيات"  
-    >  
-
+    <label>التصنيف</label>  
+    <input id="productCategory" type="text" placeholder="مثال: إلكترونيات">  
   </div>  
 
-
   <div class="field">  
-
-    <label>  
-      صورة المنتج  
-    </label>  
-
+    <label>صورة المنتج</label>  
     <label class="upload-box">  
-
-      📷  
-      <br>  
-
+      📷<br>  
       اضغط لاختيار صورة  
-
-      <input  
-        id="productImage"  
-        type="file"  
-        accept="image/*"  
-        hidden  
-        onchange="previewProductImage(event)"  
-      >  
-
+      <input id="productImage" type="file" accept="image/*" hidden onchange="previewProductImage(event)">  
     </label>  
-
-    <div  
-      id="imagePreview"  
-      class="preview"  
-    >  
-    </div>  
-
+    <div id="imagePreview" class="preview"></div>  
   </div>  
-
 
   <div class="field">  
-
-    <label>  
-      حالة المنتج  
-    </label>  
-
+    <label>حالة المنتج</label>  
     <select id="productActive">  
-
-      <option value="true">  
-        ظاهر  
-      </option>  
-
-      <option value="false">  
-        مخفي  
-      </option>  
-
+      <option value="true">ظاهر</option>  
+      <option value="false">مخفي</option>  
     </select>  
-
   </div>  
 
-
-  <button  
-    id="saveProductBtn"  
-    class="btn btn-primary"  
-    onclick="saveProduct()"  
-  >  
+  <button id="saveProductBtn" class="btn btn-primary" onclick="saveProduct()">  
     إضافة المنتج  
   </button>  
-
 </div>
 
   </div>  </section>  <!-- =====================================================  
      MY PRODUCTS  
-===================================================== -->  <section id="myProductsScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="openAccount()"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  منتجاتي  
-</span>  
-
-<span></span>
-
-  </div>    <div class="section">  <div class="admin-tools">  
-
-  <button  
-    class="btn btn-primary"  
-    onclick="openAddProduct()"  
-  >  
-    ＋ إضافة منتج  
-  </button>  
-
-</div>  
-
-<div id="myProductsList">  
-
+===================================================== -->  <section id="myProductsScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="openAccount()">→ رجوع</span>  
+    <span class="page-title">منتجاتي</span>  
+    <span></span>  
+  </div>    <div class="section">  
+    <div class="admin-tools">  
+      <button class="btn btn-primary" onclick="openAddProduct()">＋ إضافة منتج</button>  
+    </div>  <div id="myProductsList">  
   <div class="empty">  
-
-    <div class="empty-icon">  
-      📦  
-    </div>  
-
-    <div class="empty-title">  
-      لا توجد منتجات  
-    </div>  
-
-    <div class="empty-text">  
-      أضف أول منتج لك.  
-    </div>  
-
+    <div class="empty-icon">📦</div>  
+    <div class="empty-title">لا توجد منتجات</div>  
+    <div class="empty-text">أضف أول منتج لك.</div>  
   </div>  
-
 </div>
 
   </div>  </section>  <!-- =====================================================  
      SEARCH  
-===================================================== -->  <section id="searchScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="showScreen('homeScreen')"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  البحث  
-</span>  
-
-<span></span>
-
-  </div>    <div class="section">  <div class="field">  
-
-  <input  
-    id="globalSearch"  
-    type="search"  
-    placeholder="ابحث عن منتج أو خدمة..."  
-    oninput="globalSearch()"  
-  >  
-
-</div>  
-
-<div id="searchResults">  
-
+===================================================== -->  <section id="searchScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
+    <span class="page-title">البحث</span>  
+    <span></span>  
+  </div>    <div class="section">  
+    <div class="field">  
+      <input id="globalSearch" type="search" placeholder="ابحث عن منتج أو خدمة..." oninput="globalSearch()">  
+    </div>  <div id="searchResults">  
   <div class="empty">  
-
-    <div class="empty-icon">  
-      🔎  
-    </div>  
-
-    <div class="empty-title">  
-      ابدأ البحث  
-    </div>  
-
-    <div class="empty-text">  
-      اكتب ما تبحث عنه.  
-    </div>  
-
+    <div class="empty-icon">🔎</div>  
+    <div class="empty-title">ابدأ البحث</div>  
+    <div class="empty-text">اكتب ما تبحث عنه.</div>  
   </div>  
-
 </div>
 
   </div>  </section>  <!-- =====================================================  
      ORDERS  
-===================================================== -->  <section id="ordersScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="showScreen('homeScreen')"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  طلباتي  
-</span>  
-
-<span></span>
-
-  </div>    <div class="section">  <div id="ordersList">  
-
-  <div class="empty">  
-
-    <div class="empty-icon">  
-      📋  
+===================================================== -->  <section id="ordersScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
+    <span class="page-title">طلباتي</span>  
+    <span></span>  
+  </div>    <div class="section">  
+    <div id="ordersList">  
+      <div class="empty">  
+        <div class="empty-icon">📋</div>  
+        <div class="empty-title">لا توجد طلبات</div>  
+        <div class="empty-text">ستظهر طلباتك هنا.</div>  
+      </div>  
     </div>  
-
-    <div class="empty-title">  
-      لا توجد طلبات  
-    </div>  
-
-    <div class="empty-text">  
-      ستظهر طلباتك هنا.  
-    </div>  
-
-  </div>  
-
-</div>
-
   </div>  </section>  <!-- =====================================================  
      WALLET  
-===================================================== -->  <section id="walletScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="showScreen('homeScreen')"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  المحفظة  
-</span>  
-
-<span></span>
-
-  </div>    <div class="section">  <div class="card balance">  
-
-  <div class="balance-label">  
-    الرصيد المتاح  
-  </div>  
-
-  <div  
-    id="walletBalance"  
-    class="balance-number"  
-  >  
-    0.00 دج  
-  </div>  
-
-</div>  
-
-
-<div id="walletMsg" class="msg"></div>  
-
+===================================================== -->  <section id="walletScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
+    <span class="page-title">المحفظة</span>  
+    <span></span>  
+  </div>    <div class="section">  
+    <div class="card balance">  
+      <div class="balance-label">الرصيد المتاح</div>  
+      <div id="walletBalance" class="balance-number">0.00 دج</div>  
+    </div>  <div id="walletMsg" class="msg"></div>  
 
 <div class="section-head">  
-
-  <h2>  
-    شحن المحفظة  
-  </h2>  
-
+  <h2>شحن المحفظة</h2>  
 </div>  
 
-
-<div  
-  class="payment-method"  
-  onclick="selectPayment(this,'BaridiMob')"  
->  
-  📱  
-  <span>  
-    BaridiMob  
-  </span>  
+<div class="payment-method" onclick="selectPayment(this,'BaridiMob')">  
+  📱 <span>BaridiMob</span>  
 </div>  
 
-
-<div  
-  class="payment-method"  
-  onclick="selectPayment(this,'CCP')"  
->  
-  🏦  
-  <span>  
-    CCP  
-  </span>  
+<div class="payment-method" onclick="selectPayment(this,'CCP')">  
+  🏦 <span>CCP</span>  
 </div>  
 
-
-<div  
-  class="payment-method"  
-  onclick="selectPayment(this,'Flexy')"  
->  
-  💳  
-  <span>  
-    Flexy  
-  </span>  
+<div class="payment-method" onclick="selectPayment(this,'Flexy')">  
+  💳 <span>Flexy</span>  
 </div>  
 
-
-<div  
-  class="payment-method"  
-  onclick="selectPayment(this,'cash')"  
->  
-  🏢  
-  <span>  
-    الدفع لدى الإدارة  
-  </span>  
+<div class="payment-method" onclick="selectPayment(this,'cash')">  
+  🏢 <span>الدفع لدى الإدارة</span>  
 </div>  
-
 
 <div class="field">  
-
-  <label>  
-    المبلغ بالدينار  
-  </label>  
-
-  <input  
-    id="walletAmount"  
-    type="number"  
-    min="1"  
-    placeholder="مثال: 1000"  
-  >  
-
+  <label>المبلغ بالدينار</label>  
+  <input id="walletAmount" type="number" min="1" placeholder="مثال: 1000">  
 </div>  
 
-
-<button  
-  class="btn btn-primary"  
-  onclick="requestWalletRecharge()"  
->  
+<button class="btn btn-primary" onclick="requestWalletRecharge()">  
   إرسال طلب الشحن  
 </button>  
 
-
-<div  
-  id="walletHistory"  
-  style="margin-top:20px;"  
->  
-</div>
+<div id="walletHistory" style="margin-top:20px;"></div>
 
   </div>  </section>  <!-- =====================================================  
      ACCOUNT  
-===================================================== -->  <section id="accountScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="showScreen('homeScreen')"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  حسابي  
-</span>  
-
-<span></span>
-
-  </div>    <div class="container">  <div class="card profile-card">  
-
-  <div class="avatar-wrap">  
-    <div id="accountAvatar" class="avatar-lg">  
-      👤  
-    </div>  
-    <div class="avatar-edit-btn" onclick="openEditProfile()">  
-      ✏️  
-    </div>  
-  </div>  
-
-  <div class="name-row">  
-    <div  
-      id="accountName"  
-      class="profile-name"  
-    >  
-      مستخدم  
-    </div>  
+===================================================== -->  <section id="accountScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
+    <span class="page-title">حسابي</span>  
+    <span></span>  
+  </div>    <div class="container">  
+    <div class="card profile-card">  
+      <div class="avatar-wrap">  
+        <div id="accountAvatar" class="avatar-lg">👤</div>  
+        <div class="avatar-edit-btn" onclick="openEditProfile()">✏️</div>  
+      </div>  <div class="name-row">  
+    <div id="accountName" class="profile-name">مستخدم</div>  
     <span id="accountVerifiedBadge" class="verified-badge" style="display:none;">✔️</span>  
   </div>  
 
-  <div  
-    id="accountEmail"  
-    class="profile-email"  
-  >  
-  </div>  
+  <div id="accountEmail" class="profile-email"></div>  
 
   <div id="accountBadgeRow" class="badge-row"></div>  
 
   <div id="accountBio" class="profile-bio" style="display:none;"></div>  
 
   <div class="stat-row">  
-
     <div class="stat-chip">  
       <div id="statPoints" class="num">0</div>  
       <div class="lbl">نقاط BBM</div>  
     </div>  
-
     <div class="stat-chip">  
       <div id="statRating" class="num">—</div>  
       <div class="lbl">التقييم</div>  
     </div>  
-
     <div class="stat-chip">  
       <div id="statOrders" class="num">0</div>  
       <div class="lbl">الطلبات</div>  
     </div>  
-
   </div>  
 
   <div class="referral-box">  
     <span>كود الإحالة</span>  
     <span id="referralCode" class="referral-code">—</span>  
   </div>  
-
 </div>  
 
 <div id="accountBusinessLinks"></div>  
 
-
-<div  
-  class="card profile-item"  
-  onclick="openMyProducts()"  
->  
-
-  <span>  
-    📦 منتجاتي  
-  </span>  
-
-  <span>  
-    ‹  
-  </span>  
-
+<div class="card profile-item" onclick="openMyProducts()">  
+  <span>📦 منتجاتي</span><span>‹</span>  
 </div>  
 
-
-<div  
-  class="card profile-item"  
-  onclick="openOrders()"  
->  
-
-  <span>  
-    📋 طلباتي  
-  </span>  
-
-  <span>  
-    ‹  
-  </span>  
-
+<div class="card profile-item" onclick="openOrders()">  
+  <span>📋 طلباتي</span><span>‹</span>  
 </div>  
 
-
-<div  
-  class="card profile-item"  
-  onclick="openWallet()"  
->  
-
-  <span>  
-    💰 المحفظة  
-  </span>  
-
-  <span>  
-    ‹  
-  </span>  
-
+<div class="card profile-item" onclick="openWallet()">  
+  <span>💰 المحفظة</span><span>‹</span>  
 </div>  
 
-
-<div  
-  class="card profile-item"  
-  onclick="openEditProfile()"  
->  
-
-  <span>  
-    ✏️ تعديل الملف  
-  </span>  
-
-  <span>  
-    ‹  
-  </span>  
-
+<div class="card profile-item" onclick="openEditProfile()">  
+  <span>✏️ تعديل الملف</span><span>‹</span>  
 </div>  
 
-
-<div  
-  class="card profile-item"  
-  onclick="openNotifications()"  
->  
-
-  <span>  
-    🔔 الإشعارات  
-  </span>  
-
-  <span>  
-    ‹  
-  </span>  
-
+<div class="card profile-item" onclick="openNotifications()">  
+  <span>🔔 الإشعارات</span><span>‹</span>  
 </div>  
 
-
-<button  
-  class="btn btn-danger"  
-  style="width:100%;margin-top:15px;"  
-  onclick="logout()"  
->  
+<button class="btn btn-danger" style="width:100%;margin-top:15px;" onclick="logout()">  
   تسجيل الخروج  
 </button>
 
   </div>  </section>  <!-- =====================================================  
      EDIT PROFILE  
-===================================================== -->  <section id="editProfileScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="openAccount()"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  تعديل الملف  
-</span>  
-
-<span></span>
-
-  </div>    <div class="container">  <div id="profileMsg" class="msg"></div>  
-
-<div class="card" style="padding:18px;">  
-
+===================================================== -->  <section id="editProfileScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="openAccount()">→ رجوع</span>  
+    <span class="page-title">تعديل الملف</span>  
+    <span></span>  
+  </div>    <div class="container">  
+    <div id="profileMsg" class="msg"></div>  <div class="card" style="padding:18px;">  
   <div class="avatar-upload-row">  
-
-    <div id="editAvatarPreview" class="avatar-upload-preview">  
-      👤  
-    </div>  
-
+    <div id="editAvatarPreview" class="avatar-upload-preview">👤</div>  
     <label class="btn btn-secondary avatar-upload-btn" style="text-align:center;">  
       📷 تغيير الصورة  
-      <input  
-        id="editAvatarFile"  
-        type="file"  
-        accept="image/*"  
-        hidden  
-        onchange="previewAvatarImage(event)"  
-      >  
+      <input id="editAvatarFile" type="file" accept="image/*" hidden onchange="previewAvatarImage(event)">  
     </label>  
-
   </div>  
 
   <div class="field">  
-
-    <label>  
-      الاسم  
-    </label>  
-
-    <input  
-      id="editName"  
-      type="text"  
-    >  
-
+    <label>الاسم</label>  
+    <input id="editName" type="text">  
   </div>  
 
-
   <div class="field">  
-
-    <label>  
-      نبذة عني  
-    </label>  
-
-    <textarea  
-      id="editBio"  
-      placeholder="عرّف بنفسك أو بنشاطك في جملة أو جملتين"  
-    ></textarea>  
-
+    <label>نبذة عني</label>  
+    <textarea id="editBio" placeholder="عرّف بنفسك أو بنشاطك في جملة أو جملتين"></textarea>  
   </div>  
 
-
   <div class="field">  
-
-    <label>  
-      رقم الهاتف  
-    </label>  
-
-    <input  
-      id="editPhone"  
-      type="tel"  
-    >  
-
+    <label>رقم الهاتف</label>  
+    <input id="editPhone" type="tel">  
   </div>  
 
-
   <div class="field">  
-
     <div class="field-row2">  
-
       <div>  
         <label>الجنس</label>  
         <select id="editGender">  
@@ -2384,148 +1727,70 @@ onclick="openWilayaScreen()"
           <option value="female">أنثى</option>  
         </select>  
       </div>  
-
       <div>  
         <label>تاريخ الميلاد</label>  
         <input id="editBirthDate" type="date">  
       </div>  
-
     </div>  
-
   </div>  
 
-
   <div class="field">  
-
     <div class="field-row2">  
-
       <div>  
         <label>الولاية</label>  
-        <input id="editWilaya" type="text" placeholder="مثال: برج باجي مختار">  
+        <input id="editWilaya" type="text" placeholder="مثال: برج باجي مختار" readonly onclick="openWilayaScreen()">  
       </div>  
-
       <div>  
         <label>البلدية</label>  
         <input id="editCommune" type="text" placeholder="مثال: برج باجي مختار">  
       </div>  
-
     </div>  
-
   </div>  
-
 
   <div class="field">  
-
-    <label>  
-      العنوان  
-    </label>  
-
-    <input  
-      id="editAddress"  
-      type="text"  
-    >  
-
+    <label>العنوان</label>  
+    <input id="editAddress" type="text">  
   </div>  
-
 
   <div class="location-status">  
     <span>📍 الموقع الجغرافي: <b id="editLocationStatus">لم يُحدَّد بعد</b></span>  
     <button class="btn btn-secondary btn-small" type="button" onclick="captureProfileLocation()">تحديد</button>  
   </div>  
 
-
-  <button  
-    class="btn btn-primary"  
-    onclick="saveProfile()"  
-  >  
+  <button class="btn btn-primary" onclick="saveProfile()">  
     حفظ التغييرات  
   </button>  
-
 </div>
 
   </div>  </section>  <!-- =====================================================  
      NOTIFICATIONS  
-===================================================== -->  <section id="notificationsScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="showScreen('homeScreen')"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  الإشعارات  
-</span>  
-
-<span></span>
-
-  </div>    <div class="section">  <div id="notificationsList">  
-
-  <div class="empty">  
-
-    <div class="empty-icon">  
-      🔔  
+===================================================== -->  <section id="notificationsScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
+    <span class="page-title">الإشعارات</span>  
+    <span></span>  
+  </div>    <div class="section">  
+    <div id="notificationsList">  
+      <div class="empty">  
+        <div class="empty-icon">🔔</div>  
+        <div class="empty-title">لا توجد إشعارات</div>  
+        <div class="empty-text">ستظهر الإشعارات هنا.</div>  
+      </div>  
     </div>  
-
-    <div class="empty-title">  
-      لا توجد إشعارات  
-    </div>  
-
-    <div class="empty-text">  
-      ستظهر الإشعارات هنا.  
-    </div>  
-
-  </div>  
-
-</div>
-
   </div>  </section>  <!-- =====================================================  
      LOCATION / MAP  
-===================================================== -->  <section id="mapScreen" class="screen">    <div class="topbar">  <span  
-  class="back"  
-  onclick="showScreen('homeScreen')"  
->  
-  → رجوع  
-</span>  
-
-<span class="page-title">  
-  موقعي  
-</span>  
-
-<span></span>
-
-  </div>    <div class="section">  <div  
-  id="mapContainer"  
-  class="map-placeholder"  
->  
-
-  <div>  
-
-    <div style="font-size:40px;">  
-      📍  
-    </div>  
-
-    <div style="margin-top:10px;">  
-      سيتم عرض موقعك هنا.  
-    </div>  
-
-  </div>  
-
-</div>  
-
-
-<div class="card route-info">  
-
-  <div style="font-weight:900;">  
-    موقعك الحالي  
-  </div>  
-
-  <div  
-    id="coordinates"  
-    style="color:var(--muted);font-size:12px;margin-top:6px;"  
-  >  
-    لم يتم تحديد الموقع.  
-  </div>  
-
+===================================================== -->  <section id="mapScreen" class="screen">    <div class="topbar">  
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
+    <span class="page-title">موقعي</span>  
+    <span></span>  
+  </div>    <div class="section">  
+    <div id="mapContainer" class="map-placeholder">  
+      <div>  
+        <div style="font-size:40px;">📍</div>  
+        <div style="margin-top:10px;">سيتم عرض موقعك هنا.</div>  
+      </div>  
+    </div>  <div class="card route-info">  
+  <div style="font-weight:900;">موقعك الحالي</div>  
+  <div id="coordinates" style="color:var(--muted);font-size:12px;margin-top:6px;">لم يتم تحديد الموقع.</div>  
 </div>
 
   </div>  </section>  <!-- =====================================================  
@@ -2535,6 +1800,9 @@ onclick="openWilayaScreen()"
     <span class="page-title">تحديد النطاق الجغرافي</span>  
     <span></span>  
   </div>    <div class="section">  
+    <div class="field">  
+      <input id="wilayaSearch" type="search" placeholder="ابحث عن ولاية..." oninput="filterWilayas()">  
+    </div>  
     <div id="wilayaList"></div>  
   </div>  </section>  <!-- =====================================================  
      FILTER  
@@ -2542,19 +1810,16 @@ onclick="openWilayaScreen()"
     <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
     <span class="page-title">خيارات التصفية والفرز</span>  
     <span></span>  
-  </div>    <div class="section">  <div class="card" style="padding:18px;">  
-
-  <label style="display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:10px;">  
-    ترتيب النتائج  
-  </label>  
-
-  <div class="chip-toggle-row">  
+  </div>    <div class="section">  
+    <div class="card" style="padding:18px;">  
+      <label style="display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:10px;">  
+        ترتيب النتائج  
+      </label>  <div class="chip-toggle-row">  
     <div id="sortNearest" class="chip-toggle active" onclick="setSortMode('nearest',this)">الأقرب لموقعي</div>  
     <div id="sortRating" class="chip-toggle" onclick="setSortMode('rating',this)">الأعلى تقييمًا</div>  
   </div>  
 
   <button class="btn btn-primary" onclick="showScreen('productsScreen')">تطبيق التصفية</button>  
-
 </div>
 
   </div>  </section>  <!-- =====================================================  
@@ -2563,10 +1828,8 @@ onclick="openWilayaScreen()"
     <span class="back" onclick="openAccount()">→ رجوع</span>  
     <span class="page-title">تفعيل حساب الشريك التجاري</span>  
     <span></span>  
-  </div>    <div class="container">  <div id="providerMsg" class="msg"></div>  
-
-<div class="card" style="padding:18px;">  
-
+  </div>    <div class="container">  
+    <div id="providerMsg" class="msg"></div>  <div class="card" style="padding:18px;">  
   <p style="color:var(--muted);font-size:12px;line-height:1.8;margin-bottom:18px;">  
     أدخل بيانات نشاطك التجاري لبدء استلام الطلبات وحجز مساحتك في BBM STORE.  
   </p>  
@@ -2598,7 +1861,6 @@ onclick="openWilayaScreen()"
   <button id="providerSubmitBtn" class="btn btn-primary" onclick="submitBecomeProvider()">  
     تأكيد وإرسال طلب الشراكة  
   </button>  
-
 </div>
 
   </div>  </section>  <!-- =====================================================  
@@ -2607,18 +1869,17 @@ onclick="openWilayaScreen()"
     <span class="back" onclick="openAccount()">→ رجوع</span>  
     <span class="page-title">لوحة التاجر</span>  
     <span></span>  
-  </div>    <div class="section">  <div class="stat-row" style="grid-template-columns:1fr 1fr;">  
-  <div class="card stat-chip" style="padding:16px;">  
-    <div id="providerProductCount" class="num" style="font-size:20px;">0</div>  
-    <div class="lbl">منتجاتي</div>  
-  </div>  
-  <div class="card stat-chip" style="padding:16px;">  
-    <div id="providerOrderCount" class="num" style="font-size:20px;">0</div>  
-    <div class="lbl">الطلبات الواردة</div>  
-  </div>  
-</div>  
-
-<div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:15px;">  
+  </div>    <div class="section">  
+    <div class="stat-row" style="grid-template-columns:1fr 1fr;">  
+      <div class="card stat-chip" style="padding:16px;">  
+        <div id="providerProductCount" class="num" style="font-size:20px;">0</div>  
+        <div class="lbl">منتجاتي</div>  
+      </div>  
+      <div class="card stat-chip" style="padding:16px;">  
+        <div id="providerOrderCount" class="num" style="font-size:20px;">0</div>  
+        <div class="lbl">الطلبات الواردة</div>  
+      </div>  
+    </div>  <div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:15px;">  
   <div class="card profile-item" onclick="openMyProducts()">  
     <span>📦 إدارة منتجاتي</span><span>‹</span>  
   </div>  
@@ -2633,11 +1894,10 @@ onclick="openWilayaScreen()"
     <span class="back" onclick="openAccount()">→ رجوع</span>  
     <span class="page-title">لوحة الإدارة</span>  
     <span></span>  
-  </div>    <div class="section">  <div id="adminStats" class="stat-row" style="grid-template-columns:1fr 1fr;">  
-  <div class="loading" style="grid-column:1/-1;"><div class="spinner"></div>جاري تحميل الإحصائيات...</div>  
-</div>  
-
-<div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:18px;">  
+  </div>    <div class="section">  
+    <div id="adminStats" class="stat-row" style="grid-template-columns:1fr 1fr;">  
+      <div class="loading" style="grid-column:1/-1;"><div class="spinner"></div>جاري تحميل الإحصائيات...</div>  
+    </div>  <div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:18px;">  
   <div class="card profile-item" onclick="openAdminUsers()">  
     <span>👥 المستخدمون والشركاء</span><span>‹</span>  
   </div>  
@@ -2674,17 +1934,10 @@ onclick="openWilayaScreen()"
    SUPABASE  
 ====================================================== */  
   
-const SUPABASE_URL =  
-"https://cgqkkfocgkiyxsshddxv.supabase.co";  
+const SUPABASE_URL = "https://cgqkkfocgkiyxsshddxv.supabase.co";  
+const SUPABASE_KEY = "sb_publishable_3XImpdl41nPKfpPgmatvNg_ldTFmULV";  
   
-const SUPABASE_KEY =  
-"sb_publishable_3XImpdl41nPKfpPgmatvNg_ldTFmULV";  
-  
-const sb =  
-supabase.createClient(  
-  SUPABASE_URL,  
-  SUPABASE_KEY  
-);  
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);  
   
   
 /* ======================================================  
@@ -2693,11 +1946,8 @@ supabase.createClient(
   
 let currentUser = null;  
 let currentProfile = null;  
-  
 let allProducts = [];  
-  
 let selectedPayment = null;  
-  
 let editingProductId = null;  
   
   
@@ -2706,24 +1956,14 @@ let editingProductId = null;
 ====================================================== */  
   
 function showScreen(id){  
-  
-  document  
-    .querySelectorAll('.screen')  
-    .forEach(screen=>{  
-      screen.classList.remove('active');  
-    });  
-  
-  const target =  
-    document.getElementById(id);  
-  
+  document.querySelectorAll('.screen').forEach(screen=>{  
+    screen.classList.remove('active');  
+  });  
+  const target = document.getElementById(id);  
   if(target){  
     target.classList.add('active');  
   }  
-  
-  window.scrollTo({  
-    top:0,  
-    behavior:'instant'  
-  });  
+  window.scrollTo({ top:0, behavior:'instant' });  
 }  
   
   
@@ -2732,28 +1972,16 @@ function showScreen(id){
 ====================================================== */  
   
 function showMsg(id,text,type='info'){  
-  
-  const el =  
-    document.getElementById(id);  
-  
+  const el = document.getElementById(id);  
   if(!el) return;  
-  
   el.textContent = text;  
-  
-  el.className =  
-    'msg show ' + type;  
+  el.className = 'msg show ' + type;  
 }  
   
-  
 function hideMsg(id){  
-  
-  const el =  
-    document.getElementById(id);  
-  
+  const el = document.getElementById(id);  
   if(!el) return;  
-  
   el.className='msg';  
-  
   el.textContent='';  
 }  
   
@@ -2763,194 +1991,80 @@ function hideMsg(id){
 ====================================================== */  
   
 async function signup(){  
-  
-  const name =  
-    document  
-      .getElementById('signupName')  
-      .value  
-      .trim();  
-  
-  const email =  
-    document  
-      .getElementById('signupEmail')  
-      .value  
-      .trim();  
-  
-  const phone =  
-    document  
-      .getElementById('signupPhone')  
-      .value  
-      .trim();  
-  
-  const role =  
-    document  
-      .getElementById('signupRole')  
-      .value;  
-  
-  const password =  
-    document  
-      .getElementById('signupPassword')  
-      .value;  
+  const name = document.getElementById('signupName').value.trim();  
+  const email = document.getElementById('signupEmail').value.trim();  
+  const phone = document.getElementById('signupPhone').value.trim();  
+  const role = document.getElementById('signupRole').value;  
+  const password = document.getElementById('signupPassword').value;  
   
   if(!name || !email || !password){  
-  
-    showMsg(  
-      'signupMsg',  
-      'الرجاء تعبئة الحقول المطلوبة.',  
-      'error'  
-    );  
-  
+    showMsg('signupMsg','الرجاء تعبئة الحقول المطلوبة.','error');  
     return;  
   }  
   
   if(password.length < 6){  
-  
-    showMsg(  
-      'signupMsg',  
-      'كلمة المرور يجب أن تكون 6 أحرف على الأقل.',  
-      'error'  
-    );  
-  
+    showMsg('signupMsg','كلمة المرور يجب أن تكون 6 أحرف على الأقل.','error');  
     return;  
   }  
   
-  const btn =  
-    document.getElementById('signupBtn');  
-  
+  const btn = document.getElementById('signupBtn');  
   btn.disabled=true;  
   btn.textContent='جاري إنشاء الحساب...';  
   
   try{  
+    const { data, error } = await sb.auth.signUp({  
+      email,  
+      password,  
+      options:{ data:{ full_name:name, phone:phone, role:role } }  
+    });  
   
-    const {  
-      data,  
-      error  
-    } =  
-      await sb.auth.signUp({  
-  
-        email,  
-        password,  
-  
-        options:{  
-          data:{  
-            full_name:name,  
-            phone:phone,  
-            role:role  
-          }  
-        }  
-  
-      });  
-  
-    if(error){  
-      throw error;  
-    }  
+    if(error){ throw error; }  
   
     if(data.session){  
-  
-      await loadUser(  
-        data.session.user  
-      );  
-  
+      await loadUser(data.session.user);  
     }else{  
-  
-      showMsg(  
-        'signupMsg',  
-        'تم إنشاء الحساب. تحقق من بريدك الإلكتروني إذا كان تأكيد البريد مفعّلًا.',  
-        'success'  
-      );  
-  
+      showMsg('signupMsg','تم إنشاء الحساب. تحقق من بريدك الإلكتروني إذا كان تأكيد البريد مفعّلًا.','success');  
     }  
   
   }catch(error){  
-  
-    showMsg(  
-      'signupMsg',  
-      'تعذر إنشاء الحساب: ' +  
-      error.message,  
-      'error'  
-    );  
-  
+    showMsg('signupMsg','تعذر إنشاء الحساب: ' + error.message,'error');  
   }finally{  
-  
     btn.disabled=false;  
     btn.textContent='إنشاء الحساب';  
-  
   }  
 }  
   
   
 async function login(){  
-  
-  const email =  
-    document  
-      .getElementById('loginEmail')  
-      .value  
-      .trim();  
-  
-  const password =  
-    document  
-      .getElementById('loginPassword')  
-      .value;  
+  const email = document.getElementById('loginEmail').value.trim();  
+  const password = document.getElementById('loginPassword').value;  
   
   if(!email || !password){  
-  
-    showMsg(  
-      'loginMsg',  
-      'أدخل البريد الإلكتروني وكلمة المرور.',  
-      'error'  
-    );  
-  
+    showMsg('loginMsg','أدخل البريد الإلكتروني وكلمة المرور.','error');  
     return;  
   }  
   
-  const btn =  
-    document.getElementById('loginBtn');  
-  
+  const btn = document.getElementById('loginBtn');  
   btn.disabled=true;  
   btn.textContent='جاري الدخول...';  
   
   try{  
-  
-    const {  
-      data,  
-      error  
-    } =  
-      await sb.auth.signInWithPassword({  
-        email,  
-        password  
-      });  
-  
-    if(error){  
-      throw error;  
-    }  
-  
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });  
+    if(error){ throw error; }  
     await loadUser(data.user);  
-  
   }catch(error){  
-  
-    showMsg(  
-      'loginMsg',  
-      'تعذر تسجيل الدخول: ' +  
-      error.message,  
-      'error'  
-    );  
-  
+    showMsg('loginMsg','تعذر تسجيل الدخول: ' + error.message,'error');  
   }finally{  
-  
     btn.disabled=false;  
     btn.textContent='تسجيل الدخول';  
-  
   }  
 }  
   
   
 async function logout(){  
-  
   await sb.auth.signOut();  
-  
   currentUser=null;  
   currentProfile=null;  
-  
   showScreen('loginScreen');  
 }  
   
@@ -2960,45 +2074,22 @@ async function logout(){
 ====================================================== */  
   
 async function loadUser(user){  
-  
   currentUser=user;  
   
-  const {  
-    data:profile  
-  } =  
-    await sb  
-      .from('profiles')  
-      .select('*')  
-      .eq('id',user.id)  
-      .maybeSingle();  
+  const { data:profile } = await sb.from('profiles').select('*').eq('id',user.id).maybeSingle();  
   
   currentProfile=profile || {  
-  
     id:user.id,  
-  
-    full_name:  
-      user.user_metadata?.full_name ||  
-      'مستخدم',  
-  
-    phone:  
-      user.user_metadata?.phone || '',  
-  
+    full_name: user.user_metadata?.full_name || 'مستخدم',  
+    phone: user.user_metadata?.phone || '',  
     address:'',  
-  
-    role:  
-      user.user_metadata?.role ||  
-      'customer'  
-  
+    role: user.user_metadata?.role || 'customer'  
   };  
   
   updateUserUI();  
-  
   showScreen('homeScreen');  
-  
   loadHomeProducts();  
-  
   checkNotifications();  
-  
 }  
   
   
@@ -3016,2398 +2107,23 @@ const ROLE_LABELS = {
 };  
   
 function updateUserUI(){  
+  const name = currentProfile?.full_name || currentUser?.user_metadata?.full_name || 'مستخدم';  
+  const email = currentUser?.email || '';  
   
-  const name =  
-    currentProfile?.full_name ||  
-    currentUser?.user_metadata?.full_name ||  
-    'مستخدم';  
+  const welcome = document.getElementById('welcomeName');  
+  if(welcome){ welcome.textContent = 'مرحبًا، ' + name; }  
   
-  const email =  
-    currentUser?.email || '';  
+  const accountName = document.getElementById('accountName');  
+  if(accountName){ accountName.textContent=name; }  
   
-  const welcome =  
-    document.getElementById('welcomeName');  
+  const accountEmail = document.getElementById('accountEmail');  
+  if(accountEmail){ accountEmail.textContent=email; }  
   
-  if(welcome){  
-    welcome.textContent =  
-      'مرحبًا، ' + name;  
-  }  
-  
-  const accountName =  
-    document.getElementById('accountName');  
-  
-  if(accountName){  
-    accountName.textContent=name;  
-  }  
-  
-  const accountEmail =  
-    document.getElementById('accountEmail');  
-  
-  if(accountEmail){  
-    accountEmail.textContent=email;  
-  }  
-  
-  const avatarEl =  
-    document.getElementById('accountAvatar');  
-  
+  const avatarEl = document.getElementById('accountAvatar');  
   if(avatarEl){  
-    avatarEl.innerHTML =  
-      currentProfile?.avatar_url  
-        ? `<img src="${escapeHtml(currentProfile.avatar_url)}" alt="${escapeHtml(name)}">`  
-        : '👤';  
-  }  
-  
-  const verifiedBadge =  
-    document.getElementById('accountVerifiedBadge');  
-  
-  if(verifiedBadge){  
-    verifiedBadge.style.display =  
-      currentProfile?.is_verified ? 'inline' : 'none';  
-  }  
-  
-  const badgeRow =  
-    document.getElementById('accountBadgeRow');  
-  
-  if(badgeRow){  
-  
-    const role = currentProfile?.role || 'customer';  
-  
-    badgeRow.innerHTML =  
-      `<span class="role-pill">${escapeHtml(ROLE_LABELS[role] || role)}</span>`;  
-  
-  }  
-  
-  const bioEl =  
-    document.getElementById('accountBio');  
-  
-  if(bioEl){  
-  
-    if(currentProfile?.bio){  
-      bioEl.textContent = currentProfile.bio;  
-      bioEl.style.display='block';  
-    }else{  
-      bioEl.style.display='none';  
-    }  
-  
-  }  
-  
-  const statPoints =  
-    document.getElementById('statPoints');  
-  
-  if(statPoints){  
-    statPoints.textContent =  
-      currentProfile?.loyalty_points ?? 0;  
-  }  
-  
-  const statRating =  
-    document.getElementById('statRating');  
-  
-  if(statRating){  
-  
-    statRating.textContent =  
-      currentProfile?.rating_count  
-        ? `⭐ ${Number(currentProfile.rating_avg || 0).toFixed(1)}`  
-        : '—';  
-  
-  }  
-  
-  const statOrders =  
-    document.getElementById('statOrders');  
-  
-  if(statOrders){  
-    statOrders.textContent =  
-      currentProfile?.completed_orders_count ?? 0;  
-  }  
-  
-  const referralCode =  
-    document.getElementById('referralCode');  
-  
-  if(referralCode){  
-    referralCode.textContent =  
-      currentProfile?.referral_code || '—';  
-  }  
-  
-  const businessLinks =  
-    document.getElementById('accountBusinessLinks');  
-  
-  if(businessLinks){  
-  
-    const isAdmin =  
-      currentProfile?.role === 'admin' ||  
-      currentProfile?.role === 'super_admin';  
-  
-    let html = '';  
-  
-    if(isAdmin){  
-  
-      html += `  
-        <div class="card profile-item" onclick="openAdmin()">  
-          <span>👑 لوحة الإدارة</span><span>‹</span>  
-        </div>  
-      `;  
-  
-    }  
-  
-    if(currentProfile?.is_provider){  
-  
-      html += `  
-        <div class="card profile-item" onclick="openProviderDashboard()">  
-          <span>🏪 لوحة التاجر</span><span>‹</span>  
-        </div>  
-      `;  
-  
-    }else{  
-  
-      html += `  
-        <div class="card profile-item" onclick="showScreen('becomeProviderScreen')">  
-          <span>✨ كن شريكًا معنا</span><span>‹</span>  
-        </div>  
-      `;  
-  
-    }  
-  
-    businessLinks.innerHTML = html;  
-  
-  }  
-  
-}  
-  
-  
-/* ======================================================  
-   SESSION RESTORE  
-====================================================== */  
-  
-async function restoreSession(){  
-  
-  const {  
-    data:{  
-      session  
-    }  
-  } =  
-    await sb.auth.getSession();  
-  
-  if(session){  
-  
-    await loadUser(  
-      session.user  
-    );  
-  
-  }else{  
-  
-    showScreen('loginScreen');  
-  
-  }  
-}  
-  
-  
-restoreSession();  
-  
-  
-/* ======================================================  
-   PRODUCTS  
-====================================================== */  
-  
-async function loadProducts(){  
-  
-  const {  
-    data,  
-    error  
-  } =  
-    await sb  
-      .from('products')  
-      .select('*')  
-      .eq('is_active',true)  
-      .order('created_at',{  
-        ascending:false  
-      });  
-  
-  if(error){  
-  
-    console.error(error);  
-  
-    allProducts=[];  
-  
-    return [];  
-  
-  }  
-  
-  allProducts=data || [];  
-  
-  return allProducts;  
-}  
-  
-  
-async function loadHomeProducts(){  
-  
-  const container =  
-    document.getElementById('homeProducts');  
-  
-  if(!container) return;  
-  
-  const products =  
-    await loadProducts();  
-  
-  if(!products.length){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        <div class="empty-icon">🛒</div>  
-        <div class="empty-title">لا توجد منتجات بعد</div>  
-        <div class="empty-text">  
-          ستظهر هنا المنتجات التي تتم إضافتها إلى BBM STORE.  
-        </div>  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  container.innerHTML =  
-    `<div class="product-grid">  
-      ${products.slice(0,6).map(productCard).join('')}  
-    </div>`;  
-  
-}  
-  
-  
-function productCard(product){  
-  
-  const image =  
-    product.image_url  
-      ? `<img src="${escapeHtml(product.image_url)}" alt="${escapeHtml(product.name || '')}">`  
-      : `<span>📦</span>`;  
-  
-  return `  
-    <div class="card product-card">  
-  
-      <div class="product-image">  
-        ${image}  
-      </div>  
-  
-      <div class="product-info">  
-  
-        <div class="product-name">  
-          ${escapeHtml(product.name || 'منتج')}  
-        </div>  
-  
-        <div class="product-description">  
-          ${escapeHtml(product.description || '')}  
-        </div>  
-  
-        <div class="product-price">  
-          ${formatMoney(product.price)} دج  
-        </div>  
-  
-        <div class="product-stock">  
-          الكمية: ${product.stock ?? 0}  
-        </div>  
-  
-        <div class="product-actions">  
-  
-          <button  
-            class="btn btn-primary btn-small"  
-            onclick="createProductOrder('${product.id}')"  
-          >  
-            طلب  
-          </button>  
-  
-        </div>  
-  
-      </div>  
-  
-    </div>  
-  `;  
-}  
-  
-  
-/* ======================================================  
-   OPEN PRODUCTS  
-====================================================== */  
-  
-async function openProducts(){  
-  
-  showScreen('productsScreen');  
-  
-  const container =  
-    document.getElementById('productsList');  
-  
-  container.innerHTML=`  
-    <div class="loading">  
-      <div class="spinner"></div>  
-      جاري تحميل المنتجات...  
-    </div>  
-  `;  
-  
-  const products =  
-    await loadProducts();  
-  
-  renderProducts(products);  
-}  
-  
-  
-function renderProducts(products){  
-  
-  const container =  
-    document.getElementById('productsList');  
-  
-  if(!products.length){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        <div class="empty-icon">📦</div>  
-        <div class="empty-title">لا توجد منتجات</div>  
-        <div class="empty-text">  
-          لم تتم إضافة أي منتج حتى الآن.  
-        </div>  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  container.innerHTML=  
-    `<div class="product-grid">  
-      ${products.map(productCard).join('')}  
-    </div>`;  
-}  
-  
-  
-function filterProducts(){  
-  
-  const q =  
-    document  
-      .getElementById('productSearch')  
-      .value  
-      .trim()  
-      .toLowerCase();  
-  
-  const filtered =  
-    allProducts.filter(product=>{  
-  
-      const name =  
-        (product.name || '').toLowerCase();  
-  
-      const description =  
-        (product.description || '').toLowerCase();  
-  
-      const category =  
-        (product.category || '').toLowerCase();  
-  
-      return(  
-        name.includes(q) ||  
-        description.includes(q) ||  
-        category.includes(q)  
-      );  
-  
-    });  
-  
-  renderProducts(filtered);  
-}  
-  
-  
-/* ======================================================  
-   ADD PRODUCT  
-====================================================== */  
-  
-function openAddProduct(){  
-  
-  editingProductId=null;  
-  
-  document  
-    .getElementById('productName')  
-    .value='';  
-  
-  document  
-    .getElementById('productDescription')  
-    .value='';  
-  
-  document  
-    .getElementById('productPrice')  
-    .value='';  
-  
-  document  
-    .getElementById('productStock')  
-    .value='0';  
-  
-  document  
-    .getElementById('productCategory')  
-    .value='';  
-  
-  document  
-    .getElementById('productActive')  
-    .value='true';  
-  
-  document  
-    .getElementById('productImage')  
-    .value='';  
-  
-  document  
-    .getElementById('imagePreview')  
-    .style.display='none';  
-  
-  document  
-    .getElementById('saveProductBtn')  
-    .textContent='إضافة المنتج';  
-  
-  hideMsg('productMsg');  
-  
-  showScreen('addProductScreen');  
-}  
-  
-  
-function previewProductImage(event){  
-  
-  const file =  
-    event.target.files?.[0];  
-  
-  const preview =  
-    document.getElementById('imagePreview');  
-  
-  if(!file){  
-  
-    preview.style.display='none';  
-  
-    return;  
-  }  
-  
-  const url =  
-    URL.createObjectURL(file);  
-  
-  preview.innerHTML =  
-    `<img src="${url}" alt="preview">`;  
-  
-  preview.style.display='block';  
-}  
-  
-  
-/* ======================================================  
-   UPLOAD PRODUCT IMAGE  
-====================================================== */  
-  
-async function uploadProductImage(file){  
-  
-  if(!file){  
-    return null;  
-  }  
-  
-  const extension =  
-    file.name.split('.').pop();  
-  
-  const fileName =  
-    `${currentUser.id}/${Date.now()}.${extension}`;  
-  
-  const {  
-    error  
-  } =  
-    await sb.storage  
-      .from('products')  
-      .upload(  
-        fileName,  
-        file,  
-        {  
-          upsert:false,  
-          contentType:file.type  
-        }  
-      );  
-  
-  if(error){  
-    throw error;  
-  }  
-  
-  const {  
-    data  
-  } =  
-    sb.storage  
-      .from('products')  
-      .getPublicUrl(fileName);  
-  
-  return data.publicUrl;  
-}  
-  
-  
-/* ======================================================  
-   UPLOAD AVATAR IMAGE  
-====================================================== */  
-  
-async function uploadAvatarImage(file){  
-  
-  if(!file){  
-    return null;  
-  }  
-  
-  const extension =  
-    file.name.split('.').pop();  
-  
-  const fileName =  
-    `${currentUser.id}/${Date.now()}.${extension}`;  
-  
-  const {  
-    error  
-  } =  
-    await sb.storage  
-      .from('avatars')  
-      .upload(  
-        fileName,  
-        file,  
-        {  
-          upsert:false,  
-          contentType:file.type  
-        }  
-      );  
-  
-  if(error){  
-    throw error;  
-  }  
-  
-  const {  
-    data  
-  } =  
-    sb.storage  
-      .from('avatars')  
-      .getPublicUrl(fileName);  
-  
-  return data.publicUrl;  
-}  
-  
-  
-function previewAvatarImage(event){  
-  
-  const file =  
-    event.target.files?.[0];  
-  
-  const preview =  
-    document.getElementById('editAvatarPreview');  
-  
-  if(!file){  
-    return;  
-  }  
-  
-  const url =  
-    URL.createObjectURL(file);  
-  
-  preview.innerHTML =  
-    `<img src="${url}" alt="preview">`;  
-  
-}  
-  
-  
-/* ======================================================  
-   SAVE PRODUCT  
-====================================================== */  
-  
-async function saveProduct(){  
-  
-  if(!currentUser){  
-  
-    showMsg(  
-      'productMsg',  
-      'يجب تسجيل الدخول أولًا.',  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  const name =  
-    document  
-      .getElementById('productName')  
-      .value  
-      .trim();  
-  
-  const description =  
-    document  
-      .getElementById('productDescription')  
-      .value  
-      .trim();  
-  
-  const price =  
-    Number(  
-      document  
-        .getElementById('productPrice')  
-        .value  
-    );  
-  
-  const stock =  
-    Number(  
-      document  
-        .getElementById('productStock')  
-        .value  
-    );  
-  
-  const category =  
-    document  
-      .getElementById('productCategory')  
-      .value  
-      .trim();  
-  
-  const isActive =  
-    document  
-      .getElementById('productActive')  
-      .value === 'true';  
-  
-  const file =  
-    document  
-      .getElementById('productImage')  
-      .files?.[0];  
-  
-  if(!name){  
-  
-    showMsg(  
-      'productMsg',  
-      'أدخل اسم المنتج.',  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  if(!Number.isFinite(price) || price < 0){  
-  
-    showMsg(  
-      'productMsg',  
-      'أدخل سعرًا صحيحًا.',  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  if(!Number.isFinite(stock) || stock < 0){  
-  
-    showMsg(  
-      'productMsg',  
-      'أدخل كمية صحيحة.',  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  const btn =  
-    document.getElementById('saveProductBtn');  
-  
-  btn.disabled=true;  
-  btn.textContent='جاري الحفظ...';  
-  
-  try{  
-  
-    let imageUrl=null;  
-  
-    if(file){  
-  
-      imageUrl =  
-        await uploadProductImage(file);  
-  
-    }  
-  
-    const productData={  
-  
-      owner_id:currentUser.id,  
-  
-      name:name,  
-  
-      description:description,  
-  
-      price:price,  
-  
-      stock:stock,  
-  
-      category:category || null,  
-  
-      is_active:isActive  
-  
-    };  
-  
-    if(imageUrl){  
-      productData.image_url=imageUrl;  
-    }  
-  
-  
-    let response;  
-  
-    if(editingProductId){  
-  
-      response =  
-        await sb  
-          .from('products')  
-          .update(productData)  
-          .eq('id',editingProductId)  
-          .eq('owner_id',currentUser.id);  
-  
-    }else{  
-  
-      response =  
-        await sb  
-          .from('products')  
-          .insert(productData);  
-  
-    }  
-  
-    if(response.error){  
-      throw response.error;  
-    }  
-  
-    showMsg(  
-      'productMsg',  
-      editingProductId  
-        ? 'تم تعديل المنتج بنجاح.'  
-        : 'تمت إضافة المنتج بنجاح.',  
-      'success'  
-    );  
-  
-    setTimeout(()=>{  
-      openMyProducts();  
-    },700);  
-  
-  }catch(error){  
-  
-    console.error(error);  
-  
-    showMsg(  
-      'productMsg',  
-      'تعذر حفظ المنتج: ' +  
-      error.message,  
-      'error'  
-    );  
-  
-  }finally{  
-  
-    btn.disabled=false;  
-  
-    btn.textContent =  
-      editingProductId  
-        ? 'حفظ التعديلات'  
-        : 'إضافة المنتج';  
-  
-  }  
-  
-}  
-  
-  
-/* ======================================================  
-   MY PRODUCTS  
-====================================================== */  
-  
-async function openMyProducts(){  
-  
-  showScreen('myProductsScreen');  
-  
-  const container =  
-    document.getElementById('myProductsList');  
-  
-  container.innerHTML=`  
-    <div class="loading">  
-      <div class="spinner"></div>  
-      جاري التحميل...  
-    </div>  
-  `;  
-  
-  if(!currentUser){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        يجب تسجيل الدخول.  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  const {  
-    data,  
-    error  
-  } =  
-    await sb  
-      .from('products')  
-      .select('*')  
-      .eq('owner_id',currentUser.id)  
-      .order('created_at',{  
-        ascending:false  
-      });  
-  
-  if(error){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        <div class="empty-title">  
-          تعذر تحميل المنتجات  
-        </div>  
-        <div class="empty-text">  
-          ${escapeHtml(error.message)}  
-        </div>  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  if(!data?.length){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        <div class="empty-icon">📦</div>  
-        <div class="empty-title">  
-          لا توجد منتجات  
-        </div>  
-        <div class="empty-text">  
-          أضف المنتجات التي تريد عرضها في BBM STORE.  
-        </div>  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  container.innerHTML =  
-    data.map(adminProductCard).join('');  
-}  
-  
-  
-function adminProductCard(product){  
-  
-  const image =  
-    product.image_url  
-      ? `<img src="${escapeHtml(product.image_url)}">`  
-      : '';  
-  
-  return `  
-    <div class="card admin-product">  
-  
-      <div class="admin-product-img">  
-        ${image}  
-      </div>  
-  
-      <div class="admin-product-main">  
-  
-        <div class="admin-product-name">  
-          ${escapeHtml(product.name || '')}  
-        </div>  
-  
-        <div class="admin-product-price">  
-          ${formatMoney(product.price)} دج  
-        </div>  
-  
-      </div>  
-  
-      <div class="admin-actions">  
-  
-        <button  
-          class="btn btn-secondary btn-small"  
-          onclick="editProduct('${product.id}')"  
-        >  
-          ✏️  
-        </button>  
-  
-        <button  
-          class="btn btn-danger btn-small"  
-          onclick="deleteProduct('${product.id}')"  
-        >  
-          🗑️  
-        </button>  
-  
-      </div>  
-  
-    </div>  
-  `;  
-}  
-  
-  
-/* ======================================================  
-   EDIT PRODUCT  
-====================================================== */  
-  
-async function editProduct(id){  
-  
-  const {  
-    data,  
-    error  
-  } =  
-    await sb  
-      .from('products')  
-      .select('*')  
-      .eq('id',id)  
-      .eq('owner_id',currentUser.id)  
-      .single();  
-  
-  if(error){  
-  
-    alert(  
-      'تعذر تحميل المنتج: ' +  
-      error.message  
-    );  
-  
-    return;  
-  }  
-  
-  editingProductId=id;  
-  
-  document  
-    .getElementById('productName')  
-    .value=data.name || '';  
-  
-  document  
-    .getElementById('productDescription')  
-    .value=data.description || '';  
-  
-  document  
-    .getElementById('productPrice')  
-    .value=data.price ?? '';  
-  
-  document  
-    .getElementById('productStock')  
-    .value=data.stock ?? 0;  
-  
-  document  
-    .getElementById('productCategory')  
-    .value=data.category || '';  
-  
-  document  
-    .getElementById('productActive')  
-    .value=data.is_active ? 'true':'false';  
-  
-  document  
-    .getElementById('saveProductBtn')  
-    .textContent='حفظ التعديلات';  
-  
-  const preview =  
-    document.getElementById('imagePreview');  
-  
-  if(data.image_url){  
-  
-    preview.innerHTML =  
-      `<img src="${escapeHtml(data.image_url)}">`;  
-  
-    preview.style.display='block';  
-  
-  }else{  
-  
-    preview.style.display='none';  
-  
-  }  
-  
-  showScreen('addProductScreen');  
-}  
-  
-  
-/* ======================================================  
-   DELETE PRODUCT  
-====================================================== */  
-  
-async function deleteProduct(id){  
-  
-  if(!confirm('هل تريد حذف هذا المنتج؟')){  
-    return;  
-  }  
-  
-  const {  
-    error  
-  } =  
-    await sb  
-      .from('products')  
-      .delete()  
-      .eq('id',id)  
-      .eq('owner_id',currentUser.id);  
-  
-  if(error){  
-  
-    alert(  
-      'تعذر حذف المنتج: ' +  
-      error.message  
-    );  
-  
-    return;  
-  }  
-  
-  openMyProducts();  
-  
-}  
-  
-  
-/* ======================================================  
-   SEARCH  
-====================================================== */  
-  
-function openSearch(){  
-  
-  showScreen('searchScreen');  
-  
-  setTimeout(()=>{  
-    document  
-      .getElementById('globalSearch')  
-      ?.focus();  
-  },100);  
-  
-}  
-  
-  
-async function globalSearch(){  
-  
-  const q =  
-    document  
-      .getElementById('globalSearch')  
-      .value  
-      .trim()  
-      .toLowerCase();  
-  
-  const container =  
-    document.getElementById('searchResults');  
-  
-  if(!q){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        <div class="empty-icon">🔎</div>  
-        <div class="empty-title">ابدأ البحث</div>  
-        <div class="empty-text">  
-          اكتب اسم المنتج أو الخدمة.  
-        </div>  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  const products =  
-    await loadProducts();  
-  
-  const matches =  
-    products.filter(product=>{  
-  
-      const name =  
-        (product.name || '').toLowerCase();  
-  
-      const description =  
-        (product.description || '').toLowerCase();  
-  
-      const category =  
-        (product.category || '').toLowerCase();  
-  
-      return(  
-        name.includes(q) ||  
-        description.includes(q) ||  
-        category.includes(q)  
-      );  
-  
-    });  
-  
-  if(!matches.length){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        <div class="empty-icon">😕</div>  
-        <div class="empty-title">لا توجد نتائج</div>  
-        <div class="empty-text">  
-          لم نجد ما تبحث عنه.  
-        </div>  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  container.innerHTML =  
-    matches.map(productCard).join('');  
-  
-}  
-  
-  
-/* ======================================================  
-   ORDERS  
-====================================================== */  
-  
-async function createProductOrder(productId){  
-  
-  if(!currentUser){  
-  
-    alert('يجب تسجيل الدخول أولًا.');  
-  
-    return;  
-  }  
-  
-  const {  
-    data:product,  
-    error  
-  } =  
-    await sb  
-      .from('products')  
-      .select('*')  
-      .eq('id',productId)  
-      .single();  
-  
-  if(error){  
-  
-    alert(  
-      'تعذر تحميل المنتج.'  
-    );  
-  
-    return;  
-  }  
-  
-  if(!product.is_active){  
-  
-    alert(  
-      'هذا المنتج غير متاح حاليًا.'  
-    );  
-  
-    return;  
-  }  
-  
-  if(Number(product.stock) <= 0){  
-  
-    alert(  
-      'هذا المنتج غير متوفر حاليًا.'  
-    );  
-  
-    return;  
-  }  
-  
-  const quantityText =  
-    prompt(  
-      'أدخل الكمية المطلوبة:',  
-      '1'  
-    );  
-  
-  if(quantityText===null){  
-    return;  
-  }  
-  
-  const quantity =  
-    Number(quantityText);  
-  
-  if(!Number.isInteger(quantity) || quantity<=0){  
-  
-    alert(  
-      'أدخل كمية صحيحة.'  
-    );  
-  
-    return;  
-  }  
-  
-  if(quantity>Number(product.stock)){  
-  
-    alert(  
-      'الكمية المطلوبة أكبر من المخزون.'  
-    );  
-  
-    return;  
-  }  
-  
-  const total =  
-    Number(product.price) *  
-    quantity;  
-  
-  const {  
-    error:orderError  
-  } =  
-    await sb  
-      .from('orders')  
-      .insert({  
-  
-        customer_id:currentUser.id,  
-  
-        seller_id:product.owner_id,  
-  
-        status:'pending',  
-  
-        total_amount:total  
-  
-      });  
-  
-  if(orderError){  
-  
-    alert(  
-      'تعذر إنشاء الطلب: ' +  
-      orderError.message  
-    );  
-  
-    return;  
-  }  
-  
-  alert(  
-    'تم إرسال الطلب بنجاح.'  
-  );  
-  
-  openOrders();  
-  
-}  
-  
-  
-async function openOrders(){  
-  
-  showScreen('ordersScreen');  
-  
-  const container =  
-    document.getElementById('ordersList');  
-  
-  container.innerHTML=`  
-    <div class="loading">  
-      <div class="spinner"></div>  
-      جاري تحميل الطلبات...  
-    </div>  
-  `;  
-  
-  if(!currentUser){  
-  
-    container.innerHTML=  
-      '<div class="empty">يجب تسجيل الدخول.</div>';  
-  
-    return;  
-  }  
-  
-  const {  
-    data,  
-    error  
-  } =  
-    await sb  
-      .from('orders')  
-      .select('*')  
-      .eq('customer_id',currentUser.id)  
-      .order('created_at',{  
-        ascending:false  
-      });  
-  
-  if(error){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        تعذر تحميل الطلبات.  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  if(!data?.length){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        <div class="empty-icon">📋</div>  
-        <div class="empty-title">لا توجد طلبات</div>  
-        <div class="empty-text">  
-          ستظهر طلباتك هنا.  
-        </div>  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  container.innerHTML =  
-    data.map(order=>`  
-  
-      <div class="card order">  
-  
-        <div class="order-head">  
-  
-          <div class="order-title">  
-            طلب #${escapeHtml(String(order.id).slice(0,8))}  
-          </div>  
-  
-          <div class="status">  
-            ${escapeHtml(order.status || 'pending')}  
-          </div>  
-  
-        </div>  
-  
-        <div class="order-meta">  
-  
-          المبلغ:  
-          ${formatMoney(order.total_amount)}  
-          دج  
-  
-          <br>  
-  
-          تاريخ الطلب:  
-          ${formatDate(order.created_at)}  
-  
-        </div>  
-  
-      </div>  
-  
-    `).join('');  
-  
-}  
-  
-  
-/* ======================================================  
-   WALLET  
-====================================================== */  
-  
-function selectPayment(element,method){  
-  
-  document  
-    .querySelectorAll('.payment-method')  
-    .forEach(item=>{  
-      item.classList.remove('selected');  
-    });  
-  
-  element.classList.add('selected');  
-  
-  selectedPayment=method;  
-}  
-  
-  
-async function requestWalletRecharge(){  
-  
-  if(!currentUser){  
-  
-    showMsg(  
-      'walletMsg',  
-      'يجب تسجيل الدخول.',  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  const amount =  
-    Number(  
-      document  
-        .getElementById('walletAmount')  
-        .value  
-    );  
-  
-  if(!selectedPayment){  
-  
-    showMsg(  
-      'walletMsg',  
-      'اختر طريقة الدفع.',  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  if(!amount || amount<=0){  
-  
-    showMsg(  
-      'walletMsg',  
-      'أدخل مبلغًا صحيحًا.',  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  const {  
-    error  
-  } =  
-    await sb  
-      .from('wallet_requests')  
-      .insert({  
-  
-        user_id:currentUser.id,  
-  
-        method:selectedPayment,  
-  
-        amount:amount,  
-  
-        status:'pending'  
-  
-      });  
-  
-  if(error){  
-  
-    showMsg(  
-      'walletMsg',  
-      'تعذر إرسال الطلب: ' +  
-      error.message,  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  showMsg(  
-    'walletMsg',  
-    'تم إرسال طلب الشحن وبانتظار المراجعة.',  
-    'success'  
-  );  
-  
-  document  
-    .getElementById('walletAmount')  
-    .value='';  
-  
-  loadWalletHistory();  
-  
-}  
-  
-  
-async function loadWalletHistory(){  
-  
-  const container =  
-    document.getElementById('walletHistory');  
-  
-  if(!container || !currentUser){  
-    return;  
-  }  
-  
-  const {  
-    data,  
-    error  
-  } =  
-    await sb  
-      .from('wallet_requests')  
-      .select('*')  
-      .eq('user_id',currentUser.id)  
-      .order('created_at',{  
-        ascending:false  
-      });  
-  
-  if(error){  
-    return;  
-  }  
-  
-  if(!data?.length){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        لا توجد عمليات شحن.  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  container.innerHTML =  
-    data.map(item=>`  
-  
-      <div class="card order">  
-  
-        <div class="order-head">  
-  
-          <div class="order-title">  
-            ${formatMoney(item.amount)} دج  
-          </div>  
-  
-          <div class="status">  
-            ${escapeHtml(item.status || 'pending')}  
-          </div>  
-  
-        </div>  
-  
-        <div class="order-meta">  
-          طريقة الدفع:  
-          ${escapeHtml(item.method || '')}  
-        </div>  
-  
-      </div>  
-  
-    `).join('');  
-  
-}  
-  
-  
-async function openWallet(){  
-  
-  showScreen('walletScreen');  
-  
-  selectedPayment=null;  
-  
-  document  
-    .querySelectorAll('.payment-method')  
-    .forEach(item=>{  
-      item.classList.remove('selected');  
-    });  
-  
-  await loadWalletHistory();  
-  
-}  
-  
-  
-/* ======================================================  
-   ACCOUNT  
-====================================================== */  
-  
-function openAccount(){  
-  
-  updateUserUI();  
-  
-  showScreen('accountScreen');  
-  
-}  
-  
-  
-let pendingProfileLat = null;  
-let pendingProfileLng = null;  
-  
-function openEditProfile(){  
-  
-  document  
-    .getElementById('editName')  
-    .value =  
-      currentProfile?.full_name || '';  
-  
-  document  
-    .getElementById('editBio')  
-    .value =  
-      currentProfile?.bio || '';  
-  
-  document  
-    .getElementById('editPhone')  
-    .value =  
-      currentProfile?.phone || '';  
-  
-  document  
-    .getElementById('editGender')  
-    .value =  
-      currentProfile?.gender || '';  
-  
-  document  
-    .getElementById('editBirthDate')  
-    .value =  
-      currentProfile?.birth_date || '';  
-  
-  document  
-    .getElementById('editWilaya')  
-    .value =  
-      currentProfile?.wilaya || '';  
-  
-  document  
-    .getElementById('editCommune')  
-    .value =  
-      currentProfile?.commune || '';  
-  
-  document  
-    .getElementById('editAddress')  
-    .value =  
-      currentProfile?.address || '';  
-  
-  document  
-    .getElementById('editAvatarFile')  
-    .value = '';  
-  
-  const preview =  
-    document.getElementById('editAvatarPreview');  
-  
-  preview.innerHTML =  
-    currentProfile?.avatar_url  
-      ? `<img src="${escapeHtml(currentProfile.avatar_url)}">`  
+    avatarEl.innerHTML = currentProfile?.avatar_url  
+      ? `<img src="${escapeHtml(currentProfile.avatar_url)}" alt="${escapeHtml(name)}">`  
       : '👤';  
-  
-  pendingProfileLat =  
-    currentProfile?.latitude ?? null;  
-  
-  pendingProfileLng =  
-    currentProfile?.longitude ?? null;  
-  
-  const locationStatus =  
-    document.getElementById('editLocationStatus');  
-  
-  locationStatus.textContent =  
-    (pendingProfileLat && pendingProfileLng)  
-      ? `${Number(pendingProfileLat).toFixed(4)}, ${Number(pendingProfileLng).toFixed(4)}`  
-      : 'لم يُحدَّد بعد';  
-  
-  hideMsg('profileMsg');  
-  
-  showScreen('editProfileScreen');  
-  
-}  
-  
-  
-function captureProfileLocation(){  
-  
-  const locationStatus =  
-    document.getElementById('editLocationStatus');  
-  
-  if(!navigator.geolocation){  
-  
-    locationStatus.textContent =  
-      'الموقع غير مدعوم على هذا الجهاز';  
-  
-    return;  
   }  
   
-  locationStatus.textContent =  
-    'جاري تحديد الموقع...';  
-  
-  navigator.geolocation.getCurrentPosition(  
-  
-    position=>{  
-  
-      pendingProfileLat =  
-        position.coords.latitude;  
-  
-      pendingProfileLng =  
-        position.coords.longitude;  
-  
-      locationStatus.textContent =  
-        `${pendingProfileLat.toFixed(4)}, ${pendingProfileLng.toFixed(4)}`;  
-  
-    },  
-  
-    error=>{  
-  
-      console.error(error);  
-  
-      locationStatus.textContent =  
-        'تعذر تحديد الموقع';  
-  
-    },  
-  
-    {  
-      enableHighAccuracy:true,  
-      timeout:10000,  
-      maximumAge:0  
-    }  
-  
-  );  
-  
-}  
-  
-  
-async function saveProfile(){  
-  
-  const name =  
-    document  
-      .getElementById('editName')  
-      .value  
-      .trim();  
-  
-  const bio =  
-    document  
-      .getElementById('editBio')  
-      .value  
-      .trim();  
-  
-  const phone =  
-    document  
-      .getElementById('editPhone')  
-      .value  
-      .trim();  
-  
-  const gender =  
-    document  
-      .getElementById('editGender')  
-      .value || null;  
-  
-  const birthDate =  
-    document  
-      .getElementById('editBirthDate')  
-      .value || null;  
-  
-  const wilaya =  
-    document  
-      .getElementById('editWilaya')  
-      .value  
-      .trim();  
-  
-  const commune =  
-    document  
-      .getElementById('editCommune')  
-      .value  
-      .trim();  
-  
-  const address =  
-    document  
-      .getElementById('editAddress')  
-      .value  
-      .trim();  
-  
-  const avatarFile =  
-    document  
-      .getElementById('editAvatarFile')  
-      .files?.[0];  
-  
-  if(!name){  
-  
-    showMsg(  
-      'profileMsg',  
-      'أدخل اسمك.',  
-      'error'  
-    );  
-  
-    return;  
-  }  
-  
-  try{  
-  
-    let avatarUrl = null;  
-  
-    if(avatarFile){  
-      avatarUrl =  
-        await uploadAvatarImage(avatarFile);  
-    }  
-  
-    const updateData = {  
-  
-      full_name:name,  
-  
-      bio:bio || null,  
-  
-      phone:phone,  
-  
-      gender:gender,  
-  
-      birth_date:birthDate,  
-  
-      wilaya:wilaya || null,  
-  
-      commune:commune || null,  
-  
-      address:address  
-  
-    };  
-  
-    if(avatarUrl){  
-      updateData.avatar_url = avatarUrl;  
-    }  
-  
-    if(pendingProfileLat && pendingProfileLng){  
-      updateData.latitude = pendingProfileLat;  
-      updateData.longitude = pendingProfileLng;  
-    }  
-  
-    const {  
-      error  
-    } =  
-      await sb  
-        .from('profiles')  
-        .update(updateData)  
-        .eq('id',currentUser.id);  
-  
-    if(error){  
-      throw error;  
-    }  
-  
-    currentProfile={  
-      ...currentProfile,  
-      ...updateData  
-    };  
-  
-    updateUserUI();  
-  
-    showMsg(  
-      'profileMsg',  
-      'تم حفظ التغييرات.',  
-      'success'  
-    );  
-  
-  }catch(error){  
-  
-    showMsg(  
-      'profileMsg',  
-      'تعذر الحفظ: ' +  
-      error.message,  
-      'error'  
-    );  
-  
-  }  
-  
-}  
-  
-  
-/* ======================================================  
-   NOTIFICATIONS  
-====================================================== */  
-  
-async function openNotifications(){  
-  
-  showScreen('notificationsScreen');  
-  
-  const container =  
-    document.getElementById('notificationsList');  
-  
-  container.innerHTML=`  
-    <div class="loading">  
-      <div class="spinner"></div>  
-      جاري تحميل الإشعارات...  
-    </div>  
-  `;  
-  
-  if(!currentUser){  
-    return;  
-  }  
-  
-  const {  
-    data,  
-    error  
-  } =  
-    await sb  
-      .from('notifications')  
-      .select('*')  
-      .eq('user_id',currentUser.id)  
-      .order('created_at',{  
-        ascending:false  
-      });  
-  
-  if(error){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        تعذر تحميل الإشعارات.  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  if(!data?.length){  
-  
-    container.innerHTML=`  
-      <div class="empty">  
-        <div class="empty-icon">🔔</div>  
-        <div class="empty-title">  
-          لا توجد إشعارات  
-        </div>  
-      </div>  
-    `;  
-  
-    return;  
-  }  
-  
-  container.innerHTML =  
-    data.map(n=>`  
-  
-      <div  
-        class="card"  
-        style="padding:15px;margin-bottom:10px;"  
-      >  
-  
-        <div style="font-weight:900;">  
-          🔔 ${escapeHtml(n.title || '')}  
-        </div>  
-  
-        <div  
-          style="  
-            color:var(--muted);  
-            font-size:12px;  
-            margin-top:5px;  
-            line-height:1.7;  
-          "  
-        >  
-          ${escapeHtml(n.body || '')}  
-        </div>  
-  
-      </div>  
-  
-    `).join('');  
-  
-}  
-  
-  
-async function checkNotifications(){  
-  
-  if(!currentUser){  
-    return;  
-  }  
-  
-  const {  
-    data  
-  } =  
-    await sb  
-      .from('notifications')  
-      .select('id')  
-      .eq('user_id',currentUser.id)  
-      .eq('is_read',false)  
-      .limit(1);  
-  
-  const dot =  
-    document.getElementById('notificationDot');  
-  
-  if(dot){  
-    dot.style.display =  
-      data?.length ? 'block':'none';  
-  }  
-  
-}  
-  
-  
-/* ======================================================  
-   LOCATION  
-====================================================== */  
-  
-function detectLocation(){  
-  
-  const label =  
-    document.getElementById('locationLabel');  
-  
-  if(!navigator.geolocation){  
-  
-    label.textContent =  
-      'الموقع غير مدعوم';  
-  
-    return;  
-  }  
-  
-  label.textContent =  
-    'جاري تحديد الموقع...';  
-  
-  navigator.geolocation.getCurrentPosition(  
-  
-    async position=>{  
-  
-      const lat =  
-        position.coords.latitude;  
-  
-      const lng =  
-        position.coords.longitude;  
-  
-      label.textContent =  
-        `${lat.toFixed(4)}, ${lng.toFixed(4)}`;  
-  
-      document  
-        .getElementById('coordinates')  
-        .textContent =  
-          `خط العرض: ${lat.toFixed(6)} — خط الطول: ${lng.toFixed(6)}`;  
-  
-      showScreen('mapScreen');  
-  
-    },  
-  
-    error=>{  
-  
-      console.error(error);  
-  
-      label.textContent =  
-        'تعذر تحديد الموقع';  
-  
-    },  
-  
-    {  
-      enableHighAccuracy:true,  
-      timeout:10000,  
-      maximumAge:0  
-    }  
-  
-  );  
-  
-}  
-  
-  
-/* ======================================================  
-   WILAYAS  
-====================================================== */  
-  
-const WILAYAS = [  
-  'الجزائر العاصمة','وهران','قسنطينة','عنابة','سطيف','باتنة',  
-  'بجاية','تلمسان','بسكرة','ورقلة','غرداية','برج باجي مختار',  
-  'تمنراست','بشار','أدرار','الشلف'  
-];  
-  
-function openWilayaScreen(){  
-  
-  const container = document.getElementById('wilayaList');  
-  
-  const current = currentProfile?.wilaya || '';  
-  
-  container.innerHTML = WILAYAS.map(w => `  
-    <div class="card wilaya-item ${w === current ? 'selected' : ''}" onclick="selectWilaya('${w}')">  
-      <div>  
-        <div class="wilaya-name">${w}</div>  
-        <div class="wilaya-sub">ولاية ${w}</div>  
-      </div>  
-      ${w === current ? '<span style="color:var(--gold);">✓</span>' : ''}  
-    </div>  
-  `).join('');  
-  
-  showScreen('wilayaScreen');  
-  
-}  
-  
-async function selectWilaya(w){  
-  
-  document.getElementById('locationLabel').textContent = w;  
-  
-  if(currentUser){  
-  
-    await sb  
-      .from('profiles')  
-      .update({ wilaya: w })  
-      .eq('id', currentUser.id);  
-  
-    currentProfile = { ...currentProfile, wilaya: w };  
-  
-  }  
-  
-  showScreen('homeScreen');  
-  
-}  
-  
-  
-/* ======================================================  
-   FILTER / SORT  
-====================================================== */  
-  
-let sortMode = 'nearest';  
-  
-function setSortMode(mode, el){  
-  
-  sortMode = mode;  
-  
-  document.querySelectorAll('#sortNearest, #sortRating')  
-    .forEach(chip => chip.classList.remove('active'));  
-  
-  el.classList.add('active');  
-  
-}  
-  
-  
-/* ======================================================  
-   BECOME PROVIDER  
-====================================================== */  
-  
-let providerType = 'seller';  
-  
-function setProviderType(type, el){  
-  
-  providerType = type;  
-  
-  document.querySelectorAll('#typeSeller, #typeService')  
-    .forEach(chip => chip.classList.remove('active'));  
-  
-  el.classList.add('active');  
-  
-}  
-  
-async function submitBecomeProvider(){  
-  
-  if(!currentUser){  
-  
-    showMsg('providerMsg', 'يجب تسجيل الدخول أولًا.', 'error');  
-  
-    return;  
-  }  
-  
-  const businessName =  
-    document.getElementById('providerBusinessName').value.trim();  
-  
-  const category =  
-    document.getElementById('providerCategory').value.trim();  
-  
-  const phone =  
-    document.getElementById('providerPhone').value.trim();  
-  
-  if(!businessName){  
-  
-    showMsg('providerMsg', 'أدخل اسم المتجر أو النشاط.', 'error');  
-  
-    return;  
-  }  
-  
-  const btn = document.getElementById('providerSubmitBtn');  
-  
-  btn.disabled = true;  
-  btn.textContent = 'جاري الإرسال...';  
-  
-  try{  
-  
-    const { error } = await sb.rpc('become_provider', {  
-      p_business_name: businessName,  
-      p_business_type: providerType,  
-      p_business_category: category || null,  
-      p_phone: phone || null  
-    });  
-  
-    if(error){  
-      throw error;  
-    }  
-  
-    currentProfile = {  
-      ...currentProfile,  
-      is_provider: true,  
-      business_name: businessName,  
-      business_type: providerType,  
-      business_category: category  
-    };  
-  
-    showMsg('providerMsg', 'تم تفعيل حساب الشريك بنجاح!', 'success');  
-  
-    updateUserUI();  
-  
-    setTimeout(() => openProviderDashboard(), 800);  
-  
-  }catch(error){  
-  
-    showMsg('providerMsg', 'تعذر التفعيل: ' + error.message, 'error');  
-  
-  }finally{  
-  
-    btn.disabled = false;  
-    btn.textContent = 'تأكيد وإرسال طلب الشراكة';  
-  
-  }  
-  
-}  
-  
-async function openProviderDashboard(){  
-  
-  showScreen('providerDashboardScreen');  
-  
-  if(!currentUser) return;  
-  
-  const { data: products } = await sb  
-    .from('products')  
-    .select('id')  
-    .eq('owner_id', currentUser.id);  
-  
-  document.getElementById('providerProductCount').textContent = products?.length ?? 0;  
-  
-  const { data: orders } = await sb  
-    .from('orders')  
-    .select('id')  
-    .eq('seller_id', currentUser.id);  
-  
-  document.getElementById('providerOrderCount').textContent = orders?.length ?? 0;  
-  
-}  
-  
-  
-/* ======================================================  
-   ADMIN DASHBOARD  
-====================================================== */  
-  
-function openAdmin(){  
-  
-  showScreen('adminScreen');  
-  
-  loadAdminStats();  
-  
-}  
-  
-async function loadAdminStats(){  
-  
-  const container = document.getElementById('adminStats');  
-  
-  const { data, error } = await sb.rpc('admin_get_stats');  
-  
-  if(error || !data?.length){  
-  
-    container.innerHTML = `<div class="empty" style="grid-column:1/-1;">تعذر تحميل الإحصائيات.</div>`;  
-  
-    return;  
-  }  
-  
-  const stats = data[0];  
-  
-  container.innerHTML = `  
-    <div class="card stat-chip" style="padding:16px;">  
-      <div class="num" style="font-size:20px;">${stats.total_users}</div>  
-      <div class="lbl">إجمالي المستخدمين</div>  
-    </div>  
-    <div class="card stat-chip" style="padding:16px;">  
-      <div class="num" style="font-size:20px;">${stats.total_providers}</div>  
-      <div class="lbl">الشركاء</div>  
-    </div>  
-    <div class="card stat-chip" style="padding:16px;">  
-      <div class="num" style="font-size:20px;">${stats.total_orders}</div>  
-      <div class="lbl">إجمالي الطلبات</div>  
-    </div>  
-    <div class="card stat-chip" style="padding:16px;">  
-      <div class="num" style="font-size:20px;">${formatMoney(stats.platform_revenue)} دج</div>  
-      <div class="lbl">أرباح المنصة</div>  
-    </div>  
-  `;  
-  
-}  
-  
-async function openAdminUsers(){  
-  
-  showScreen('adminUsersScreen');  
-  
-  const container = document.getElementById('adminUsersList');  
-  
-  const { data, error } = await sb  
-    .from('profiles')  
-    .select('*')  
-    .order('created_at', { ascending: false });  
-  
-  if(error || !data?.length){  
-  
-    container.innerHTML = `<div class="empty">لا يوجد مستخدمون.</div>`;  
-  
-    return;  
-  }  
-  
-  container.innerHTML = data.map(u => `  
-    <div class="card admin-product">  
-      <div class="admin-product-main">  
-        <div class="admin-product-name">  
-          ${escapeHtml(u.full_name || 'مستخدم')}  
-          ${u.is_verified ? ' ✔️' : ''}  
-        </div>  
-        <div class="admin-product-price">  
-          ${escapeHtml(ROLE_LABELS[u.role] || u.role)}  
-          ${u.is_active === false ? ' — معطّل' : ''}  
-        </div>  
-      </div>  
-      <div class="admin-actions">  
-        <button class="btn btn-secondary btn-small" onclick="adminToggleActive('${u.id}', ${u.is_active === false})">  
-          ${u.is_active === false ? 'تفعيل' : 'تعطيل'}  
-        </button>  
-      </div>  
-    </div>  
-  `).join('');  
-  
-}  
-  
-async function adminToggleActive(userId, makeActive){  
-  
-  await sb.rpc('admin_set_user_status', {  
-    p_user_id: userId,  
-    p_is_active: makeActive,  
-    p_is_verified: null,  
-    p_is_banned: null  
-  });  
-  
-  openAdminUsers();  
-  
-}  
-  
-async function openAdminWallet(){  
-  
-  showScreen('adminWalletScreen');  
-  
-  const container = document.getElementById('adminWalletList');  
-  
-  const { data, error } = await sb  
-    .from('wallet_requests')  
-    .select('*')  
-    .eq('status', 'pending')  
-    .order('created_at', { ascending: false });  
-  
-  if(error || !data?.length){  
-  
-    container.innerHTML = `<div class="empty">لا توجد طلبات معلّقة.</div>`;  
-  
-    return;  
-  }  
-  
-  container.innerHTML = data.map(r => `  
-    <div class="card order">  
-      <div class="order-head">  
-        <div class="order-title">${formatMoney(r.amount)} دج</div>  
-        <div class="status">${escapeHtml(r.method)}</div>  
-      </div>  
-      <div class="product-actions" style="margin-top:12px;">  
-        <button class="btn btn-primary btn-small" onclick="adminApproveTopup('${r.id}')">موافقة</button>  
-        <button class="btn btn-danger btn-small" onclick="adminRejectTopup('${r.id}')">رفض</button>  
-      </div>  
-    </div>  
-  `).join('');  
-  
-}  
-  
-async function adminApproveTopup(id){  
-  
-  await sb.rpc('admin_approve_topup', { p_request_id: id });  
-  
-  openAdminWallet();  
-  
-}  
-  
-async function adminRejectTopup(id){  
-  
-  await sb.rpc('admin_reject_topup', { p_request_id: id });  
-  
-  openAdminWallet();  
-  
-}  
-  
-  
-/* ======================================================  
-   SERVICES  
-====================================================== */  
-  
-function openServices(){  
-  
-  showScreen('servicesScreen');  
-  
-}  
-  
-  
-function openAllServices(){  
-  
-  showScreen('servicesScreen');  
-  
-}  
-  
-  
-/* ======================================================  
-   UTILITIES  
-====================================================== */  
-  
-function formatMoney(value){  
-  
-  const number =  
-    Number(value || 0);  
-  
-  return new Intl.NumberFormat(  
-    'ar-DZ',  
-    {  
-      maximumFractionDigits:2  
-    }  
-  ).format(number);  
-  
-}  
-  
-  
-function formatDate(value){  
-  
-  if(!value){  
-    return '';  
-  }  
-  
-  try{  
-  
-    return new Date(value)  
-      .toLocaleString('ar-DZ');  
-  
-  }catch{  
-  
-    return value;  
-  
-  }  
-  
-}  
-  
-  
-function escapeHtml(value){  
-  
-  return String(value ?? '')  
-    .replaceAll('&','&amp;')  
-    .replaceAll('<','&lt;')  
-    .replaceAll('>','&gt;')  
-    .replaceAll('"','&quot;')  
-    .replaceAll("'","&#039;");  
-  
-}  
-  
-  
-/* ======================================================  
-   SUPABASE AUTH EVENTS  
-====================================================== */  
-  
-sb.auth.onAuthStateChange(  
-  async(event,session)=>{  
-  
-    if(event === 'SIGNED_OUT'){  
-  
-      currentUser=null;  
-      currentProfile=null;  
-  
-      showScreen('loginScreen');  
-  
-    }  
-  
-  }  
-);  
-  
-  
-/* ======================================================  
-   AUTO REFRESH  
-====================================================== */  
-  
-setInterval(()=>{  
-  
-  if(currentUser){  
-  
-    checkNotifications();  
-  
-  }  
-  
-},30000);  
-  
-</script>  </div>  </body>  
-   </html>
+  const verifiedBadge = document.getElementById('accountVerifiedBadge');  
