@@ -463,6 +463,49 @@ img{
   cursor:pointer;
 }
 
+/* Icon tiles (from BBM icon-pack image) */
+.icon-tiles{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.icon-tile{
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  background:var(--card2);
+  border:1px solid var(--line);
+  transition:.15s;
+}
+
+.icon-tile:active{
+  transform:scale(.97);
+}
+
+.icon-tile img{
+  width:100%;
+  aspect-ratio:180/201;
+  object-fit:cover;
+}
+
+.icon-tiles.scroll-row{
+  display:flex;
+  grid-template-columns:none;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:4px;
+  scrollbar-width:none;
+}
+
+.icon-tiles.scroll-row::-webkit-scrollbar{
+  display:none;
+}
+
+.icon-tiles.scroll-row .icon-tile{
+  flex:0 0 96px;
+}
+
 .categories{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -483,6 +526,14 @@ img{
 .category-icon{
   font-size:28px;
   margin-bottom:12px;
+}
+
+.category-icon img{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  object-fit:cover;
+  margin-bottom:10px;
 }
 
 .category-title{
@@ -552,6 +603,31 @@ img{
 
 .search-form{
   margin-bottom:15px;
+}
+
+.search-lang-row{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.lang-chip{
+  flex:1;
+  text-align:center;
+  padding:9px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:var(--card2);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.lang-chip.active{
+  border-color:var(--gold);
+  color:var(--gold);
+  background:var(--gold-soft);
 }
 
 .result-item{
@@ -645,6 +721,22 @@ img{
 
 .product-actions button{
   flex:1;
+}
+
+.fav-btn{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:var(--card2);
+  color:var(--gold);
+  flex:0 0 36px !important;
+  font-size:15px;
+}
+
+.fav-btn.active{
+  background:var(--gold-soft);
+  border-color:var(--gold);
 }
 
 /* =========================
@@ -764,11 +856,58 @@ img{
   color:var(--gold);
 }
 
+.status.paid,
+.status.completed,
+.status.approved{
+  background:rgba(70,200,120,.12);
+  color:var(--success);
+}
+
+.status.rejected,
+.status.cancelled,
+.status.disputed{
+  background:rgba(255,80,80,.12);
+  color:#ff9999;
+}
+
 .order-meta{
   color:var(--muted);
   font-size:11px;
   margin-top:8px;
   line-height:1.7;
+}
+
+.order-track{
+  display:flex;
+  justify-content:space-between;
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px dashed var(--line);
+}
+
+.track-step{
+  flex:1;
+  text-align:center;
+  position:relative;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:800;
+}
+
+.track-step .dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--line);
+  margin:0 auto 6px;
+}
+
+.track-step.done .dot{
+  background:var(--gold);
+}
+
+.track-step.done{
+  color:var(--gold);
 }
 
 /* =========================
@@ -793,6 +932,15 @@ img{
   margin-top:5px;
 }
 
+.balance-sub{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin-top:10px;
+  font-size:11px;
+  color:var(--muted);
+}
+
 .payment-method{
   display:flex;
   align-items:center;
@@ -803,6 +951,13 @@ img{
   border-radius:13px;
   background:var(--card);
   cursor:pointer;
+}
+
+.payment-method img{
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  object-fit:cover;
 }
 
 .payment-method.selected{
@@ -924,6 +1079,11 @@ img{
   font-weight:900;
   padding:4px 10px;
   border-radius:20px;
+}
+
+.role-pill.pro{
+  background:linear-gradient(135deg,#f0a93a,#e0921f);
+  color:#211505;
 }
 
 .profile-bio{
@@ -1160,6 +1320,214 @@ img{
 }
 
 /* =========================
+   MESSAGING
+========================= */
+
+.chat-list-item{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:14px;
+  margin-bottom:9px;
+  cursor:pointer;
+}
+
+.chat-avatar{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:var(--gold-soft);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  font-size:18px;
+  overflow:hidden;
+}
+
+.chat-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.chat-main{
+  flex:1;
+  min-width:0;
+}
+
+.chat-name{
+  font-weight:900;
+  font-size:13px;
+}
+
+.chat-preview{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.chat-window{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:15px;
+  min-height:55vh;
+}
+
+.bubble{
+  max-width:75%;
+  padding:10px 13px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.bubble.in{
+  align-self:flex-start;
+  background:var(--card2);
+  border:1px solid var(--line);
+  border-bottom-right-radius:4px;
+}
+
+.bubble.out{
+  align-self:flex-end;
+  background:var(--gold-soft);
+  color:var(--gold);
+  border:1px solid var(--gold);
+  border-bottom-left-radius:4px;
+}
+
+.chat-input-row{
+  position:sticky;
+  bottom:0;
+  display:flex;
+  gap:8px;
+  padding:12px;
+  background:rgba(15,11,7,.97);
+  border-top:1px solid var(--line);
+}
+
+.chat-input-row input{
+  flex:1;
+  background:var(--card2);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:11px 15px;
+  color:var(--text);
+  outline:none;
+}
+
+.chat-send-btn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--gold2);
+  color:#211505;
+  border:none;
+  font-size:16px;
+  flex-shrink:0;
+}
+
+/* =========================
+   RATINGS
+========================= */
+
+.stars{
+  display:flex;
+  gap:4px;
+  font-size:22px;
+  color:var(--line);
+  cursor:pointer;
+  justify-content:center;
+  margin-bottom:15px;
+}
+
+.stars span.active{
+  color:var(--gold);
+}
+
+.review-item{
+  padding:14px;
+  margin-bottom:10px;
+}
+
+.review-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.review-stars{
+  color:var(--gold);
+  font-size:12px;
+}
+
+.review-text{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:6px;
+  line-height:1.7;
+}
+
+/* =========================
+   FAVORITES / ADS / PRO
+========================= */
+
+.ad-banner{
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:12px;
+  border:1px solid var(--line);
+  position:relative;
+  cursor:pointer;
+}
+
+.ad-banner img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+}
+
+.ad-tag{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:rgba(15,11,7,.8);
+  color:var(--gold);
+  font-size:9px;
+  font-weight:800;
+  padding:3px 8px;
+  border-radius:10px;
+}
+
+.pro-card{
+  padding:22px;
+  text-align:center;
+  background:linear-gradient(160deg,var(--card),#3a2610);
+  border:1px solid var(--gold);
+  margin-bottom:16px;
+}
+
+.pro-price{
+  font-size:26px;
+  font-weight:900;
+  color:var(--gold);
+  margin:10px 0;
+}
+
+.pro-feature-list{
+  text-align:right;
+  margin:16px 0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:2.1;
+}
+
+/* =========================
    MAP
 ========================= */
 
@@ -1182,6 +1550,24 @@ img{
 .route-info{
   margin-top:12px;
   padding:15px;
+}
+
+/* =========================
+   OFFLINE BANNER
+========================= */
+
+.offline-banner{
+  display:none;
+  background:var(--gold-soft);
+  color:var(--gold);
+  text-align:center;
+  font-size:11px;
+  font-weight:800;
+  padding:8px;
+}
+
+.offline-banner.show{
+  display:block;
 }
 
 /* =========================
@@ -1227,6 +1613,7 @@ img{
 </style>
 </head>
 <body>
+<div id="offlineBanner" class="offline-banner">📴 أنت غير متصل — يتم عرض بيانات محفوظة مسبقًا</div>
 <div class="device">
 
 <!-- =====================================================
@@ -1368,10 +1755,13 @@ img{
       <div class="brand-name">BBM STORE</div>
     </div>
 
-    <button class="notification-btn" onclick="openNotifications()">
-      🔔
-      <span id="notificationDot" class="notification-dot"></span>
-    </button>
+    <div class="header-actions">
+      <button class="notification-btn" onclick="openFavorites()" title="المفضلة">❤️</button>
+      <button class="notification-btn" onclick="openNotifications()">
+        🔔
+        <span id="notificationDot" class="notification-dot"></span>
+      </button>
+    </div>
   </div>
 
   <div class="welcome">
@@ -1391,49 +1781,66 @@ img{
     <span id="locationLabel">تحديد موقعي الحالي</span>
   </button>
 
+  <!-- Quick services strip (icons from BBM icon pack) -->
+  <div class="home-section">
+    <div class="section-head">
+      <h2>خدمات سريعة</h2>
+    </div>
+    <div class="icon-tiles scroll-row">
+      <div class="icon-tile" onclick="openQuickService('flexy')">
+        <img src="icons/flexy.jpg" alt="فليكسي" loading="lazy">
+      </div>
+      <div class="icon-tile" onclick="openQuickService('game_topup')">
+        <img src="icons/game_topup.jpg" alt="شحن العاب" loading="lazy">
+      </div>
+      <div class="icon-tile" onclick="openQuickService('app_topup')">
+        <img src="icons/app_topup.jpg" alt="شحن التطبيقات" loading="lazy">
+      </div>
+      <div class="icon-tile" onclick="openQuickService('game_accounts')">
+        <img src="icons/game_accounts.jpg" alt="بيع حسابات العاب" loading="lazy">
+      </div>
+      <div class="icon-tile" onclick="openQuickService('baridimob')">
+        <img src="icons/baridimob.jpg" alt="بريدي موب" loading="lazy">
+      </div>
+      <div class="icon-tile" onclick="openQuickService('ccp')">
+        <img src="icons/ccp.jpg" alt="سيسيبي" loading="lazy">
+      </div>
+    </div>
+  </div>
+
   <div class="home-section">
     <div class="section-head">
       <h2>الأقسام</h2>
       <span onclick="openAllServices()">عرض الكل</span>
     </div>
 
-    <div class="categories">
-      <div class="card category" onclick="openProducts('all')">
-        <span class="category-status ready">جاهز للتعبئة</span>
-        <div class="category-icon">🛍️</div>
-        <div class="category-title">المنتجات</div>
-        <div class="category-desc">المنتجات التي تضيفها أنت</div>
+    <div class="icon-tiles">
+      <div class="icon-tile" onclick="openProducts('all')">
+        <img src="icons/stores.jpg" alt="متاجر" loading="lazy">
       </div>
-
-      <div class="card category" onclick="openServices()">
-        <span class="category-status empty2">فارغ حاليًا</span>
-        <div class="category-icon">👨‍🔧</div>
-        <div class="category-title">الخدمات</div>
-        <div class="category-desc">الخدمات التي تضيفها لاحقًا</div>
+      <div class="icon-tile" onclick="openServices()">
+        <img src="icons/professional_services.jpg" alt="خدمات مهنية" loading="lazy">
       </div>
-
-      <div class="card category disabled">
-        <span class="category-status soon2">قريبًا</span>
-        <div class="category-icon">🏪</div>
-        <div class="category-title">المتاجر</div>
+      <div class="icon-tile" onclick="openCategoryScreen('restaurants')">
+        <img src="icons/restaurants.jpg" alt="مطاعم" loading="lazy">
       </div>
-
-      <div class="card category disabled">
-        <span class="category-status soon2">قريبًا</span>
-        <div class="category-icon">🍔</div>
-        <div class="category-title">المطاعم</div>
+      <div class="icon-tile" onclick="openCategoryScreen('cafes')">
+        <img src="icons/cafes.jpg" alt="مقاهي" loading="lazy">
       </div>
-
-      <div class="card category disabled">
-        <span class="category-status soon2">قريبًا</span>
-        <div class="category-icon">☕</div>
-        <div class="category-title">المقاهي</div>
+      <div class="icon-tile" onclick="openCategoryScreen('transport')">
+        <img src="icons/transport.jpg" alt="نقل و مواصلات" loading="lazy">
       </div>
-
-      <div class="card category disabled">
-        <span class="category-status soon2">قريبًا</span>
-        <div class="category-icon">🚗</div>
-        <div class="category-title">النقل</div>
+      <div class="icon-tile" onclick="openCategoryScreen('local_market')">
+        <img src="icons/local_market.jpg" alt="السوق المحلي" loading="lazy">
+      </div>
+      <div class="icon-tile" onclick="openCategoryScreen('digital_services')">
+        <img src="icons/digital_services.jpg" alt="خدمات رقمية" loading="lazy">
+      </div>
+      <div class="icon-tile" onclick="openCategoryScreen('home_services')">
+        <img src="icons/home_services.jpg" alt="خدمات منزلية" loading="lazy">
+      </div>
+      <div class="icon-tile" onclick="openCategoryScreen('other_services')">
+        <img src="icons/other_services.jpg" alt="خدمات أخرى" loading="lazy">
       </div>
     </div>
   </div>
@@ -1446,6 +1853,17 @@ img{
       <button class="btn btn-primary" style="margin-top:14px;" onclick="showScreen('becomeProviderScreen')">
         انضم الآن كتاجر أو مزود خدمة
       </button>
+    </div>
+  </div>
+
+  <div class="home-section">
+    <div class="section-head">
+      <h2>عروض وإعلانات</h2>
+    </div>
+    <div id="homeAds">
+      <div class="empty">
+        <div class="empty-text">لا توجد عروض حاليًا.</div>
+      </div>
     </div>
   </div>
 
@@ -1477,13 +1895,36 @@ img{
       <span class="nav-icon">📋</span>
       طلباتي
     </div>
-    <div class="nav-item" onclick="openWallet()">
-      <span class="nav-icon">💰</span>
-      المحفظة
+    <div class="nav-item" onclick="openChats()">
+      <span class="nav-icon">💬</span>
+      الرسائل
     </div>
     <div class="nav-item" onclick="openAccount()">
       <span class="nav-icon">👤</span>
       حسابي
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     CATEGORY LISTING (generic: restaurants/cafes/transport/...)
+===================================================== -->
+<section id="categoryScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span id="categoryScreenTitle" class="page-title">القسم</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="categoryList">
+      <div class="empty">
+        <div class="empty-icon">📭</div>
+        <div class="empty-title">لا يوجد محتوى بعد</div>
+        <div class="empty-text">سيتم عرض العناصر هنا فور إضافتها من مزودي الخدمة.</div>
+      </div>
     </div>
   </div>
 
@@ -1644,6 +2085,12 @@ img{
   </div>
 
   <div class="section">
+    <div class="search-lang-row">
+      <div id="langAr" class="lang-chip active" onclick="setSearchLang('ar',this)">العربية</div>
+      <div id="langFr" class="lang-chip" onclick="setSearchLang('fr',this)">Français</div>
+      <div id="langEn" class="lang-chip" onclick="setSearchLang('en',this)">English</div>
+    </div>
+
     <div class="field">
       <input id="globalSearch" type="search" placeholder="ابحث عن منتج أو خدمة..." oninput="globalSearch()">
     </div>
@@ -1689,7 +2136,7 @@ img{
 
   <div class="topbar">
     <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
-    <span class="page-title">المحفظة</span>
+    <span class="page-title">محفظة ALG</span>
     <span></span>
   </div>
 
@@ -1697,6 +2144,9 @@ img{
     <div class="card balance">
       <div class="balance-label">الرصيد المتاح</div>
       <div id="walletBalance" class="balance-number">0.00 دج</div>
+      <div class="balance-sub">
+        <span>معلّق: <b id="walletPending">0.00</b> دج</span>
+      </div>
     </div>
 
     <div id="walletMsg" class="msg"></div>
@@ -1706,15 +2156,15 @@ img{
     </div>
 
     <div class="payment-method" onclick="selectPayment(this,'BaridiMob')">
-      📱 <span>BaridiMob</span>
+      <img src="icons/baridimob.jpg" alt="BaridiMob"> <span>BaridiMob</span>
     </div>
 
     <div class="payment-method" onclick="selectPayment(this,'CCP')">
-      🏦 <span>CCP</span>
+      <img src="icons/ccp.jpg" alt="CCP"> <span>CCP</span>
     </div>
 
     <div class="payment-method" onclick="selectPayment(this,'Flexy')">
-      💳 <span>Flexy</span>
+      <img src="icons/flexy.jpg" alt="Flexy"> <span>Flexy</span>
     </div>
 
     <div class="payment-method" onclick="selectPayment(this,'cash')">
@@ -1731,6 +2181,195 @@ img{
     </button>
 
     <div id="walletHistory" style="margin-top:20px;"></div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     FAVORITES
+===================================================== -->
+<section id="favoritesScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">المفضلة</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="favoritesList">
+      <div class="empty">
+        <div class="empty-icon">❤️</div>
+        <div class="empty-title">لا توجد عناصر في المفضلة</div>
+        <div class="empty-text">اضغط على أيقونة القلب في أي منتج لإضافته هنا.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     CHATS (LIST)
+===================================================== -->
+<section id="chatsScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">الرسائل</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="chatsList">
+      <div class="empty">
+        <div class="empty-icon">💬</div>
+        <div class="empty-title">لا توجد محادثات</div>
+        <div class="empty-text">ستظهر محادثاتك مع مقدمي الخدمة هنا.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     CHAT WINDOW
+===================================================== -->
+<section id="chatWindowScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openChats()">→ رجوع</span>
+    <span id="chatWithName" class="page-title">محادثة</span>
+    <span></span>
+  </div>
+
+  <div id="chatMessages" class="chat-window"></div>
+
+  <div class="chat-input-row">
+    <input id="chatMessageInput" type="text" placeholder="اكتب رسالة...">
+    <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     RATE ORDER
+===================================================== -->
+<section id="rateScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openOrders()">→ رجوع</span>
+    <span class="page-title">تقييم الطلب</span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <div id="rateMsg" class="msg"></div>
+    <div class="card" style="padding:22px;">
+      <div class="stars" id="ratingStars">
+        <span data-v="1">★</span>
+        <span data-v="2">★</span>
+        <span data-v="3">★</span>
+        <span data-v="4">★</span>
+        <span data-v="5">★</span>
+      </div>
+      <div class="field">
+        <label>تعليقك (اختياري)</label>
+        <textarea id="ratingComment" placeholder="شاركنا رأيك في التجربة"></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="submitRating()">إرسال التقييم</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     DISPUTE
+===================================================== -->
+<section id="disputeScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openOrders()">→ رجوع</span>
+    <span class="page-title">فتح نزاع / استرداد</span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <div id="disputeMsg" class="msg"></div>
+    <div class="card" style="padding:18px;">
+      <div class="field">
+        <label>سبب النزاع</label>
+        <select id="disputeReason">
+          <option value="not_received">لم يصل الطلب</option>
+          <option value="wrong_item">منتج مختلف عمّا طُلب</option>
+          <option value="damaged">منتج تالف</option>
+          <option value="other">سبب آخر</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>تفاصيل إضافية</label>
+        <textarea id="disputeDetails" placeholder="اشرح المشكلة بالتفصيل"></textarea>
+      </div>
+      <button class="btn btn-danger" style="width:100%;" onclick="submitDispute()">إرسال طلب النزاع</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     PRO SUBSCRIPTION
+===================================================== -->
+<section id="proScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openAccount()">→ رجوع</span>
+    <span class="page-title">اشتراك ALG Pro</span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <div id="proMsg" class="msg"></div>
+    <div class="card pro-card">
+      <div class="kicker" style="color:var(--gold);font-weight:800;font-size:12px;">💎 للمحترفين ومقدمي الخدمة</div>
+      <h3 style="margin-top:8px;">ALG Pro</h3>
+      <div class="pro-price">2500 دج / شهريًا</div>
+      <div class="pro-feature-list">
+        ✔️ ظهور أعلى في نتائج البحث والمطابقة الذكية<br>
+        ✔️ شارة "موثّق" على ملفك<br>
+        ✔️ إحصائيات وتحليلات متقدمة لأداء متجرك<br>
+        ✔️ عدد غير محدود من الإعلانات المميزة<br>
+        ✔️ دعم فني ذو أولوية
+      </div>
+      <button class="btn btn-primary" onclick="subscribePro()">اشترك الآن</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     ALG MATCH
+===================================================== -->
+<section id="matchScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">🤖 ALG MATCH</span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <div id="matchMsg" class="msg"></div>
+    <div class="card" style="padding:18px;">
+      <p style="color:var(--muted);font-size:12px;line-height:1.8;margin-bottom:16px;">
+        صف ما تحتاجه وسنقترح عليك أفضل مقدمي الخدمة بالقرب منك بناءً على التصنيف والتقييم والمسافة.
+      </p>
+      <div class="field">
+        <label>ماذا تحتاج؟</label>
+        <textarea id="matchQuery" placeholder="مثال: سباك لإصلاح تسرب مياه اليوم"></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="runAlgMatch()">🤖 ابحث عن الأنسب لي</button>
+    </div>
+
+    <div id="matchResults" style="margin-top:16px;"></div>
   </div>
 
 </section>
@@ -1787,6 +2426,10 @@ img{
 
     <div id="accountBusinessLinks"></div>
 
+    <div class="card profile-item" onclick="showScreen('matchScreen')">
+      <span>🤖 ALG MATCH</span><span>‹</span>
+    </div>
+
     <div class="card profile-item" onclick="openMyProducts()">
       <span>📦 منتجاتي</span><span>‹</span>
     </div>
@@ -1795,8 +2438,20 @@ img{
       <span>📋 طلباتي</span><span>‹</span>
     </div>
 
+    <div class="card profile-item" onclick="openChats()">
+      <span>💬 الرسائل</span><span>‹</span>
+    </div>
+
+    <div class="card profile-item" onclick="openFavorites()">
+      <span>❤️ المفضلة</span><span>‹</span>
+    </div>
+
     <div class="card profile-item" onclick="openWallet()">
-      <span>💰 المحفظة</span><span>‹</span>
+      <span>💰 محفظة ALG</span><span>‹</span>
+    </div>
+
+    <div class="card profile-item" onclick="showScreen('proScreen')">
+      <span>💎 اشتراك Pro</span><span>‹</span>
     </div>
 
     <div class="card profile-item" onclick="openEditProfile()">
@@ -1807,1882 +2462,4 @@ img{
       <span>🔔 الإشعارات</span><span>‹</span>
     </div>
 
-    <button class="btn btn-danger" style="width:100%;margin-top:15px;" onclick="logout()">
-      تسجيل الخروج
-    </button>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     EDIT PROFILE
-===================================================== -->
-<section id="editProfileScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="openAccount()">→ رجوع</span>
-    <span class="page-title">تعديل الملف</span>
-    <span></span>
-  </div>
-
-  <div class="container">
-    <div id="profileMsg" class="msg"></div>
-
-    <div class="card" style="padding:18px;">
-      <div class="avatar-upload-row">
-        <div id="editAvatarPreview" class="avatar-upload-preview">👤</div>
-        <label class="btn btn-secondary avatar-upload-btn" style="text-align:center;">
-          📷 تغيير الصورة
-          <input id="editAvatarFile" type="file" accept="image/*" hidden onchange="previewAvatarImage(event)">
-        </label>
-      </div>
-
-      <div class="field">
-        <label>الاسم</label>
-        <input id="editName" type="text">
-      </div>
-
-      <div class="field">
-        <label>نبذة عني</label>
-        <textarea id="editBio" placeholder="عرّف بنفسك أو بنشاطك في جملة أو جملتين"></textarea>
-      </div>
-
-      <div class="field">
-        <label>رقم الهاتف</label>
-        <input id="editPhone" type="tel">
-      </div>
-
-      <div class="field">
-        <div class="field-row2">
-          <div>
-            <label>الجنس</label>
-            <select id="editGender">
-              <option value="">غير محدد</option>
-              <option value="male">ذكر</option>
-              <option value="female">أنثى</option>
-            </select>
-          </div>
-          <div>
-            <label>تاريخ الميلاد</label>
-            <input id="editBirthDate" type="date">
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="field-row2">
-          <div>
-            <label>الولاية</label>
-            <input id="editWilaya" type="text" placeholder="مثال: برج باجي مختار" readonly onclick="openWilayaScreen()">
-          </div>
-          <div>
-            <label>البلدية</label>
-            <input id="editCommune" type="text" placeholder="مثال: برج باجي مختار">
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>العنوان</label>
-        <input id="editAddress" type="text">
-      </div>
-
-      <div class="location-status">
-        <span>📍 الموقع الجغرافي: <b id="editLocationStatus">لم يُحدَّد بعد</b></span>
-        <button class="btn btn-secondary btn-small" type="button" onclick="captureProfileLocation()">تحديد</button>
-      </div>
-
-      <button class="btn btn-primary" onclick="saveProfile()">
-        حفظ التغييرات
-      </button>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     NOTIFICATIONS
-===================================================== -->
-<section id="notificationsScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
-    <span class="page-title">الإشعارات</span>
-    <span></span>
-  </div>
-
-  <div class="section">
-    <div id="notificationsList">
-      <div class="empty">
-        <div class="empty-icon">🔔</div>
-        <div class="empty-title">لا توجد إشعارات</div>
-        <div class="empty-text">ستظهر الإشعارات هنا.</div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     LOCATION / MAP
-===================================================== -->
-<section id="mapScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
-    <span class="page-title">موقعي</span>
-    <span></span>
-  </div>
-
-  <div class="section">
-    <div id="mapContainer" class="map-placeholder">
-      <div>
-        <div style="font-size:40px;">📍</div>
-        <div style="margin-top:10px;">سيتم عرض موقعك هنا.</div>
-      </div>
-    </div>
-
-    <div class="card route-info">
-      <div style="font-weight:900;">موقعك الحالي</div>
-      <div id="coordinates" style="color:var(--muted);font-size:12px;margin-top:6px;">لم يتم تحديد الموقع.</div>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     WILAYA (LOCATION SCOPE)
-===================================================== -->
-<section id="wilayaScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
-    <span class="page-title">تحديد النطاق الجغرافي</span>
-    <span></span>
-  </div>
-
-  <div class="section">
-    <div class="field">
-      <input id="wilayaSearch" type="search" placeholder="ابحث عن ولاية..." oninput="filterWilayas()">
-    </div>
-    <div id="wilayaList"></div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     FILTER
-===================================================== -->
-<section id="filterScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
-    <span class="page-title">خيارات التصفية والفرز</span>
-    <span></span>
-  </div>
-
-  <div class="section">
-    <div class="card" style="padding:18px;">
-      <label style="display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:10px;">
-        ترتيب النتائج
-      </label>
-
-      <div class="chip-toggle-row">
-        <div id="sortNearest" class="chip-toggle active" onclick="setSortMode('nearest',this)">الأقرب لموقعي</div>
-        <div id="sortRating" class="chip-toggle" onclick="setSortMode('rating',this)">الأعلى تقييمًا</div>
-      </div>
-
-      <button class="btn btn-primary" onclick="showScreen('productsScreen')">تطبيق التصفية</button>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     BECOME PROVIDER
-===================================================== -->
-<section id="becomeProviderScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="openAccount()">→ رجوع</span>
-    <span class="page-title">تفعيل حساب الشريك التجاري</span>
-    <span></span>
-  </div>
-
-  <div class="container">
-    <div id="providerMsg" class="msg"></div>
-
-    <div class="card" style="padding:18px;">
-      <p style="color:var(--muted);font-size:12px;line-height:1.8;margin-bottom:18px;">
-        أدخل بيانات نشاطك التجاري لبدء استلام الطلبات وحجز مساحتك في BBM STORE.
-      </p>
-
-      <label style="display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:10px;">
-        نوع النشاط
-      </label>
-
-      <div class="chip-toggle-row">
-        <div id="typeSeller" class="chip-toggle active" onclick="setProviderType('seller',this)">متجر / بيع منتجات</div>
-        <div id="typeService" class="chip-toggle" onclick="setProviderType('service',this)">مزود خدمة / حرفي</div>
-      </div>
-
-      <div class="field">
-        <label>اسم المتجر أو العلامة التجارية</label>
-        <input id="providerBusinessName" type="text" placeholder="مثال: بوتيك الأناقة BBM">
-      </div>
-
-      <div class="field">
-        <label>التصنيف</label>
-        <input id="providerCategory" type="text" placeholder="مثال: إلكترونيات، سباكة، أزياء...">
-      </div>
-
-      <div class="field">
-        <label>رقم الهاتف للتواصل</label>
-        <input id="providerPhone" type="tel" placeholder="05 / 06 / 07 XX XX XX">
-      </div>
-
-      <button id="providerSubmitBtn" class="btn btn-primary" onclick="submitBecomeProvider()">
-        تأكيد وإرسال طلب الشراكة
-      </button>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     PROVIDER DASHBOARD
-===================================================== -->
-<section id="providerDashboardScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="openAccount()">→ رجوع</span>
-    <span class="page-title">لوحة التاجر</span>
-    <span></span>
-  </div>
-
-  <div class="section">
-    <div class="stat-row" style="grid-template-columns:1fr 1fr;">
-      <div class="card stat-chip" style="padding:16px;">
-        <div id="providerProductCount" class="num" style="font-size:20px;">0</div>
-        <div class="lbl">منتجاتي</div>
-      </div>
-      <div class="card stat-chip" style="padding:16px;">
-        <div id="providerOrderCount" class="num" style="font-size:20px;">0</div>
-        <div class="lbl">الطلبات الواردة</div>
-      </div>
-    </div>
-
-    <div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:15px;">
-      <div class="card profile-item" onclick="openMyProducts()">
-        <span>📦 إدارة منتجاتي</span><span>‹</span>
-      </div>
-      <div class="card profile-item" onclick="openOrders()">
-        <span>📋 الطلبات</span><span>‹</span>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     ADMIN DASHBOARD
-===================================================== -->
-<section id="adminScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="openAccount()">→ رجوع</span>
-    <span class="page-title">لوحة الإدارة</span>
-    <span></span>
-  </div>
-
-  <div class="section">
-    <div id="adminStats" class="stat-row" style="grid-template-columns:1fr 1fr;">
-      <div class="loading" style="grid-column:1/-1;"><div class="spinner"></div>جاري تحميل الإحصائيات...</div>
-    </div>
-
-    <div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:18px;">
-      <div class="card profile-item" onclick="openAdminUsers()">
-        <span>👥 المستخدمون والشركاء</span><span>‹</span>
-      </div>
-      <div class="card profile-item" onclick="openAdminWallet()">
-        <span>💳 طلبات شحن المحفظة</span><span>‹</span>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     ADMIN USERS
-===================================================== -->
-<section id="adminUsersScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="showScreen('adminScreen')">→ رجوع</span>
-    <span class="page-title">المستخدمون والشركاء</span>
-    <span></span>
-  </div>
-
-  <div class="section">
-    <div id="adminUsersList">
-      <div class="loading"><div class="spinner"></div>جاري التحميل...</div>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     ADMIN WALLET REQUESTS
-===================================================== -->
-<section id="adminWalletScreen" class="screen">
-
-  <div class="topbar">
-    <span class="back" onclick="showScreen('adminScreen')">→ رجوع</span>
-    <span class="page-title">طلبات شحن المحفظة</span>
-    <span></span>
-  </div>
-
-  <div class="section">
-    <div id="adminWalletList">
-      <div class="loading"><div class="spinner"></div>جاري التحميل...</div>
-    </div>
-  </div>
-
-</section>
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-<script>
-
-/* ======================================================
-   SUPABASE
-====================================================== */
-
-const SUPABASE_URL = "https://cgqkkfocgkiyxsshddxv.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3XImpdl41nPKfpPgmatvNg_ldTFmULV";
-
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-
-/* ======================================================
-   GLOBAL STATE
-====================================================== */
-
-let currentUser = null;
-let currentProfile = null;
-let allProducts = [];
-let selectedPayment = null;
-let editingProductId = null;
-
-
-/* ======================================================
-   SCREEN SYSTEM
-====================================================== */
-
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(screen=>{
-    screen.classList.remove('active');
-  });
-  const target = document.getElementById(id);
-  if(target){
-    target.classList.add('active');
-  }
-  window.scrollTo({ top:0, behavior:'instant' });
-}
-
-
-/* ======================================================
-   MESSAGES
-====================================================== */
-
-function showMsg(id,text,type='info'){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.textContent = text;
-  el.className = 'msg show ' + type;
-}
-
-function hideMsg(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.className='msg';
-  el.textContent='';
-}
-
-
-/* ======================================================
-   AUTH
-====================================================== */
-
-async function signup(){
-  const name = document.getElementById('signupName').value.trim();
-  const email = document.getElementById('signupEmail').value.trim();
-  const phone = document.getElementById('signupPhone').value.trim();
-  const role = document.getElementById('signupRole').value;
-  const password = document.getElementById('signupPassword').value;
-
-  if(!name || !email || !password){
-    showMsg('signupMsg','الرجاء تعبئة الحقول المطلوبة.','error');
-    return;
-  }
-
-  if(password.length < 6){
-    showMsg('signupMsg','كلمة المرور يجب أن تكون 6 أحرف على الأقل.','error');
-    return;
-  }
-
-  const btn = document.getElementById('signupBtn');
-  btn.disabled=true;
-  btn.textContent='جاري إنشاء الحساب...';
-
-  try{
-    const { data, error } = await sb.auth.signUp({
-      email,
-      password,
-      options:{ data:{ full_name:name, phone:phone, role:role } }
-    });
-
-    if(error){ throw error; }
-
-    if(data.session){
-      await loadUser(data.session.user);
-    }else{
-      showMsg('signupMsg','تم إنشاء الحساب. تحقق من بريدك الإلكتروني إذا كان تأكيد البريد مفعّلًا.','success');
-    }
-
-  }catch(error){
-    showMsg('signupMsg','تعذر إنشاء الحساب: ' + error.message,'error');
-  }finally{
-    btn.disabled=false;
-    btn.textContent='إنشاء الحساب';
-  }
-}
-
-
-async function login(){
-  const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPassword').value;
-
-  if(!email || !password){
-    showMsg('loginMsg','أدخل البريد الإلكتروني وكلمة المرور.','error');
-    return;
-  }
-
-  const btn = document.getElementById('loginBtn');
-  btn.disabled=true;
-  btn.textContent='جاري الدخول...';
-
-  try{
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if(error){ throw error; }
-    await loadUser(data.user);
-  }catch(error){
-    showMsg('loginMsg','تعذر تسجيل الدخول: ' + error.message,'error');
-  }finally{
-    btn.disabled=false;
-    btn.textContent='تسجيل الدخول';
-  }
-}
-
-
-async function logout(){
-  await sb.auth.signOut();
-  currentUser=null;
-  currentProfile=null;
-  showScreen('loginScreen');
-}
-
-
-/* ======================================================
-   LOAD USER
-====================================================== */
-
-async function loadUser(user){
-  currentUser=user;
-
-  const { data:profile } = await sb.from('profiles').select('*').eq('id',user.id).maybeSingle();
-
-  currentProfile=profile || {
-    id:user.id,
-    full_name: user.user_metadata?.full_name || 'مستخدم',
-    phone: user.user_metadata?.phone || '',
-    address:'',
-    role: user.user_metadata?.role || 'customer'
-  };
-
-  updateUserUI();
-  showScreen('homeScreen');
-  loadHomeProducts();
-  checkNotifications();
-}
-
-
-/* ======================================================
-   USER UI
-====================================================== */
-
-const ROLE_LABELS = {
-  customer:'عميل',
-  professional:'مهني',
-  seller:'بائع / متجر',
-  provider:'مقدم خدمة',
-  admin:'إدارة',
-  super_admin:'إدارة عليا'
-};
-
-function updateUserUI(){
-  const name = currentProfile?.full_name || currentUser?.user_metadata?.full_name || 'مستخدم';
-  const email = currentUser?.email || '';
-
-  const welcome = document.getElementById('welcomeName');
-  if(welcome){ welcome.textContent = 'مرحبًا، ' + name; }
-
-  const accountName = document.getElementById('accountName');
-  if(accountName){ accountName.textContent=name; }
-
-  const accountEmail = document.getElementById('accountEmail');
-  if(accountEmail){ accountEmail.textContent=email; }
-
-  const avatarEl = document.getElementById('accountAvatar');
-  if(avatarEl){
-    avatarEl.innerHTML = currentProfile?.avatar_url
-      ? `<img src="${escapeHtml(currentProfile.avatar_url)}" alt="${escapeHtml(name)}">`
-      : '👤';
-  }
-
-  const verifiedBadge = document.getElementById('accountVerifiedBadge');
-  if(verifiedBadge){
-    verifiedBadge.style.display = currentProfile?.is_verified ? 'inline' : 'none';
-  }
-
-  const badgeRow = document.getElementById('accountBadgeRow');
-  if(badgeRow){
-    const role = currentProfile?.role || 'customer';
-    badgeRow.innerHTML = `<span class="role-pill">${escapeHtml(ROLE_LABELS[role] || role)}</span>`;
-  }
-
-  const bioEl = document.getElementById('accountBio');
-  if(bioEl){
-    if(currentProfile?.bio){
-      bioEl.textContent = currentProfile.bio;
-      bioEl.style.display='block';
-    }else{
-      bioEl.style.display='none';
-    }
-  }
-
-  const statPoints = document.getElementById('statPoints');
-  if(statPoints){ statPoints.textContent = currentProfile?.loyalty_points ?? 0; }
-
-  const statRating = document.getElementById('statRating');
-  if(statRating){
-    statRating.textContent = currentProfile?.rating_count
-      ? `⭐ ${Number(currentProfile.rating_avg || 0).toFixed(1)}`
-      : '—';
-  }
-
-  const statOrders = document.getElementById('statOrders');
-  if(statOrders){ statOrders.textContent = currentProfile?.completed_orders_count ?? 0; }
-
-  const referralCode = document.getElementById('referralCode');
-  if(referralCode){ referralCode.textContent = currentProfile?.referral_code || '—'; }
-
-  const businessLinks = document.getElementById('accountBusinessLinks');
-  if(businessLinks){
-    const isAdmin = currentProfile?.role === 'admin' || currentProfile?.role === 'super_admin';
-    let html = '';
-
-    if(isAdmin){
-      html += `
-        <div class="card profile-item" onclick="openAdmin()">
-          <span>👑 لوحة الإدارة</span><span>‹</span>
-        </div>
-      `;
-    }
-
-    if(currentProfile?.is_provider){
-      html += `
-        <div class="card profile-item" onclick="openProviderDashboard()">
-          <span>🏪 لوحة التاجر</span><span>‹</span>
-        </div>
-      `;
-    }else{
-      html += `
-        <div class="card profile-item" onclick="showScreen('becomeProviderScreen')">
-          <span>✨ كن شريكًا معنا</span><span>‹</span>
-        </div>
-      `;
-    }
-
-    businessLinks.innerHTML = html;
-  }
-}
-
-
-/* ======================================================
-   SESSION RESTORE
-====================================================== */
-
-async function restoreSession(){
-  const { data:{ session } } = await sb.auth.getSession();
-  if(session){
-    await loadUser(session.user);
-  }else{
-    showScreen('loginScreen');
-  }
-}
-
-restoreSession();
-
-
-/* ======================================================
-   PRODUCTS
-====================================================== */
-
-async function loadProducts(){
-  const { data, error } = await sb.from('products').select('*').eq('is_active',true).order('created_at',{ ascending:false });
-
-  if(error){
-    console.error(error);
-    allProducts=[];
-    return [];
-  }
-
-  allProducts=data || [];
-  return allProducts;
-}
-
-
-async function loadHomeProducts(){
-  const container = document.getElementById('homeProducts');
-  if(!container) return;
-
-  const products = await loadProducts();
-
-  if(!products.length){
-    container.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">🛒</div>
-        <div class="empty-title">لا توجد منتجات بعد</div>
-        <div class="empty-text">ستظهر هنا المنتجات التي تتم إضافتها إلى BBM STORE.</div>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = `<div class="product-grid">${products.slice(0,6).map(productCard).join('')}</div>`;
-}
-
-
-function productCard(product){
-  const image = product.image_url
-    ? `<img src="${escapeHtml(product.image_url)}" alt="${escapeHtml(product.name || '')}">`
-    : `<span>📦</span>`;
-
-  return `
-    <div class="card product-card">
-      <div class="product-image">${image}</div>
-      <div class="product-info">
-        <div class="product-name">${escapeHtml(product.name || 'منتج')}</div>
-        <div class="product-description">${escapeHtml(product.description || '')}</div>
-        <div class="product-price">${formatMoney(product.price)} دج</div>
-        <div class="product-stock">الكمية: ${product.stock ?? 0}</div>
-        <div class="product-actions">
-          <button class="btn btn-primary btn-small" onclick="createProductOrder('${product.id}')">طلب</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-
-/* ======================================================
-   OPEN PRODUCTS
-====================================================== */
-
-async function openProducts(){
-  showScreen('productsScreen');
-
-  const container = document.getElementById('productsList');
-  container.innerHTML=`<div class="loading"><div class="spinner"></div>جاري تحميل المنتجات...</div>`;
-
-  const products = await loadProducts();
-  renderProducts(products);
-}
-
-
-function renderProducts(products){
-  const container = document.getElementById('productsList');
-
-  if(!products.length){
-    container.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">📦</div>
-        <div class="empty-title">لا توجد منتجات</div>
-        <div class="empty-text">لم تتم إضافة أي منتج حتى الآن.</div>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML=`<div class="product-grid">${products.map(productCard).join('')}</div>`;
-}
-
-
-function filterProducts(){
-  const q = document.getElementById('productSearch').value.trim().toLowerCase();
-
-  const filtered = allProducts.filter(product=>{
-    const name = (product.name || '').toLowerCase();
-    const description = (product.description || '').toLowerCase();
-    const category = (product.category || '').toLowerCase();
-    return( name.includes(q) || description.includes(q) || category.includes(q) );
-  });
-
-  renderProducts(filtered);
-}
-
-
-/* ======================================================
-   ADD PRODUCT
-====================================================== */
-
-function openAddProduct(){
-  editingProductId=null;
-
-  document.getElementById('productName').value='';
-  document.getElementById('productDescription').value='';
-  document.getElementById('productPrice').value='';
-  document.getElementById('productStock').value='0';
-  document.getElementById('productCategory').value='';
-  document.getElementById('productActive').value='true';
-  document.getElementById('productImage').value='';
-  document.getElementById('imagePreview').style.display='none';
-  document.getElementById('saveProductBtn').textContent='إضافة المنتج';
-
-  hideMsg('productMsg');
-  showScreen('addProductScreen');
-}
-
-
-function previewProductImage(event){
-  const file = event.target.files?.[0];
-  const preview = document.getElementById('imagePreview');
-
-  if(!file){
-    preview.style.display='none';
-    return;
-  }
-
-  const url = URL.createObjectURL(file);
-  preview.innerHTML = `<img src="${url}" alt="preview">`;
-  preview.style.display='block';
-}
-
-
-/* ======================================================
-   UPLOAD PRODUCT IMAGE
-====================================================== */
-
-async function uploadProductImage(file){
-  if(!file){ return null; }
-
-  const extension = file.name.split('.').pop();
-  const fileName = `${currentUser.id}/${Date.now()}.${extension}`;
-
-  const { error } = await sb.storage.from('products').upload(fileName, file, { upsert:false, contentType:file.type });
-
-  if(error){ throw error; }
-
-  const { data } = sb.storage.from('products').getPublicUrl(fileName);
-  return data.publicUrl;
-}
-
-
-/* ======================================================
-   UPLOAD AVATAR IMAGE
-====================================================== */
-
-async function uploadAvatarImage(file){
-  if(!file){ return null; }
-
-  const extension = file.name.split('.').pop();
-  const fileName = `${currentUser.id}/${Date.now()}.${extension}`;
-
-  const { error } = await sb.storage.from('avatars').upload(fileName, file, { upsert:false, contentType:file.type });
-
-  if(error){ throw error; }
-
-  const { data } = sb.storage.from('avatars').getPublicUrl(fileName);
-  return data.publicUrl;
-}
-
-
-function previewAvatarImage(event){
-  const file = event.target.files?.[0];
-  const preview = document.getElementById('editAvatarPreview');
-
-  if(!file){ return; }
-
-  const url = URL.createObjectURL(file);
-  preview.innerHTML = `<img src="${url}" alt="preview">`;
-}
-
-
-/* ======================================================
-   SAVE PRODUCT
-====================================================== */
-
-async function saveProduct(){
-  if(!currentUser){
-    showMsg('productMsg','يجب تسجيل الدخول أولًا.','error');
-    return;
-  }
-
-  const name = document.getElementById('productName').value.trim();
-  const description = document.getElementById('productDescription').value.trim();
-  const price = Number(document.getElementById('productPrice').value);
-  const stock = Number(document.getElementById('productStock').value);
-  const category = document.getElementById('productCategory').value.trim();
-  const isActive = document.getElementById('productActive').value === 'true';
-  const file = document.getElementById('productImage').files?.[0];
-
-  if(!name){
-    showMsg('productMsg','أدخل اسم المنتج.','error');
-    return;
-  }
-
-  if(!Number.isFinite(price) || price < 0){
-    showMsg('productMsg','أدخل سعرًا صحيحًا.','error');
-    return;
-  }
-
-  if(!Number.isFinite(stock) || stock < 0){
-    showMsg('productMsg','أدخل كمية صحيحة.','error');
-    return;
-  }
-
-  const btn = document.getElementById('saveProductBtn');
-  btn.disabled=true;
-  btn.textContent='جاري الحفظ...';
-
-  try{
-    let imageUrl=null;
-
-    if(file){
-      imageUrl = await uploadProductImage(file);
-    }
-
-    const productData={
-      owner_id:currentUser.id,
-      name:name,
-      description:description,
-      price:price,
-      stock:stock,
-      category:category || null,
-      is_active:isActive
-    };
-
-    if(imageUrl){ productData.image_url=imageUrl; }
-
-    let response;
-
-    if(editingProductId){
-      response = await sb.from('products').update(productData).eq('id',editingProductId).eq('owner_id',currentUser.id);
-    }else{
-      response = await sb.from('products').insert(productData);
-    }
-
-    if(response.error){ throw response.error; }
-
-    showMsg('productMsg', editingProductId ? 'تم تعديل المنتج بنجاح.' : 'تمت إضافة المنتج بنجاح.', 'success');
-
-    setTimeout(()=>{ openMyProducts(); },700);
-
-  }catch(error){
-    console.error(error);
-    showMsg('productMsg','تعذر حفظ المنتج: ' + error.message,'error');
-  }finally{
-    btn.disabled=false;
-    btn.textContent = editingProductId ? 'حفظ التعديلات' : 'إضافة المنتج';
-  }
-}
-
-
-/* ======================================================
-   MY PRODUCTS
-====================================================== */
-
-async function openMyProducts(){
-  showScreen('myProductsScreen');
-
-  const container = document.getElementById('myProductsList');
-  container.innerHTML=`<div class="loading"><div class="spinner"></div>جاري التحميل...</div>`;
-
-  if(!currentUser){
-    container.innerHTML=`<div class="empty">يجب تسجيل الدخول.</div>`;
-    return;
-  }
-
-  const { data, error } = await sb.from('products').select('*').eq('owner_id',currentUser.id).order('created_at',{ ascending:false });
-
-  if(error){
-    container.innerHTML=`
-      <div class="empty">
-        <div class="empty-title">تعذر تحميل المنتجات</div>
-        <div class="empty-text">${escapeHtml(error.message)}</div>
-      </div>
-    `;
-    return;
-  }
-
-  if(!data?.length){
-    container.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">📦</div>
-        <div class="empty-title">لا توجد منتجات</div>
-        <div class="empty-text">أضف المنتجات التي تريد عرضها في BBM STORE.</div>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = data.map(adminProductCard).join('');
-}
-
-
-function adminProductCard(product){
-  const image = product.image_url ? `<img src="${escapeHtml(product.image_url)}">` : '';
-
-  return `
-    <div class="card admin-product">
-      <div class="admin-product-img">${image}</div>
-      <div class="admin-product-main">
-        <div class="admin-product-name">${escapeHtml(product.name || '')}</div>
-        <div class="admin-product-price">${formatMoney(product.price)} دج</div>
-      </div>
-      <div class="admin-actions">
-        <button class="btn btn-secondary btn-small" onclick="editProduct('${product.id}')">✏️</button>
-        <button class="btn btn-danger btn-small" onclick="deleteProduct('${product.id}')">🗑️</button>
-      </div>
-    </div>
-  `;
-}
-
-
-/* ======================================================
-   EDIT PRODUCT
-====================================================== */
-
-async function editProduct(id){
-  const { data, error } = await sb.from('products').select('*').eq('id',id).eq('owner_id',currentUser.id).single();
-
-  if(error){
-    alert('تعذر تحميل المنتج: ' + error.message);
-    return;
-  }
-
-  editingProductId=id;
-
-  document.getElementById('productName').value=data.name || '';
-  document.getElementById('productDescription').value=data.description || '';
-  document.getElementById('productPrice').value=data.price ?? '';
-  document.getElementById('productStock').value=data.stock ?? 0;
-  document.getElementById('productCategory').value=data.category || '';
-  document.getElementById('productActive').value=data.is_active ? 'true':'false';
-  document.getElementById('saveProductBtn').textContent='حفظ التعديلات';
-
-  const preview = document.getElementById('imagePreview');
-
-  if(data.image_url){
-    preview.innerHTML = `<img src="${escapeHtml(data.image_url)}">`;
-    preview.style.display='block';
-  }else{
-    preview.style.display='none';
-  }
-
-  showScreen('addProductScreen');
-}
-
-
-/* ======================================================
-   DELETE PRODUCT
-====================================================== */
-
-async function deleteProduct(id){
-  if(!confirm('هل تريد حذف هذا المنتج؟')){ return; }
-
-  const { error } = await sb.from('products').delete().eq('id',id).eq('owner_id',currentUser.id);
-
-  if(error){
-    alert('تعذر حذف المنتج: ' + error.message);
-    return;
-  }
-
-  openMyProducts();
-}
-
-
-/* ======================================================
-   SEARCH
-====================================================== */
-
-function openSearch(){
-  showScreen('searchScreen');
-  setTimeout(()=>{ document.getElementById('globalSearch')?.focus(); },100);
-}
-
-
-async function globalSearch(){
-  const q = document.getElementById('globalSearch').value.trim().toLowerCase();
-  const container = document.getElementById('searchResults');
-
-  if(!q){
-    container.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">🔎</div>
-        <div class="empty-title">ابدأ البحث</div>
-        <div class="empty-text">اكتب اسم المنتج أو الخدمة.</div>
-      </div>
-    `;
-    return;
-  }
-
-  const products = await loadProducts();
-
-  const matches = products.filter(product=>{
-    const name = (product.name || '').toLowerCase();
-    const description = (product.description || '').toLowerCase();
-    const category = (product.category || '').toLowerCase();
-    return( name.includes(q) || description.includes(q) || category.includes(q) );
-  });
-
-  if(!matches.length){
-    container.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">😕</div>
-        <div class="empty-title">لا توجد نتائج</div>
-        <div class="empty-text">لم نجد ما تبحث عنه.</div>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = matches.map(productCard).join('');
-}
-
-
-/* ======================================================
-   ORDERS
-====================================================== */
-
-async function createProductOrder(productId){
-  if(!currentUser){
-    alert('يجب تسجيل الدخول أولًا.');
-    return;
-  }
-
-  const { data:product, error } = await sb.from('products').select('*').eq('id',productId).single();
-
-  if(error){
-    alert('تعذر تحميل المنتج.');
-    return;
-  }
-
-  if(!product.is_active){
-    alert('هذا المنتج غير متاح حاليًا.');
-    return;
-  }
-
-  if(Number(product.stock) <= 0){
-    alert('هذا المنتج غير متوفر حاليًا.');
-    return;
-  }
-
-  const quantityText = prompt('أدخل الكمية المطلوبة:','1');
-
-  if(quantityText===null){ return; }
-
-  const quantity = Number(quantityText);
-
-  if(!Number.isInteger(quantity) || quantity<=0){
-    alert('أدخل كمية صحيحة.');
-    return;
-  }
-
-  if(quantity>Number(product.stock)){
-    alert('الكمية المطلوبة أكبر من المخزون.');
-    return;
-  }
-
-  const total = Number(product.price) * quantity;
-
-  const { error:orderError } = await sb.from('orders').insert({
-    customer_id:currentUser.id,
-    seller_id:product.owner_id,
-    status:'pending',
-    total_amount:total
-  });
-
-  if(orderError){
-    alert('تعذر إنشاء الطلب: ' + orderError.message);
-    return;
-  }
-
-  alert('تم إرسال الطلب بنجاح.');
-  openOrders();
-}
-
-
-async function openOrders(){
-  showScreen('ordersScreen');
-
-  const container = document.getElementById('ordersList');
-  container.innerHTML=`<div class="loading"><div class="spinner"></div>جاري تحميل الطلبات...</div>`;
-
-  if(!currentUser){
-    container.innerHTML='<div class="empty">يجب تسجيل الدخول.</div>';
-    return;
-  }
-
-  const { data, error } = await sb.from('orders').select('*').eq('customer_id',currentUser.id).order('created_at',{ ascending:false });
-
-  if(error){
-    container.innerHTML=`<div class="empty">تعذر تحميل الطلبات.</div>`;
-    return;
-  }
-
-  if(!data?.length){
-    container.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">📋</div>
-        <div class="empty-title">لا توجد طلبات</div>
-        <div class="empty-text">ستظهر طلباتك هنا.</div>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = data.map(order=>`
-    <div class="card order">
-      <div class="order-head">
-        <div class="order-title">طلب #${escapeHtml(String(order.id).slice(0,8))}</div>
-        <div class="status">${escapeHtml(order.status || 'pending')}</div>
-      </div>
-      <div class="order-meta">
-        المبلغ: ${formatMoney(order.total_amount)} دج
-        <br>
-        تاريخ الطلب: ${formatDate(order.created_at)}
-      </div>
-    </div>
-  `).join('');
-}
-
-
-/* ======================================================
-   WALLET
-====================================================== */
-
-function selectPayment(element,method){
-  document.querySelectorAll('.payment-method').forEach(item=>{ item.classList.remove('selected'); });
-  element.classList.add('selected');
-  selectedPayment=method;
-}
-
-
-async function requestWalletRecharge(){
-  if(!currentUser){
-    showMsg('walletMsg','يجب تسجيل الدخول.','error');
-    return;
-  }
-
-  const amount = Number(document.getElementById('walletAmount').value);
-
-  if(!selectedPayment){
-    showMsg('walletMsg','اختر طريقة الدفع.','error');
-    return;
-  }
-
-  if(!amount || amount<=0){
-    showMsg('walletMsg','أدخل مبلغًا صحيحًا.','error');
-    return;
-  }
-
-  const { error } = await sb.from('wallet_requests').insert({
-    user_id:currentUser.id,
-    method:selectedPayment,
-    amount:amount,
-    status:'pending'
-  });
-
-  if(error){
-    showMsg('walletMsg','تعذر إرسال الطلب: ' + error.message,'error');
-    return;
-  }
-
-  showMsg('walletMsg','تم إرسال طلب الشحن وبانتظار المراجعة.','success');
-  document.getElementById('walletAmount').value='';
-  loadWalletHistory();
-}
-
-
-async function loadWalletHistory(){
-  const container = document.getElementById('walletHistory');
-  if(!container || !currentUser){ return; }
-
-  const { data, error } = await sb.from('wallet_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ ascending:false });
-
-  if(error){ return; }
-
-  if(!data?.length){
-    container.innerHTML=`<div class="empty">لا توجد عمليات شحن.</div>`;
-    return;
-  }
-
-  container.innerHTML = data.map(item=>`
-    <div class="card order">
-      <div class="order-head">
-        <div class="order-title">${formatMoney(item.amount)} دج</div>
-        <div class="status">${escapeHtml(item.status || 'pending')}</div>
-      </div>
-      <div class="order-meta">طريقة الدفع: ${escapeHtml(item.method || '')}</div>
-    </div>
-  `).join('');
-}
-
-
-async function openWallet(){
-  showScreen('walletScreen');
-  selectedPayment=null;
-  document.querySelectorAll('.payment-method').forEach(item=>{ item.classList.remove('selected'); });
-  await loadWalletHistory();
-}
-
-
-/* ======================================================
-   ACCOUNT
-====================================================== */
-
-function openAccount(){
-  updateUserUI();
-  showScreen('accountScreen');
-}
-
-
-let pendingProfileLat = null;
-let pendingProfileLng = null;
-
-function openEditProfile(){
-  document.getElementById('editName').value = currentProfile?.full_name || '';
-  document.getElementById('editBio').value = currentProfile?.bio || '';
-  document.getElementById('editPhone').value = currentProfile?.phone || '';
-  document.getElementById('editGender').value = currentProfile?.gender || '';
-  document.getElementById('editBirthDate').value = currentProfile?.birth_date || '';
-  document.getElementById('editWilaya').value = currentProfile?.wilaya || '';
-  document.getElementById('editCommune').value = currentProfile?.commune || '';
-  document.getElementById('editAddress').value = currentProfile?.address || '';
-  document.getElementById('editAvatarFile').value = '';
-
-  const preview = document.getElementById('editAvatarPreview');
-  preview.innerHTML = currentProfile?.avatar_url ? `<img src="${escapeHtml(currentProfile.avatar_url)}">` : '👤';
-
-  pendingProfileLat = currentProfile?.latitude ?? null;
-  pendingProfileLng = currentProfile?.longitude ?? null;
-
-  const locationStatus = document.getElementById('editLocationStatus');
-  locationStatus.textContent = (pendingProfileLat && pendingProfileLng)
-    ? `${Number(pendingProfileLat).toFixed(4)}, ${Number(pendingProfileLng).toFixed(4)}`
-    : 'لم يُحدَّد بعد';
-
-  hideMsg('profileMsg');
-  showScreen('editProfileScreen');
-}
-
-
-function captureProfileLocation(){
-  const locationStatus = document.getElementById('editLocationStatus');
-
-  if(!navigator.geolocation){
-    locationStatus.textContent = 'الموقع غير مدعوم على هذا الجهاز';
-    return;
-  }
-
-  locationStatus.textContent = 'جاري تحديد الموقع...';
-
-  navigator.geolocation.getCurrentPosition(
-    position=>{
-      pendingProfileLat = position.coords.latitude;
-      pendingProfileLng = position.coords.longitude;
-      locationStatus.textContent = `${pendingProfileLat.toFixed(4)}, ${pendingProfileLng.toFixed(4)}`;
-    },
-    error=>{
-      console.error(error);
-      locationStatus.textContent = 'تعذر تحديد الموقع';
-    },
-    { enableHighAccuracy:true, timeout:10000, maximumAge:0 }
-  );
-}
-
-
-async function saveProfile(){
-  const name = document.getElementById('editName').value.trim();
-  const bio = document.getElementById('editBio').value.trim();
-  const phone = document.getElementById('editPhone').value.trim();
-  const gender = document.getElementById('editGender').value || null;
-  const birthDate = document.getElementById('editBirthDate').value || null;
-  const wilaya = document.getElementById('editWilaya').value.trim();
-  const commune = document.getElementById('editCommune').value.trim();
-  const address = document.getElementById('editAddress').value.trim();
-  const avatarFile = document.getElementById('editAvatarFile').files?.[0];
-
-  if(!name){
-    showMsg('profileMsg','أدخل اسمك.','error');
-    return;
-  }
-
-  try{
-    let avatarUrl = null;
-
-    if(avatarFile){
-      avatarUrl = await uploadAvatarImage(avatarFile);
-    }
-
-    const updateData = {
-      full_name:name,
-      bio:bio || null,
-      phone:phone,
-      gender:gender,
-      birth_date:birthDate,
-      wilaya:wilaya || null,
-      commune:commune || null,
-      address:address
-    };
-
-    if(avatarUrl){ updateData.avatar_url = avatarUrl; }
-
-    if(pendingProfileLat && pendingProfileLng){
-      updateData.latitude = pendingProfileLat;
-      updateData.longitude = pendingProfileLng;
-    }
-
-    const { error } = await sb.from('profiles').update(updateData).eq('id',currentUser.id);
-
-    if(error){ throw error; }
-
-    currentProfile={ ...currentProfile, ...updateData };
-
-    updateUserUI();
-
-    showMsg('profileMsg','تم حفظ التغييرات.','success');
-
-  }catch(error){
-    showMsg('profileMsg','تعذر الحفظ: ' + error.message,'error');
-  }
-}
-
-
-/* ======================================================
-   NOTIFICATIONS
-====================================================== */
-
-async function openNotifications(){
-  showScreen('notificationsScreen');
-
-  const container = document.getElementById('notificationsList');
-  container.innerHTML=`<div class="loading"><div class="spinner"></div>جاري تحميل الإشعارات...</div>`;
-
-  if(!currentUser){ return; }
-
-  const { data, error } = await sb.from('notifications').select('*').eq('user_id',currentUser.id).order('created_at',{ ascending:false });
-
-  if(error){
-    container.innerHTML=`<div class="empty">تعذر تحميل الإشعارات.</div>`;
-    return;
-  }
-
-  if(!data?.length){
-    container.innerHTML=`
-      <div class="empty">
-        <div class="empty-icon">🔔</div>
-        <div class="empty-title">لا توجد إشعارات</div>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = data.map(n=>`
-    <div class="card" style="padding:15px;margin-bottom:10px;">
-      <div style="font-weight:900;">🔔 ${escapeHtml(n.title || '')}</div>
-      <div style="color:var(--muted);font-size:12px;margin-top:5px;line-height:1.7;">${escapeHtml(n.body || '')}</div>
-    </div>
-  `).join('');
-}
-
-
-async function checkNotifications(){
-  if(!currentUser){ return; }
-
-  const { data } = await sb.from('notifications').select('id').eq('user_id',currentUser.id).eq('is_read',false).limit(1);
-
-  const dot = document.getElementById('notificationDot');
-  if(dot){ dot.style.display = data?.length ? 'block':'none'; }
-}
-
-
-/* ======================================================
-   LOCATION
-====================================================== */
-
-function detectLocation(){
-  const label = document.getElementById('locationLabel');
-
-  if(!navigator.geolocation){
-    label.textContent = 'الموقع غير مدعوم';
-    return;
-  }
-
-  label.textContent = 'جاري تحديد الموقع...';
-
-  navigator.geolocation.getCurrentPosition(
-    async position=>{
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-
-      label.textContent = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-
-      document.getElementById('coordinates').textContent = `خط العرض: ${lat.toFixed(6)} — خط الطول: ${lng.toFixed(6)}`;
-
-      showScreen('mapScreen');
-    },
-    error=>{
-      console.error(error);
-      label.textContent = 'تعذر تحديد الموقع';
-    },
-    { enableHighAccuracy:true, timeout:10000, maximumAge:0 }
-  );
-}
-
-
-/* ======================================================
-   WILAYAS — القائمة الرسمية الكاملة (69 ولاية)
-   القانون رقم 06-26 الصادر في الجريدة الرسمية بتاريخ 5 أفريل 2026
-====================================================== */
-
-const WILAYAS = [
-  { code:"01", ar:"أدرار", fr:"Adrar" },
-  { code:"02", ar:"الشلف", fr:"Chlef" },
-  { code:"03", ar:"الأغواط", fr:"Laghouat" },
-  { code:"04", ar:"أم البواقي", fr:"Oum El Bouaghi" },
-  { code:"05", ar:"باتنة", fr:"Batna" },
-  { code:"06", ar:"بجاية", fr:"Béjaïa" },
-  { code:"07", ar:"بسكرة", fr:"Biskra" },
-  { code:"08", ar:"بشار", fr:"Béchar" },
-  { code:"09", ar:"البليدة", fr:"Blida" },
-  { code:"10", ar:"البويرة", fr:"Bouira" },
-  { code:"11", ar:"تمنراست", fr:"Tamanrasset" },
-  { code:"12", ar:"تبسة", fr:"Tébessa" },
-  { code:"13", ar:"تلمسان", fr:"Tlemcen" },
-  { code:"14", ar:"تيارت", fr:"Tiaret" },
-  { code:"15", ar:"تيزي وزو", fr:"Tizi Ouzou" },
-  { code:"16", ar:"الجزائر العاصمة", fr:"Alger" },
-  { code:"17", ar:"الجلفة", fr:"Djelfa" },
-  { code:"18", ar:"جيجل", fr:"Jijel" },
-  { code:"19", ar:"سطيف", fr:"Sétif" },
-  { code:"20", ar:"سعيدة", fr:"Saïda" },
-  { code:"21", ar:"سكيكدة", fr:"Skikda" },
-  { code:"22", ar:"سيدي بلعباس", fr:"Sidi Bel Abbès" },
-  { code:"23", ar:"عنابة", fr:"Annaba" },
-  { code:"24", ar:"قالمة", fr:"Guelma" },
-  { code:"25", ar:"قسنطينة", fr:"Constantine" },
-  { code:"26", ar:"المدية", fr:"Médéa" },
-  { code:"27", ar:"مستغانم", fr:"Mostaganem" },
-  { code:"28", ar:"المسيلة", fr:"M'Sila" },
-  { code:"29", ar:"معسكر", fr:"Mascara" },
-  { code:"30", ar:"ورقلة", fr:"Ouargla" },
-  { code:"31", ar:"وهران", fr:"Oran" },
-  { code:"32", ar:"البيض", fr:"El Bayadh" },
-  { code:"33", ar:"إليزي", fr:"Illizi" },
-  { code:"34", ar:"برج بوعريريج", fr:"Bordj Bou Arréridj" },
-  { code:"35", ar:"بومرداس", fr:"Boumerdès" },
-  { code:"36", ar:"الطارف", fr:"El Tarf" },
-  { code:"37", ar:"تندوف", fr:"Tindouf" },
-  { code:"38", ar:"تيسمسيلت", fr:"Tissemsilt" },
-  { code:"39", ar:"الوادي", fr:"El Oued" },
-  { code:"40", ar:"خنشلة", fr:"Khenchela" },
-  { code:"41", ar:"سوق أهراس", fr:"Souk Ahras" },
-  { code:"42", ar:"تيبازة", fr:"Tipaza" },
-  { code:"43", ar:"ميلة", fr:"Mila" },
-  { code:"44", ar:"عين الدفلى", fr:"Aïn Defla" },
-  { code:"45", ar:"النعامة", fr:"Naâma" },
-  { code:"46", ar:"عين تموشنت", fr:"Aïn Témouchent" },
-  { code:"47", ar:"غرداية", fr:"Ghardaïa" },
-  { code:"48", ar:"غليزان", fr:"Relizane" },
-  { code:"49", ar:"تيميمون", fr:"Timimoun" },
-  { code:"50", ar:"برج باجي مختار", fr:"Bordj Badji Mokhtar" },
-  { code:"51", ar:"أولاد جلال", fr:"Ouled Djellal" },
-  { code:"52", ar:"بني عباس", fr:"Béni Abbès" },
-  { code:"53", ar:"عين صالح", fr:"In Salah" },
-  { code:"54", ar:"عين قزام", fr:"In Guezzam" },
-  { code:"55", ar:"تقرت", fr:"Touggourt" },
-  { code:"56", ar:"جانت", fr:"Djanet" },
-  { code:"57", ar:"المغير", fr:"El M'Ghair" },
-  { code:"58", ar:"المنيعة", fr:"El Meniaa" },
-  { code:"59", ar:"آفلو", fr:"Aflou" },
-  { code:"60", ar:"بريكة", fr:"Barika" },
-  { code:"61", ar:"القنطرة", fr:"El Kantara" },
-  { code:"62", ar:"بئر العاتر", fr:"Bir El Ater" },
-  { code:"63", ar:"العريشة", fr:"El Aricha" },
-  { code:"64", ar:"قصر الشلالة", fr:"Ksar Chellala" },
-  { code:"65", ar:"عين وسارة", fr:"Ain Oussara" },
-  { code:"66", ar:"مسعد", fr:"Messaad" },
-  { code:"67", ar:"قصر البخاري", fr:"Ksar El Boukhari" },
-  { code:"68", ar:"بوسعادة", fr:"Bousaada" },
-  { code:"69", ar:"الأبيض سيدي الشيخ", fr:"El Abiodh Sidi Cheikh" }
-];
-
-
-function renderWilayaList(list){
-  const container = document.getElementById('wilayaList');
-  if(!container) return;
-
-  const current = currentProfile?.wilaya || '';
-
-  if(!list.length){
-    container.innerHTML = `<div class="empty">لا توجد نتائج مطابقة.</div>`;
-    return;
-  }
-
-  container.innerHTML = list.map(w => `
-    <div class="card wilaya-item ${w.ar === current ? 'selected' : ''}" onclick="selectWilaya('${w.ar}')">
-      <div>
-        <div class="wilaya-name">${w.code} — ${w.ar}</div>
-        <div class="wilaya-sub">${w.fr}</div>
-      </div>
-      ${w.ar === current ? '<span style="color:var(--gold);">✓</span>' : '<span>›</span>'}
-    </div>
-  `).join('');
-}
-
-
-function openWilayaScreen(){
-  document.getElementById('wilayaSearch').value = '';
-  renderWilayaList(WILAYAS);
-  showScreen('wilayaScreen');
-}
-
-
-function filterWilayas(){
-  const q = document.getElementById('wilayaSearch').value.trim().toLowerCase();
-
-  if(!q){
-    renderWilayaList(WILAYAS);
-    return;
-  }
-
-  const filtered = WILAYAS.filter(w =>
-    w.ar.toLowerCase().includes(q) ||
-    w.fr.toLowerCase().includes(q) ||
-    w.code.includes(q)
-  );
-
-  renderWilayaList(filtered);
-}
-
-
-async function selectWilaya(name){
-  document.getElementById('locationLabel').textContent = name;
-
-  const editWilayaInput = document.getElementById('editWilaya');
-  if(editWilayaInput){ editWilayaInput.value = name; }
-
-  if(currentUser){
-    await sb.from('profiles').update({ wilaya: name }).eq('id', currentUser.id);
-    currentProfile = { ...currentProfile, wilaya: name };
-  }
-
-  showScreen('homeScreen');
-}
-
-
-/* ======================================================
-   FILTER / SORT
-====================================================== */
-
-let sortMode = 'nearest';
-
-function setSortMode(mode, el){
-  sortMode = mode;
-  document.querySelectorAll('#sortNearest, #sortRating').forEach(chip => chip.classList.remove('active'));
-  el.classList.add('active');
-}
-
-
-/* ======================================================
-   BECOME PROVIDER
-====================================================== */
-
-let providerType = 'seller';
-
-function setProviderType(type, el){
-  providerType = type;
-  document.querySelectorAll('#typeSeller, #typeService').forEach(chip => chip.classList.remove('active'));
-  el.classList.add('active');
-}
-
-async function submitBecomeProvider(){
-  if(!currentUser){
-    showMsg('providerMsg', 'يجب تسجيل الدخول أولًا.', 'error');
-    return;
-  }
-
-  const businessName = document.getElementById('providerBusinessName').value.trim();
-  const category = document.getElementById('providerCategory').value.trim();
-  const phone = document.getElementById('providerPhone').value.trim();
-
-  if(!businessName){
-    showMsg('providerMsg', 'أدخل اسم المتجر أو النشاط.', 'error');
-    return;
-  }
-
-  const btn = document.getElementById('providerSubmitBtn');
-  btn.disabled = true;
-  btn.textContent = 'جاري الإرسال...';
-
-  try{
-    const { error } = await sb.rpc('become_provider', {
-      p_business_name: businessName,
-      p_business_type: providerType,
-      p_business_category: category || null,
-      p_phone: phone || null
-    });
-
-    if(error){ throw error; }
-
-    currentProfile = {
-      ...currentProfile,
-      is_provider: true,
-      business_name: businessName,
-      business_type: providerType,
-      business_category: category
-    };
-
-    showMsg('providerMsg', 'تم تفعيل حساب الشريك بنجاح!', 'success');
-
-    updateUserUI();
-
-    setTimeout(() => openProviderDashboard(), 800);
-
-  }catch(error){
-    showMsg('providerMsg', 'تعذر التفعيل: ' + error.message, 'error');
-  }finally{
-    btn.disabled = false;
-    btn.textContent = 'تأكيد وإرسال طلب الشراكة';
-  }
-}
-
-async function openProviderDashboard(){
-  showScreen('providerDashboardScreen');
-
-  if(!currentUser) return;
-
-  const { data: products } = await sb.from('products').select('id').eq('owner_id', currentUser.id);
-  document.getElementById('providerProductCount').textContent = products?.length ?? 0;
-
-  const { data: orders } = await sb.from('orders').select('id').eq('seller_id', currentUser.id);
-  document.getElementById('providerOrderCount').textContent = orders?.length ?? 0;
-}
-
-
-/* ======================================================
-   ADMIN DASHBOARD
-====================================================== */
-
-function openAdmin(){
-  showScreen('adminScreen');
-  loadAdminStats();
-}
-
-async function loadAdminStats(){
-  const container = document.getElementById('adminStats');
-
-  const { data, error } = await sb.rpc('admin_get_stats');
-
-  if(error || !data?.length){
-    container.innerHTML = `<div class="empty" style="grid-column:1/-1;">تعذر تحميل الإحصائيات.</div>`;
-    return;
-  }
-
-  const stats = data[0];
-
-  container.innerHTML = `
-    <div class="card stat-chip" style="padding:16px;">
-      <div class="num" style="font-size:20px;">${stats.total_users}</div>
-      <div class="lbl">إجمالي المستخدمين</div>
-    </div>
-    <div class="card stat-chip" style="padding:16px;">
-      <div class="num" style="font-size:20px;">${stats.total_providers}</div>
-      <div class="lbl">الشركاء</div>
-    </div>
-    <div class="card stat-chip" style="padding:16px;">
-      <div class="num" style="font-size:20px;">${stats.total_orders}</div>
-      <div class="lbl">إجمالي الطلبات</div>
-    </div>
-    <div class="card stat-chip" style="padding:16px;">
-      <div class="num" style="font-size:20px;">${formatMoney(stats.platform_revenue)} دج</div>
-      <div class="lbl">أرباح المنصة</div>
-    </div>
-  `;
-}
-
-async function openAdminUsers(){
-  showScreen('adminUsersScreen');
-
-  const container = document.getElementById('adminUsersList');
-
-  const { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false });
-
-  if(error || !data?.length){
-    container.innerHTML = `<div class="empty">لا يوجد مستخدمون.</div>`;
-    return;
-  }
-
-  container.innerHTML = data.map(u => `
-    <div class="card admin-product">
-      <div class="admin-product-main">
-        <div class="admin-product-name">
-          ${escapeHtml(u.full_name || 'مستخدم')}
-          ${u.is_verified ? ' ✔️' : ''}
-        </div>
-        <div class="admin-product-price">
-          ${escapeHtml(ROLE_LABELS[u.role] || u.role)}
-          ${u.is_active === false ? ' — معطّل' : ''}
-        </div>
-      </div>
-      <div class="admin-actions">
-        <button class="btn btn-secondary btn-small" onclick="adminToggleActive('${u.id}', ${u.is_active === false})">
-          ${u.is_active === false ? 'تفعيل' : 'تعطيل'}
-        </button>
-      </div>
-    </div>
-  `).join('');
-}
-
-async function adminToggleActive(userId, makeActive){
-  await sb.rpc('admin_set_user_status', {
-    p_user_id: userId,
-    p_is_active: makeActive,
-    p_is_verified: null,
-    p_is_banned: null
-  });
-
-  openAdminUsers();
-}
-
-async function openAdminWallet(){
-  showScreen('adminWalletScreen');
-
-  const container = document.getElementById('adminWalletList');
-
-  const { data, error } = await sb.from('wallet_requests').select('*').eq('status', 'pending').order('created_at', { ascending: false });
-
-  if(error || !data?.length){
-    container.innerHTML = `<div class="empty">لا توجد طلبات معلّقة.</div>`;
-    return;
-  }
-
-  container.innerHTML = data.map(r => `
-    <div class="card order">
-      <div class="order-head">
-        <div class="order-title">${formatMoney(r.amount)} دج</div>
-        <div class="status">${escapeHtml(r.method)}</div>
-      </div>
-      <div class="product-actions" style="margin-top:12px;">
-        <button class="btn btn-primary btn-small" onclick="adminApproveTopup('${r.id}')">موافقة</button>
-        <button class="btn btn-danger btn-small" onclick="adminRejectTopup('${r.id}')">رفض</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-async function adminApproveTopup(id){
-  await sb.rpc('admin_approve_topup', { p_request_id: id });
-  openAdminWallet();
-}
-
-async function adminRejectTopup(id){
-  await sb.rpc('admin_reject_topup', { p_request_id: id });
-  openAdminWallet();
-}
-
-
-/* ======================================================
-   SERVICES
-====================================================== */
-
-function openServices(){
-  showScreen('servicesScreen');
-}
-
-function openAllServices(){
-  showScreen('servicesScreen');
-}
-
-
-/* ======================================================
-   UTILITIES
-====================================================== */
-
-function formatMoney(value){
-  const number = Number(value || 0);
-  return new Intl.NumberFormat('ar-DZ', { maximumFractionDigits:2 }).format(number);
-}
-
-function formatDate(value){
-  if(!value){ return ''; }
-  try{
-    return new Date(value).toLocaleString('ar-DZ');
-  }catch{
-    return value;
-  }
-}
-
-function escapeHtml(value){
-  return String(value ?? '')
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'","&#039;");
-}
-
-
-/* ======================================================
-   SUPABASE AUTH EVENTS
-====================================================== */
-
-sb.auth.onAuthStateChange(
-  async(event,session)=>{
-    if(event === 'SIGNED_OUT'){
-      currentUser=null;
-      currentProfile=null;
-      showScreen('loginScreen');
-    }
-  }
-);
-
-
-/* ======================================================
-   AUTO REFRESH
-====================================================== */
-
-setInterval(()=>{
-  if(currentUser){
-    checkNotifications();
-  }
-},30000);
-
-</script>
-</div>
-</body>
-</html>
+    <button class="
