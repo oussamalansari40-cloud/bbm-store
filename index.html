@@ -1,2129 +1,2323 @@
-<!DOCTYPE html>  <html lang="ar" dir="rtl">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">  
-<title>BBM STORE</title>  
-<link rel="preconnect" href="https://fonts.googleapis.com">  
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">  
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  
-<style>  
-:root{  
-  --bg:#160f08;  
-  --card:#241708;  
-  --card2:#2e1c0a;  
-  --gold:#f0a93a;  
-  --gold2:#e0921f;  
-  --gold-soft:#3d2610;  
-  --text:#f6ead3;  
-  --muted:#c2a37e;  
-  --line:#42290f;  
-  --danger:#ff7777;  
-  --success:#75d99a;  
-  --radius:18px;  
-  --shadow:0 8px 24px rgba(0,0,0,.35);  
-}  *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BBM STORE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#160f08;
+  --card:#241708;
+  --card2:#2e1c0a;
+  --gold:#f0a93a;
+  --gold2:#e0921f;
+  --gold-soft:#3d2610;
+  --text:#f6ead3;
+  --muted:#c2a37e;
+  --line:#42290f;
+  --danger:#ff7777;
+  --success:#75d99a;
+  --radius:18px;
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 html{
-scroll-behavior:smooth;
+  scroll-behavior:smooth;
 }
 
 body{
-font-family:'Tajawal',sans-serif;
-background:#050403;
-color:var(--text);
-min-height:100vh;
--webkit-font-smoothing:antialiased;
+  font-family:'Tajawal',sans-serif;
+  background:#050403;
+  color:var(--text);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
 }
 
 button,
 input,
 select,
 textarea{
-font-family:inherit;
+  font-family:inherit;
 }
 
 button{
-cursor:pointer;
+  cursor:pointer;
 }
 
 img{
-max-width:100%;
-display:block;
+  max-width:100%;
+  display:block;
 }
 
 .device{
-width:100%;
-max-width:480px;
-min-height:100vh;
-margin:auto;
-background:var(--bg);
-position:relative;
-overflow-x:hidden;
+  width:100%;
+  max-width:480px;
+  min-height:100vh;
+  margin:auto;
+  background:var(--bg);
+  position:relative;
+  overflow-x:hidden;
 }
 
 .screen{
-display:none;
-min-height:100vh;
-animation:fade .25s ease;
+  display:none;
+  min-height:100vh;
+  animation:fade .25s ease;
 }
 
 .screen.active{
-display:block;
+  display:block;
 }
 
 @keyframes fade{
-from{
-opacity:0;
-transform:translateY(5px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+  from{
+    opacity:0;
+    transform:translateY(5px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 /* =========================
-GENERAL
+   GENERAL
 ========================= */
 
 .topbar{
-min-height:70px;
-padding:16px 20px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-border-bottom:1px solid var(--line);
-background:rgba(15,11,7,.96);
-position:sticky;
-top:0;
-z-index:20;
+  min-height:70px;
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  background:rgba(15,11,7,.96);
+  position:sticky;
+  top:0;
+  z-index:20;
 }
 
 .brand{
-display:flex;
-align-items:center;
-gap:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .brand-icon{
-width:40px;
-height:40px;
-border-radius:12px;
-overflow:hidden;
-background:var(--gold-soft);
-border:1px solid var(--line);
-display:flex;
-align-items:center;
-justify-content:center;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  overflow:hidden;
+  background:var(--gold-soft);
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .brand-icon img{
-width:100%;
-height:100%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .brand-fallback{
-font-weight:900;
-color:var(--gold);
-font-size:14px;
+  font-weight:900;
+  color:var(--gold);
+  font-size:14px;
 }
 
 .brand-name{
-font-size:20px;
-font-weight:900;
-color:var(--gold);
+  font-size:20px;
+  font-weight:900;
+  color:var(--gold);
 }
 
 .container{
-padding:20px;
+  padding:20px;
 }
 
 .section{
-padding:0 20px 22px;
+  padding:0 20px 22px;
 }
 
 .card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:var(--radius);
-box-shadow:var(--shadow);
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
 }
 
 .empty{
-text-align:center;
-padding:45px 20px;
-color:var(--muted);
+  text-align:center;
+  padding:45px 20px;
+  color:var(--muted);
 }
 
 .empty-icon{
-font-size:42px;
-margin-bottom:12px;
+  font-size:42px;
+  margin-bottom:12px;
 }
 
 .empty-title{
-color:var(--text);
-font-size:16px;
-font-weight:900;
-margin-bottom:7px;
+  color:var(--text);
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:7px;
 }
 
 .empty-text{
-font-size:12px;
-line-height:1.8;
+  font-size:12px;
+  line-height:1.8;
 }
 
 .msg{
-display:none;
-padding:11px 12px;
-border-radius:12px;
-font-size:13px;
-margin-bottom:14px;
-text-align:center;
+  display:none;
+  padding:11px 12px;
+  border-radius:12px;
+  font-size:13px;
+  margin-bottom:14px;
+  text-align:center;
 }
 
 .msg.show{
-display:block;
+  display:block;
 }
 
 .msg.error{
-background:rgba(255,80,80,.12);
-color:#ff9999;
-border:1px solid rgba(255,80,80,.2);
+  background:rgba(255,80,80,.12);
+  color:#ff9999;
+  border:1px solid rgba(255,80,80,.2);
 }
 
 .msg.success{
-background:rgba(70,200,120,.1);
-color:var(--success);
-border:1px solid rgba(70,200,120,.2);
+  background:rgba(70,200,120,.1);
+  color:var(--success);
+  border:1px solid rgba(70,200,120,.2);
 }
 
 .msg.info{
-background:var(--gold-soft);
-color:var(--gold);
-border:1px solid var(--line);
+  background:var(--gold-soft);
+  color:var(--gold);
+  border:1px solid var(--line);
 }
 
 .btn{
-border:none;
-border-radius:13px;
-padding:13px 16px;
-font-size:14px;
-font-weight:900;
-transition:.15s;
+  border:none;
+  border-radius:13px;
+  padding:13px 16px;
+  font-size:14px;
+  font-weight:900;
+  transition:.15s;
 }
 
 .btn:active{
-transform:scale(.98);
+  transform:scale(.98);
 }
 
 .btn-primary{
-width:100%;
-background:var(--gold2);
-color:#211505;
+  width:100%;
+  background:var(--gold2);
+  color:#211505;
 }
 
 .btn-secondary{
-width:100%;
-background:transparent;
-border:1px solid var(--line);
-color:var(--text);
+  width:100%;
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--text);
 }
 
 .btn-danger{
-background:rgba(255,80,80,.12);
-color:#ff9999;
-border:1px solid rgba(255,80,80,.2);
+  background:rgba(255,80,80,.12);
+  color:#ff9999;
+  border:1px solid rgba(255,80,80,.2);
 }
 
 .btn-small{
-padding:9px 12px;
-font-size:12px;
+  padding:9px 12px;
+  font-size:12px;
 }
 
 .field{
-margin-bottom:15px;
+  margin-bottom:15px;
 }
 
 .field label{
-display:block;
-color:var(--muted);
-font-size:12px;
-font-weight:800;
-margin-bottom:7px;
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:7px;
 }
 
 .field input,
 .field select,
 .field textarea{
-width:100%;
-background:var(--card2);
-color:var(--text);
-border:1px solid var(--line);
-border-radius:12px;
-padding:13px;
-outline:none;
-font-size:14px;
+  width:100%;
+  background:var(--card2);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:13px;
+  outline:none;
+  font-size:14px;
 }
 
 .field textarea{
-min-height:100px;
-resize:vertical;
+  min-height:100px;
+  resize:vertical;
 }
 
 .field input:focus,
 .field select:focus,
 .field textarea:focus{
-border-color:var(--gold);
+  border-color:var(--gold);
 }
 
 .field input::placeholder,
 .field textarea::placeholder{
-color:#766b57;
+  color:#766b57;
 }
 
 .back{
-color:var(--gold);
-font-size:13px;
-font-weight:900;
-cursor:pointer;
+  color:var(--gold);
+  font-size:13px;
+  font-weight:900;
+  cursor:pointer;
 }
 
 .page-title{
-font-size:19px;
-font-weight:900;
+  font-size:19px;
+  font-weight:900;
 }
 
 /* =========================
-AUTH
+   AUTH
 ========================= */
 
 .auth-hero{
-min-height:300px;
-padding:55px 25px 45px;
-background:
-linear-gradient(
-180deg,
-rgba(15,11,7,.25),
-rgba(15,11,7,.95)
-),
-url('bbm-bg-main.jpg');
-background-size:cover;
-background-position:center;
-border-radius:0 0 32px 32px;
+  min-height:300px;
+  padding:55px 25px 45px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(15,11,7,.25),
+      rgba(15,11,7,.95)
+    ),
+    url('bbm-bg-main.jpg');
+  background-size:cover;
+  background-position:center;
+  border-radius:0 0 32px 32px;
 }
 
 .auth-title{
-margin-top:45px;
-font-size:29px;
-font-weight:900;
-line-height:1.45;
+  margin-top:45px;
+  font-size:29px;
+  font-weight:900;
+  line-height:1.45;
 }
 
 .auth-sub{
-margin-top:8px;
-color:rgba(255,255,255,.7);
-font-size:13px;
+  margin-top:8px;
+  color:rgba(255,255,255,.7);
+  font-size:13px;
 }
 
 .auth-box{
-margin:-25px 20px 30px;
-position:relative;
-z-index:2;
-padding:22px;
+  margin:-25px 20px 30px;
+  position:relative;
+  z-index:2;
+  padding:22px;
 }
 
 .divider{
-display:flex;
-align-items:center;
-gap:10px;
-color:var(--muted);
-font-size:11px;
-margin:18px 0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--muted);
+  font-size:11px;
+  margin:18px 0;
 }
 
 .divider:before,
 .divider:after{
-content:"";
-flex:1;
-height:1px;
-background:var(--line);
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--line);
 }
 
 .switch{
-text-align:center;
-margin-top:15px;
-color:var(--muted);
-font-size:13px;
+  text-align:center;
+  margin-top:15px;
+  color:var(--muted);
+  font-size:13px;
 }
 
 .switch b{
-color:var(--gold);
-cursor:pointer;
+  color:var(--gold);
+  cursor:pointer;
 }
 
 /* =========================
-HOME
+   HOME
 ========================= */
 
 .home-head{
-padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 .notification-btn{
-width:42px;
-height:42px;
-border-radius:50%;
-border:1px solid var(--line);
-background:var(--card);
-color:var(--text);
-position:relative;
-font-size:18px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  position:relative;
+  font-size:18px;
 }
 
 .notification-dot{
-width:8px;
-height:8px;
-background:var(--gold);
-border-radius:50%;
-position:absolute;
-top:8px;
-left:8px;
-display:none;
+  width:8px;
+  height:8px;
+  background:var(--gold);
+  border-radius:50%;
+  position:absolute;
+  top:8px;
+  left:8px;
+  display:none;
 }
 
 .welcome{
-padding:0 20px 18px;
+  padding:0 20px 18px;
 }
 
 .welcome h1{
-font-size:23px;
-font-weight:900;
+  font-size:23px;
+  font-weight:900;
 }
 
 .welcome p{
-color:var(--muted);
-font-size:13px;
-margin-top:5px;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:5px;
 }
 
 .search{
-margin:0 20px 20px;
-background:var(--card);
-border:1px solid var(--line);
-border-radius:14px;
-padding:14px;
-color:var(--muted);
-cursor:pointer;
+  margin:0 20px 20px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  color:var(--muted);
+  cursor:pointer;
 }
 
 .location-chip{
-margin:-8px 20px 22px;
-display:inline-flex;
-background:var(--gold-soft);
-border:1px solid var(--line);
-color:var(--gold);
-padding:8px 12px;
-border-radius:30px;
-font-size:11px;
-font-weight:800;
-cursor:pointer;
+  margin:-8px 20px 22px;
+  display:inline-flex;
+  background:var(--gold-soft);
+  border:1px solid var(--line);
+  color:var(--gold);
+  padding:8px 12px;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
 }
 
 .home-section{
-padding:0 20px 22px;
+  padding:0 20px 22px;
 }
 
 .section-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:13px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:13px;
 }
 
 .section-head h2{
-font-size:17px;
-font-weight:900;
+  font-size:17px;
+  font-weight:900;
 }
 
 .section-head span{
-color:var(--gold);
-font-size:12px;
-font-weight:800;
-cursor:pointer;
+  color:var(--gold);
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
 }
 
 .categories{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
 
 .category{
-padding:18px 15px;
-min-height:120px;
-cursor:pointer;
-transition:.15s;
+  padding:18px 15px;
+  min-height:120px;
+  cursor:pointer;
+  transition:.15s;
 }
 
 .category:active{
-transform:scale(.98);
+  transform:scale(.98);
 }
 
 .category-icon{
-font-size:28px;
-margin-bottom:12px;
+  font-size:28px;
+  margin-bottom:12px;
 }
 
 .category-title{
-font-weight:900;
-font-size:14px;
+  font-weight:900;
+  font-size:14px;
 }
 
 .category-desc{
-color:var(--muted);
-font-size:11px;
-margin-top:4px;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
 }
 
 .category.disabled{
-opacity:.65;
-cursor:default;
+  opacity:.65;
+  cursor:default;
 }
 
 .soon{
-display:inline-block;
-color:var(--muted);
-border:1px solid var(--line);
-border-radius:20px;
-font-size:9px;
-padding:3px 8px;
-margin-top:8px;
+  display:inline-block;
+  color:var(--muted);
+  border:1px solid var(--line);
+  border-radius:20px;
+  font-size:9px;
+  padding:3px 8px;
+  margin-top:8px;
 }
 
 /* =========================
-BOTTOM NAV
+   BOTTOM NAV
 ========================= */
 
 .bottom-nav{
-position:sticky;
-bottom:0;
-z-index:30;
-display:grid;
-grid-template-columns:repeat(5,1fr);
-background:rgba(28,20,11,.98);
-border-top:1px solid var(--line);
-padding:9px 4px 8px;
-backdrop-filter:blur(10px);
+  position:sticky;
+  bottom:0;
+  z-index:30;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  background:rgba(28,20,11,.98);
+  border-top:1px solid var(--line);
+  padding:9px 4px 8px;
+  backdrop-filter:blur(10px);
 }
 
 .nav-item{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:3px;
-color:var(--muted);
-font-size:10px;
-font-weight:800;
-cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  cursor:pointer;
 }
 
 .nav-item.active{
-color:var(--gold);
+  color:var(--gold);
 }
 
 .nav-icon{
-font-size:18px;
+  font-size:18px;
 }
 
 /* =========================
-SEARCH
+   SEARCH
 ========================= */
 
 .search-form{
-margin-bottom:15px;
+  margin-bottom:15px;
 }
 
 .result-item{
-padding:15px;
-margin-bottom:10px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+  padding:15px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 .result-main{
-min-width:0;
+  min-width:0;
 }
 
 .result-name{
-font-weight:900;
-font-size:14px;
+  font-weight:900;
+  font-size:14px;
 }
 
 .result-meta{
-color:var(--muted);
-font-size:11px;
-margin-top:4px;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
 }
 
 /* =========================
-PRODUCTS
+   PRODUCTS
 ========================= */
 
 .product-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
 
 .product-card{
-overflow:hidden;
+  overflow:hidden;
 }
 
 .product-image{
-height:150px;
-background:var(--card2);
-display:flex;
-align-items:center;
-justify-content:center;
-color:var(--muted);
-overflow:hidden;
+  height:150px;
+  background:var(--card2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--muted);
+  overflow:hidden;
 }
 
 .product-image img{
-width:100%;
-height:100%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .product-info{
-padding:12px;
+  padding:12px;
 }
 
 .product-name{
-font-size:14px;
-font-weight:900;
-line-height:1.5;
+  font-size:14px;
+  font-weight:900;
+  line-height:1.5;
 }
 
 .product-description{
-font-size:11px;
-color:var(--muted);
-margin-top:4px;
-min-height:32px;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:4px;
+  min-height:32px;
 }
 
 .product-price{
-color:var(--gold);
-font-size:14px;
-font-weight:900;
-margin-top:8px;
+  color:var(--gold);
+  font-size:14px;
+  font-weight:900;
+  margin-top:8px;
 }
 
 .product-stock{
-color:var(--muted);
-font-size:10px;
-margin-top:4px;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:4px;
 }
 
 .product-actions{
-margin-top:10px;
-display:flex;
-gap:6px;
+  margin-top:10px;
+  display:flex;
+  gap:6px;
 }
 
 .product-actions button{
-flex:1;
+  flex:1;
 }
 
 /* =========================
-ADMIN / PRODUCTS
+   ADMIN / PRODUCTS
 ========================= */
 
 .admin-tools{
-display:flex;
-gap:8px;
-margin-bottom:15px;
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
 }
 
 .admin-tools button{
-flex:1;
+  flex:1;
 }
 
 .admin-product{
-padding:13px;
-margin-bottom:10px;
-display:flex;
-gap:10px;
-align-items:center;
+  padding:13px;
+  margin-bottom:10px;
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
 .admin-product-img{
-width:55px;
-height:55px;
-border-radius:10px;
-overflow:hidden;
-background:var(--card2);
-flex-shrink:0;
+  width:55px;
+  height:55px;
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--card2);
+  flex-shrink:0;
 }
 
 .admin-product-img img{
-width:100%;
-height:100%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .admin-product-main{
-flex:1;
-min-width:0;
+  flex:1;
+  min-width:0;
 }
 
 .admin-product-name{
-font-weight:900;
-font-size:13px;
+  font-weight:900;
+  font-size:13px;
 }
 
 .admin-product-price{
-color:var(--gold);
-font-size:11px;
-margin-top:3px;
+  color:var(--gold);
+  font-size:11px;
+  margin-top:3px;
 }
 
 .admin-actions{
-display:flex;
-gap:5px;
+  display:flex;
+  gap:5px;
 }
 
 /* =========================
-UPLOAD
+   UPLOAD
 ========================= */
 
 .upload-box{
-border:1px dashed var(--line);
-border-radius:14px;
-padding:18px;
-text-align:center;
-color:var(--muted);
-cursor:pointer;
-background:var(--card2);
+  border:1px dashed var(--line);
+  border-radius:14px;
+  padding:18px;
+  text-align:center;
+  color:var(--muted);
+  cursor:pointer;
+  background:var(--card2);
 }
 
 .preview{
-margin-top:10px;
-display:none;
-width:100%;
-height:180px;
-border-radius:14px;
-overflow:hidden;
+  margin-top:10px;
+  display:none;
+  width:100%;
+  height:180px;
+  border-radius:14px;
+  overflow:hidden;
 }
 
 .preview img{
-width:100%;
-height:100%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 /* =========================
-ORDERS
+   ORDERS
 ========================= */
 
 .order{
-padding:16px;
-margin-bottom:12px;
+  padding:16px;
+  margin-bottom:12px;
 }
 
 .order-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
 }
 
 .order-title{
-font-size:14px;
-font-weight:900;
+  font-size:14px;
+  font-weight:900;
 }
 
 .status{
-padding:4px 9px;
-border-radius:20px;
-font-size:10px;
-font-weight:900;
-background:var(--gold-soft);
-color:var(--gold);
+  padding:4px 9px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:900;
+  background:var(--gold-soft);
+  color:var(--gold);
 }
 
 .order-meta{
-color:var(--muted);
-font-size:11px;
-margin-top:8px;
-line-height:1.7;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:8px;
+  line-height:1.7;
 }
 
 /* =========================
-WALLET
+   WALLET
 ========================= */
 
 .balance{
-padding:25px;
-text-align:center;
-margin-bottom:15px;
+  padding:25px;
+  text-align:center;
+  margin-bottom:15px;
 }
 
 .balance-label{
-color:var(--muted);
-font-size:12px;
+  color:var(--muted);
+  font-size:12px;
 }
 
 .balance-number{
-color:var(--gold);
-font-size:32px;
-font-weight:900;
-margin-top:5px;
+  color:var(--gold);
+  font-size:32px;
+  font-weight:900;
+  margin-top:5px;
 }
 
 .payment-method{
-display:flex;
-align-items:center;
-gap:10px;
-padding:14px;
-margin-bottom:9px;
-border:1px solid var(--line);
-border-radius:13px;
-background:var(--card);
-cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px;
+  margin-bottom:9px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--card);
+  cursor:pointer;
 }
 
 .payment-method.selected{
-border-color:var(--gold);
-background:var(--gold-soft);
+  border-color:var(--gold);
+  background:var(--gold-soft);
 }
 
 /* =========================
-PROFILE
+   PROFILE
 ========================= */
 
 .profile-card{
-padding:22px;
-text-align:center;
-margin-bottom:15px;
+  padding:22px;
+  text-align:center;
+  margin-bottom:15px;
 }
 
 .avatar{
-width:72px;
-height:72px;
-border-radius:50%;
-margin:auto auto 10px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:var(--gold-soft);
-font-size:30px;
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  margin:auto auto 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--gold-soft);
+  font-size:30px;
 }
 
 .profile-name{
-font-size:17px;
-font-weight:900;
+  font-size:17px;
+  font-weight:900;
 }
 
 .profile-email{
-color:var(--muted);
-font-size:12px;
-margin-top:4px;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
 }
 
 .profile-item{
-padding:15px;
-margin-bottom:9px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-cursor:pointer;
+  padding:15px;
+  margin-bottom:9px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
 }
 
 .avatar-wrap{
-position:relative;
-width:84px;
-margin:auto auto 12px;
+  position:relative;
+  width:84px;
+  margin:auto auto 12px;
 }
 
 .avatar-lg{
-width:84px;
-height:84px;
-border-radius:50%;
-overflow:hidden;
-background:var(--gold-soft);
-border:2px solid var(--gold);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:34px;
+  width:84px;
+  height:84px;
+  border-radius:50%;
+  overflow:hidden;
+  background:var(--gold-soft);
+  border:2px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
 }
 
 .avatar-lg img{
-width:100%;
-height:100%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .avatar-edit-btn{
-position:absolute;
-bottom:-2px;
-left:-2px;
-width:28px;
-height:28px;
-border-radius:50%;
-background:var(--gold2);
-color:#211505;
-border:2px solid var(--bg);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:13px;
-cursor:pointer;
+  position:absolute;
+  bottom:-2px;
+  left:-2px;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:var(--gold2);
+  color:#211505;
+  border:2px solid var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  cursor:pointer;
 }
 
 .name-row{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
 }
 
 .verified-badge{
-color:var(--gold);
-font-size:14px;
+  color:var(--gold);
+  font-size:14px;
 }
 
 .badge-row{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:6px;
-flex-wrap:wrap;
-margin-top:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:8px;
 }
 
 .role-pill{
-display:inline-block;
-background:var(--gold-soft);
-color:var(--gold);
-border:1px solid var(--line);
-font-size:10px;
-font-weight:900;
-padding:4px 10px;
-border-radius:20px;
+  display:inline-block;
+  background:var(--gold-soft);
+  color:var(--gold);
+  border:1px solid var(--line);
+  font-size:10px;
+  font-weight:900;
+  padding:4px 10px;
+  border-radius:20px;
 }
 
 .profile-bio{
-color:var(--muted);
-font-size:12px;
-line-height:1.7;
-margin-top:10px;
-padding:0 6px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  margin-top:10px;
+  padding:0 6px;
 }
 
 .stat-row{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px;
-margin-top:16px;
-padding-top:16px;
-border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
 }
 
 .stat-chip{
-text-align:center;
+  text-align:center;
 }
 
 .stat-chip .num{
-color:var(--gold);
-font-size:15px;
-font-weight:900;
+  color:var(--gold);
+  font-size:15px;
+  font-weight:900;
 }
 
 .stat-chip .lbl{
-color:var(--muted);
-font-size:10px;
-margin-top:3px;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
 }
 
 .referral-box{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:8px;
-background:var(--gold-soft);
-border:1px dashed var(--gold);
-border-radius:12px;
-padding:11px 13px;
-margin-top:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  background:var(--gold-soft);
+  border:1px dashed var(--gold);
+  border-radius:12px;
+  padding:11px 13px;
+  margin-top:14px;
 }
 
 .referral-code{
-font-family:'IBM Plex Mono',monospace;
-color:var(--gold);
-font-weight:700;
-font-size:14px;
-letter-spacing:1px;
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--gold);
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:1px;
 }
 
 .avatar-upload-row{
-display:flex;
-align-items:center;
-gap:14px;
-margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
 }
 
 .avatar-upload-preview{
-width:64px;
-height:64px;
-border-radius:50%;
-overflow:hidden;
-background:var(--card2);
-border:1px solid var(--line);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:26px;
-flex-shrink:0;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  overflow:hidden;
+  background:var(--card2);
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  flex-shrink:0;
 }
 
 .avatar-upload-preview img{
-width:100%;
-height:100%;
-object-fit:cover;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 .avatar-upload-btn{
-flex:1;
+  flex:1;
 }
 
 .field-row2{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
 .location-status{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px;
-background:var(--card2);
-border:1px solid var(--line);
-border-radius:12px;
-padding:12px 14px;
-margin-bottom:15px;
-font-size:12px;
-color:var(--muted);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  background:var(--card2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-bottom:15px;
+  font-size:12px;
+  color:var(--muted);
 }
 
 .location-status b{
-color:var(--text);
+  color:var(--text);
 }
 
 .category-status{
-display:inline-block;
-font-size:9px;
-font-weight:800;
-padding:4px 10px;
-border-radius:20px;
-margin-bottom:10px;
+  display:inline-block;
+  font-size:9px;
+  font-weight:800;
+  padding:4px 10px;
+  border-radius:20px;
+  margin-bottom:10px;
 }
 
 .category-status.ready{
-background:rgba(117,217,154,.12);
-color:var(--success);
+  background:rgba(117,217,154,.12);
+  color:var(--success);
 }
 
 .category-status.soon2{
-background:var(--gold-soft);
-color:var(--gold);
+  background:var(--gold-soft);
+  color:var(--gold);
 }
 
 .category-status.empty2{
-background:var(--card2);
-color:var(--muted);
+  background:var(--card2);
+  color:var(--muted);
 }
 
 .header-actions{
-display:flex;
-gap:8px;
-align-items:center;
+  display:flex;
+  gap:8px;
+  align-items:center;
 }
 
 .search-row{
-display:flex;
-gap:8px;
-margin:0 20px 12px;
+  display:flex;
+  gap:8px;
+  margin:0 20px 12px;
 }
 
 .search-row .search{
-margin:0;
-flex:1;
+  margin:0;
+  flex:1;
 }
 
 .filter-btn{
-width:52px;
-flex-shrink:0;
-background:var(--card);
-border:1px solid var(--line);
-border-radius:14px;
-color:var(--gold);
-font-size:18px;
+  width:52px;
+  flex-shrink:0;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  color:var(--gold);
+  font-size:18px;
 }
 
 .wilaya-item{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:16px;
-margin-bottom:10px;
-cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px;
+  margin-bottom:10px;
+  cursor:pointer;
 }
 
 .wilaya-item.selected{
-border-color:var(--gold);
-background:var(--gold-soft);
+  border-color:var(--gold);
+  background:var(--gold-soft);
 }
 
 .wilaya-name{
-font-weight:900;
-font-size:14px;
+  font-weight:900;
+  font-size:14px;
 }
 
 .wilaya-sub{
-color:var(--muted);
-font-size:11px;
-margin-top:2px;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
 }
 
 .chip-toggle-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-bottom:15px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:15px;
 }
 
 .chip-toggle{
-padding:13px;
-text-align:center;
-border:1px solid var(--line);
-border-radius:12px;
-background:var(--card2);
-color:var(--text);
-font-size:13px;
-font-weight:800;
-cursor:pointer;
+  padding:13px;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--card2);
+  color:var(--text);
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
 }
 
 .chip-toggle.active{
-border-color:var(--gold);
-background:var(--gold-soft);
-color:var(--gold);
+  border-color:var(--gold);
+  background:var(--gold-soft);
+  color:var(--gold);
 }
 
 .partner-banner{
-padding:20px;
-margin-bottom:15px;
+  padding:20px;
+  margin-bottom:15px;
 }
 
 .partner-banner .kicker{
-color:var(--gold);
-font-size:11px;
-font-weight:800;
+  color:var(--gold);
+  font-size:11px;
+  font-weight:800;
 }
 
 .partner-banner h3{
-font-size:17px;
-font-weight:900;
-margin-top:6px;
+  font-size:17px;
+  font-weight:900;
+  margin-top:6px;
 }
 
 .partner-banner p{
-color:var(--muted);
-font-size:12px;
-line-height:1.7;
-margin-top:8px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  margin-top:8px;
 }
 
 /* =========================
-MAP
+   MAP
 ========================= */
 
 .map-placeholder{
-min-height:280px;
-border-radius:18px;
-border:1px solid var(--line);
-background:
-radial-gradient(circle at 20% 30%, #342716 0 2px, transparent 3px),
-radial-gradient(circle at 70% 60%, #342716 0 2px, transparent 3px),
-var(--card2);
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-color:var(--muted);
-padding:20px;
+  min-height:280px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(circle at 20% 30%, #342716 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, #342716 0 2px, transparent 3px),
+    var(--card2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--muted);
+  padding:20px;
 }
 
 .route-info{
-margin-top:12px;
-padding:15px;
+  margin-top:12px;
+  padding:15px;
 }
 
 /* =========================
-LOADING
+   LOADING
 ========================= */
 
 .loading{
-text-align:center;
-color:var(--muted);
-padding:30px;
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
 }
 
 .spinner{
-width:28px;
-height:28px;
-border:3px solid var(--line);
-border-top-color:var(--gold);
-border-radius:50%;
-animation:spin .8s linear infinite;
-margin:auto auto 10px;
+  width:28px;
+  height:28px;
+  border:3px solid var(--line);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:auto auto 10px;
 }
 
 @keyframes spin{
-to{
-transform:rotate(360deg);
-}
+  to{
+    transform:rotate(360deg);
+  }
 }
 
 /* =========================
-RESPONSIVE
+   RESPONSIVE
 ========================= */
 
 @media(max-width:360px){
-.product-grid,
-.categories{
-grid-template-columns:1fr;
-}
+  .product-grid,
+  .categories{
+    grid-template-columns:1fr;
+  }
 
-.auth-title{
-font-size:25px;
-}
+  .auth-title{
+    font-size:25px;
+  }
 }
 </style>
-
-</head>  
-<body>  
-<div class="device">  <!-- =====================================================  
-     LOGIN  
-===================================================== -->  <section id="loginScreen" class="screen active">    <div class="auth-hero">  
-    <div class="brand">  
-      <div class="brand-icon">  
-        <img  
-          src="bbm-icon.png"  
-          alt="BBM"  
-          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
-        >  
-      </div>  
-      <div class="brand-name">  
-        BBM STORE  
-      </div>  
-    </div>  <div class="auth-title">  
-  كل ما تحتاجه،<br>  
-  أقرب إليك.  
-</div>  
-
-<div class="auth-sub">  
-  منصة BBM STORE للخدمات والتجارة المحلية  
-</div>
-
-  </div>    <div class="card auth-box">  
-    <div id="loginMsg" class="msg"></div>  <div class="field">  
-  <label>البريد الإلكتروني</label>  
-  <input id="loginEmail" type="email" placeholder="example@email.com" autocomplete="email">  
-</div>  
-
-<div class="field">  
-  <label>كلمة المرور</label>  
-  <input id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password">  
-</div>  
-
-<button id="loginBtn" class="btn btn-primary" onclick="login()">  
-  تسجيل الدخول  
-</button>  
-
-<div class="divider">أو</div>  
-
-<button class="btn btn-secondary" onclick="showScreen('signupScreen')">  
-  إنشاء حساب جديد  
-</button>
-
-  </div>  </section>  <!-- =====================================================  
-     SIGNUP  
-===================================================== -->  <section id="signupScreen" class="screen">    <div class="auth-hero">  
-    <div class="brand">  
-      <div class="brand-icon">  
-        <img  
-          src="bbm-icon.png"  
-          alt="BBM"  
-          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
-        >  
-      </div>  
-      <div class="brand-name">  
-        BBM STORE  
-      </div>  
-    </div>  <div class="auth-title">إنشاء حساب</div>  
-<div class="auth-sub">أنشئ حسابك وابدأ باستخدام BBM STORE</div>
-
-  </div>    <div class="card auth-box">  
-    <div id="signupMsg" class="msg"></div>  <div class="field">  
-  <label>الاسم الكامل</label>  
-  <input id="signupName" type="text" placeholder="اسمك الكامل">  
-</div>  
-
-<div class="field">  
-  <label>البريد الإلكتروني</label>  
-  <input id="signupEmail" type="email" placeholder="example@email.com">  
-</div>  
-
-<div class="field">  
-  <label>رقم الهاتف</label>  
-  <input id="signupPhone" type="tel" placeholder="05XXXXXXXX">  
-</div>  
-
-<div class="field">  
-  <label>نوع الحساب</label>  
-  <select id="signupRole">  
-    <option value="customer">عميل</option>  
-    <option value="professional">مهني</option>  
-    <option value="seller">بائع / متجر</option>  
-  </select>  
-</div>  
-
-<div class="field">  
-  <label>كلمة المرور</label>  
-  <input id="signupPassword" type="password" placeholder="6 أحرف على الأقل">  
-</div>  
-
-<button id="signupBtn" class="btn btn-primary" onclick="signup()">  
-  إنشاء الحساب  
-</button>  
-
-<div class="switch">  
-  لديك حساب بالفعل؟  
-  <b onclick="showScreen('loginScreen')">تسجيل الدخول</b>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     HOME  
-===================================================== -->  <section id="homeScreen" class="screen">    <div class="home-head">  
-    <div class="brand">  
-      <div class="brand-icon">  
-        <img  
-          src="bbm-icon.png"  
-          alt="BBM"  
-          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"  
-        >  
-      </div>  
-      <div class="brand-name">BBM STORE</div>  
-    </div>  <button class="notification-btn" onclick="openNotifications()">  
-  🔔  
-  <span id="notificationDot" class="notification-dot"></span>  
-</button>
-
-  </div>    <div class="welcome">  
-    <h1 id="welcomeName">مرحبًا بك</h1>  
-    <p>ابحث عن ما تحتاجه بالقرب منك</p>  
-  </div>    <div class="search-row">  
-    <div class="search" onclick="openSearch()">  
-      🔎 ابحث عن خدمة أو منتج أو متجر...  
-    </div>  
-    <button class="filter-btn" onclick="showScreen('filterScreen')">⚙️</button>  
-  </div>    <button class="location-chip" onclick="openWilayaScreen()">  
-    📍  
-    <span id="locationLabel">تحديد موقعي الحالي</span>  
-  </button>    <div class="home-section">  
-    <div class="section-head">  
-      <h2>الأقسام</h2>  
-      <span onclick="openAllServices()">عرض الكل</span>  
-    </div>  <div class="categories">  
-  <div class="card category" onclick="openProducts('all')">  
-    <span class="category-status ready">جاهز للتعبئة</span>  
-    <div class="category-icon">🛍️</div>  
-    <div class="category-title">المنتجات</div>  
-    <div class="category-desc">المنتجات التي تضيفها أنت</div>  
-  </div>  
-
-  <div class="card category" onclick="openServices()">  
-    <span class="category-status empty2">فارغ حاليًا</span>  
-    <div class="category-icon">👨‍🔧</div>  
-    <div class="category-title">الخدمات</div>  
-    <div class="category-desc">الخدمات التي تضيفها لاحقًا</div>  
-  </div>  
-
-  <div class="card category disabled">  
-    <span class="category-status soon2">قريبًا</span>  
-    <div class="category-icon">🏪</div>  
-    <div class="category-title">المتاجر</div>  
-  </div>  
-
-  <div class="card category disabled">  
-    <span class="category-status soon2">قريبًا</span>  
-    <div class="category-icon">🍔</div>  
-    <div class="category-title">المطاعم</div>  
-  </div>  
-
-  <div class="card category disabled">  
-    <span class="category-status soon2">قريبًا</span>  
-    <div class="category-icon">☕</div>  
-    <div class="category-title">المقاهي</div>  
-  </div>  
-
-  <div class="card category disabled">  
-    <span class="category-status soon2">قريبًا</span>  
-    <div class="category-icon">🚗</div>  
-    <div class="category-title">النقل</div>  
-  </div>  
-</div>
-
-  </div>    <div class="home-section">  
-    <div class="card partner-banner">  
-      <div class="kicker">✨ فرصة تجارية</div>  
-      <h3>كن شريكًا معنا في BBM STORE</h3>  
-      <p>انضم كتاجر أو مزود خدمة معتمد لتوسيع نطاق أعمالك مع لوحة تحكم خاصة بك.</p>  
-      <button class="btn btn-primary" style="margin-top:14px;" onclick="showScreen('becomeProviderScreen')">  
-        انضم الآن كتاجر أو مزود خدمة  
-      </button>  
-    </div>  
-  </div>    <div class="home-section">  
-    <div class="section-head">  
-      <h2>المنتجات</h2>  
-      <span onclick="openProducts('all')">عرض الكل</span>  
-    </div>  <div id="homeProducts">  
-  <div class="empty">  
-    <div class="empty-icon">🛒</div>  
-    <div class="empty-title">لا توجد منتجات بعد</div>  
-    <div class="empty-text">ستظهر هنا المنتجات التي تتم إضافتها إلى BBM STORE.</div>  
-  </div>  
-</div>
-
-  </div>    <div class="bottom-nav">  
-    <div class="nav-item active" onclick="showScreen('homeScreen')">  
-      <span class="nav-icon">🏠</span>  
-      الرئيسية  
-    </div>  
-    <div class="nav-item" onclick="openSearch()">  
-      <span class="nav-icon">🔎</span>  
-      البحث  
-    </div>  
-    <div class="nav-item" onclick="openOrders()">  
-      <span class="nav-icon">📋</span>  
-      طلباتي  
-    </div>  
-    <div class="nav-item" onclick="openWallet()">  
-      <span class="nav-icon">💰</span>  
-      المحفظة  
-    </div>  
-    <div class="nav-item" onclick="openAccount()">  
-      <span class="nav-icon">👤</span>  
-      حسابي  
-    </div>  
-  </div>  </section>  <!-- =====================================================  
-     ALL SERVICES  
-===================================================== -->  <section id="servicesScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">الخدمات</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div id="servicesList">  
-      <div class="empty">  
-        <div class="empty-icon">👨‍🔧</div>  
-        <div class="empty-title">لا توجد خدمات بعد</div>  
-        <div class="empty-text">لم تتم إضافة أي خدمة حتى الآن.</div>  
-      </div>  
-    </div>  
-  </div>  </section>  <!-- =====================================================  
-     PRODUCTS  
-===================================================== -->  <section id="productsScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">المنتجات</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div class="field">  
-      <input id="productSearch" type="search" placeholder="ابحث عن منتج..." oninput="filterProducts()">  
-    </div>  <div id="productsList">  
-  <div class="empty">  
-    <div class="empty-icon">🛒</div>  
-    <div class="empty-title">لا توجد منتجات</div>  
-    <div class="empty-text">ستظهر المنتجات هنا بعد إضافتها.</div>  
-  </div>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     ADD PRODUCT  
-===================================================== -->  <section id="addProductScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="openMyProducts()">→ رجوع</span>  
-    <span class="page-title">إضافة منتج</span>  
-    <span></span>  
-  </div>    <div class="container">  
-    <div id="productMsg" class="msg"></div>  <div class="card" style="padding:18px;">  
-  <div class="field">  
-    <label>اسم المنتج *</label>  
-    <input id="productName" type="text" placeholder="اسم المنتج">  
-  </div>  
-
-  <div class="field">  
-    <label>وصف المنتج</label>  
-    <textarea id="productDescription" placeholder="وصف المنتج"></textarea>  
-  </div>  
-
-  <div class="field">  
-    <label>السعر بالدينار الجزائري *</label>  
-    <input id="productPrice" type="number" min="0" step="0.01" placeholder="0">  
-  </div>  
-
-  <div class="field">  
-    <label>الكمية</label>  
-    <input id="productStock" type="number" min="0" step="1" value="0">  
-  </div>  
-
-  <div class="field">  
-    <label>التصنيف</label>  
-    <input id="productCategory" type="text" placeholder="مثال: إلكترونيات">  
-  </div>  
-
-  <div class="field">  
-    <label>صورة المنتج</label>  
-    <label class="upload-box">  
-      📷<br>  
-      اضغط لاختيار صورة  
-      <input id="productImage" type="file" accept="image/*" hidden onchange="previewProductImage(event)">  
-    </label>  
-    <div id="imagePreview" class="preview"></div>  
-  </div>  
-
-  <div class="field">  
-    <label>حالة المنتج</label>  
-    <select id="productActive">  
-      <option value="true">ظاهر</option>  
-      <option value="false">مخفي</option>  
-    </select>  
-  </div>  
-
-  <button id="saveProductBtn" class="btn btn-primary" onclick="saveProduct()">  
-    إضافة المنتج  
-  </button>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     MY PRODUCTS  
-===================================================== -->  <section id="myProductsScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="openAccount()">→ رجوع</span>  
-    <span class="page-title">منتجاتي</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div class="admin-tools">  
-      <button class="btn btn-primary" onclick="openAddProduct()">＋ إضافة منتج</button>  
-    </div>  <div id="myProductsList">  
-  <div class="empty">  
-    <div class="empty-icon">📦</div>  
-    <div class="empty-title">لا توجد منتجات</div>  
-    <div class="empty-text">أضف أول منتج لك.</div>  
-  </div>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     SEARCH  
-===================================================== -->  <section id="searchScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">البحث</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div class="field">  
-      <input id="globalSearch" type="search" placeholder="ابحث عن منتج أو خدمة..." oninput="globalSearch()">  
-    </div>  <div id="searchResults">  
-  <div class="empty">  
-    <div class="empty-icon">🔎</div>  
-    <div class="empty-title">ابدأ البحث</div>  
-    <div class="empty-text">اكتب ما تبحث عنه.</div>  
-  </div>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     ORDERS  
-===================================================== -->  <section id="ordersScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">طلباتي</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div id="ordersList">  
-      <div class="empty">  
-        <div class="empty-icon">📋</div>  
-        <div class="empty-title">لا توجد طلبات</div>  
-        <div class="empty-text">ستظهر طلباتك هنا.</div>  
-      </div>  
-    </div>  
-  </div>  </section>  <!-- =====================================================  
-     WALLET  
-===================================================== -->  <section id="walletScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">المحفظة</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div class="card balance">  
-      <div class="balance-label">الرصيد المتاح</div>  
-      <div id="walletBalance" class="balance-number">0.00 دج</div>  
-    </div>  <div id="walletMsg" class="msg"></div>  
-
-<div class="section-head">  
-  <h2>شحن المحفظة</h2>  
-</div>  
-
-<div class="payment-method" onclick="selectPayment(this,'BaridiMob')">  
-  📱 <span>BaridiMob</span>  
-</div>  
-
-<div class="payment-method" onclick="selectPayment(this,'CCP')">  
-  🏦 <span>CCP</span>  
-</div>  
-
-<div class="payment-method" onclick="selectPayment(this,'Flexy')">  
-  💳 <span>Flexy</span>  
-</div>  
-
-<div class="payment-method" onclick="selectPayment(this,'cash')">  
-  🏢 <span>الدفع لدى الإدارة</span>  
-</div>  
-
-<div class="field">  
-  <label>المبلغ بالدينار</label>  
-  <input id="walletAmount" type="number" min="1" placeholder="مثال: 1000">  
-</div>  
-
-<button class="btn btn-primary" onclick="requestWalletRecharge()">  
-  إرسال طلب الشحن  
-</button>  
-
-<div id="walletHistory" style="margin-top:20px;"></div>
-
-  </div>  </section>  <!-- =====================================================  
-     ACCOUNT  
-===================================================== -->  <section id="accountScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">حسابي</span>  
-    <span></span>  
-  </div>    <div class="container">  
-    <div class="card profile-card">  
-      <div class="avatar-wrap">  
-        <div id="accountAvatar" class="avatar-lg">👤</div>  
-        <div class="avatar-edit-btn" onclick="openEditProfile()">✏️</div>  
-      </div>  <div class="name-row">  
-    <div id="accountName" class="profile-name">مستخدم</div>  
-    <span id="accountVerifiedBadge" class="verified-badge" style="display:none;">✔️</span>  
-  </div>  
-
-  <div id="accountEmail" class="profile-email"></div>  
-
-  <div id="accountBadgeRow" class="badge-row"></div>  
-
-  <div id="accountBio" class="profile-bio" style="display:none;"></div>  
-
-  <div class="stat-row">  
-    <div class="stat-chip">  
-      <div id="statPoints" class="num">0</div>  
-      <div class="lbl">نقاط BBM</div>  
-    </div>  
-    <div class="stat-chip">  
-      <div id="statRating" class="num">—</div>  
-      <div class="lbl">التقييم</div>  
-    </div>  
-    <div class="stat-chip">  
-      <div id="statOrders" class="num">0</div>  
-      <div class="lbl">الطلبات</div>  
-    </div>  
-  </div>  
-
-  <div class="referral-box">  
-    <span>كود الإحالة</span>  
-    <span id="referralCode" class="referral-code">—</span>  
-  </div>  
-</div>  
-
-<div id="accountBusinessLinks"></div>  
-
-<div class="card profile-item" onclick="openMyProducts()">  
-  <span>📦 منتجاتي</span><span>‹</span>  
-</div>  
-
-<div class="card profile-item" onclick="openOrders()">  
-  <span>📋 طلباتي</span><span>‹</span>  
-</div>  
-
-<div class="card profile-item" onclick="openWallet()">  
-  <span>💰 المحفظة</span><span>‹</span>  
-</div>  
-
-<div class="card profile-item" onclick="openEditProfile()">  
-  <span>✏️ تعديل الملف</span><span>‹</span>  
-</div>  
-
-<div class="card profile-item" onclick="openNotifications()">  
-  <span>🔔 الإشعارات</span><span>‹</span>  
-</div>  
-
-<button class="btn btn-danger" style="width:100%;margin-top:15px;" onclick="logout()">  
-  تسجيل الخروج  
-</button>
-
-  </div>  </section>  <!-- =====================================================  
-     EDIT PROFILE  
-===================================================== -->  <section id="editProfileScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="openAccount()">→ رجوع</span>  
-    <span class="page-title">تعديل الملف</span>  
-    <span></span>  
-  </div>    <div class="container">  
-    <div id="profileMsg" class="msg"></div>  <div class="card" style="padding:18px;">  
-  <div class="avatar-upload-row">  
-    <div id="editAvatarPreview" class="avatar-upload-preview">👤</div>  
-    <label class="btn btn-secondary avatar-upload-btn" style="text-align:center;">  
-      📷 تغيير الصورة  
-      <input id="editAvatarFile" type="file" accept="image/*" hidden onchange="previewAvatarImage(event)">  
-    </label>  
-  </div>  
-
-  <div class="field">  
-    <label>الاسم</label>  
-    <input id="editName" type="text">  
-  </div>  
-
-  <div class="field">  
-    <label>نبذة عني</label>  
-    <textarea id="editBio" placeholder="عرّف بنفسك أو بنشاطك في جملة أو جملتين"></textarea>  
-  </div>  
-
-  <div class="field">  
-    <label>رقم الهاتف</label>  
-    <input id="editPhone" type="tel">  
-  </div>  
-
-  <div class="field">  
-    <div class="field-row2">  
-      <div>  
-        <label>الجنس</label>  
-        <select id="editGender">  
-          <option value="">غير محدد</option>  
-          <option value="male">ذكر</option>  
-          <option value="female">أنثى</option>  
-        </select>  
-      </div>  
-      <div>  
-        <label>تاريخ الميلاد</label>  
-        <input id="editBirthDate" type="date">  
-      </div>  
-    </div>  
-  </div>  
-
-  <div class="field">  
-    <div class="field-row2">  
-      <div>  
-        <label>الولاية</label>  
-        <input id="editWilaya" type="text" placeholder="مثال: برج باجي مختار" readonly onclick="openWilayaScreen()">  
-      </div>  
-      <div>  
-        <label>البلدية</label>  
-        <input id="editCommune" type="text" placeholder="مثال: برج باجي مختار">  
-      </div>  
-    </div>  
-  </div>  
-
-  <div class="field">  
-    <label>العنوان</label>  
-    <input id="editAddress" type="text">  
-  </div>  
-
-  <div class="location-status">  
-    <span>📍 الموقع الجغرافي: <b id="editLocationStatus">لم يُحدَّد بعد</b></span>  
-    <button class="btn btn-secondary btn-small" type="button" onclick="captureProfileLocation()">تحديد</button>  
-  </div>  
-
-  <button class="btn btn-primary" onclick="saveProfile()">  
-    حفظ التغييرات  
-  </button>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     NOTIFICATIONS  
-===================================================== -->  <section id="notificationsScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">الإشعارات</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div id="notificationsList">  
-      <div class="empty">  
-        <div class="empty-icon">🔔</div>  
-        <div class="empty-title">لا توجد إشعارات</div>  
-        <div class="empty-text">ستظهر الإشعارات هنا.</div>  
-      </div>  
-    </div>  
-  </div>  </section>  <!-- =====================================================  
-     LOCATION / MAP  
-===================================================== -->  <section id="mapScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">موقعي</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div id="mapContainer" class="map-placeholder">  
-      <div>  
-        <div style="font-size:40px;">📍</div>  
-        <div style="margin-top:10px;">سيتم عرض موقعك هنا.</div>  
-      </div>  
-    </div>  <div class="card route-info">  
-  <div style="font-weight:900;">موقعك الحالي</div>  
-  <div id="coordinates" style="color:var(--muted);font-size:12px;margin-top:6px;">لم يتم تحديد الموقع.</div>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     WILAYA (LOCATION SCOPE)  
-===================================================== -->  <section id="wilayaScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">تحديد النطاق الجغرافي</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div class="field">  
-      <input id="wilayaSearch" type="search" placeholder="ابحث عن ولاية..." oninput="filterWilayas()">  
-    </div>  
-    <div id="wilayaList"></div>  
-  </div>  </section>  <!-- =====================================================  
-     FILTER  
-===================================================== -->  <section id="filterScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>  
-    <span class="page-title">خيارات التصفية والفرز</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div class="card" style="padding:18px;">  
-      <label style="display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:10px;">  
-        ترتيب النتائج  
-      </label>  <div class="chip-toggle-row">  
-    <div id="sortNearest" class="chip-toggle active" onclick="setSortMode('nearest',this)">الأقرب لموقعي</div>  
-    <div id="sortRating" class="chip-toggle" onclick="setSortMode('rating',this)">الأعلى تقييمًا</div>  
-  </div>  
-
-  <button class="btn btn-primary" onclick="showScreen('productsScreen')">تطبيق التصفية</button>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     BECOME PROVIDER  
-===================================================== -->  <section id="becomeProviderScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="openAccount()">→ رجوع</span>  
-    <span class="page-title">تفعيل حساب الشريك التجاري</span>  
-    <span></span>  
-  </div>    <div class="container">  
-    <div id="providerMsg" class="msg"></div>  <div class="card" style="padding:18px;">  
-  <p style="color:var(--muted);font-size:12px;line-height:1.8;margin-bottom:18px;">  
-    أدخل بيانات نشاطك التجاري لبدء استلام الطلبات وحجز مساحتك في BBM STORE.  
-  </p>  
-
-  <label style="display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:10px;">  
-    نوع النشاط  
-  </label>  
-
-  <div class="chip-toggle-row">  
-    <div id="typeSeller" class="chip-toggle active" onclick="setProviderType('seller',this)">متجر / بيع منتجات</div>  
-    <div id="typeService" class="chip-toggle" onclick="setProviderType('service',this)">مزود خدمة / حرفي</div>  
-  </div>  
-
-  <div class="field">  
-    <label>اسم المتجر أو العلامة التجارية</label>  
-    <input id="providerBusinessName" type="text" placeholder="مثال: بوتيك الأناقة BBM">  
-  </div>  
-
-  <div class="field">  
-    <label>التصنيف</label>  
-    <input id="providerCategory" type="text" placeholder="مثال: إلكترونيات، سباكة، أزياء...">  
-  </div>  
-
-  <div class="field">  
-    <label>رقم الهاتف للتواصل</label>  
-    <input id="providerPhone" type="tel" placeholder="05 / 06 / 07 XX XX XX">  
-  </div>  
-
-  <button id="providerSubmitBtn" class="btn btn-primary" onclick="submitBecomeProvider()">  
-    تأكيد وإرسال طلب الشراكة  
-  </button>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     PROVIDER DASHBOARD  
-===================================================== -->  <section id="providerDashboardScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="openAccount()">→ رجوع</span>  
-    <span class="page-title">لوحة التاجر</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div class="stat-row" style="grid-template-columns:1fr 1fr;">  
-      <div class="card stat-chip" style="padding:16px;">  
-        <div id="providerProductCount" class="num" style="font-size:20px;">0</div>  
-        <div class="lbl">منتجاتي</div>  
-      </div>  
-      <div class="card stat-chip" style="padding:16px;">  
-        <div id="providerOrderCount" class="num" style="font-size:20px;">0</div>  
-        <div class="lbl">الطلبات الواردة</div>  
-      </div>  
-    </div>  <div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:15px;">  
-  <div class="card profile-item" onclick="openMyProducts()">  
-    <span>📦 إدارة منتجاتي</span><span>‹</span>  
-  </div>  
-  <div class="card profile-item" onclick="openOrders()">  
-    <span>📋 الطلبات</span><span>‹</span>  
-  </div>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     ADMIN DASHBOARD  
-===================================================== -->  <section id="adminScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="openAccount()">→ رجوع</span>  
-    <span class="page-title">لوحة الإدارة</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div id="adminStats" class="stat-row" style="grid-template-columns:1fr 1fr;">  
-      <div class="loading" style="grid-column:1/-1;"><div class="spinner"></div>جاري تحميل الإحصائيات...</div>  
-    </div>  <div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:18px;">  
-  <div class="card profile-item" onclick="openAdminUsers()">  
-    <span>👥 المستخدمون والشركاء</span><span>‹</span>  
-  </div>  
-  <div class="card profile-item" onclick="openAdminWallet()">  
-    <span>💳 طلبات شحن المحفظة</span><span>‹</span>  
-  </div>  
-</div>
-
-  </div>  </section>  <!-- =====================================================  
-     ADMIN USERS  
-===================================================== -->  <section id="adminUsersScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('adminScreen')">→ رجوع</span>  
-    <span class="page-title">المستخدمون والشركاء</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div id="adminUsersList">  
-      <div class="loading"><div class="spinner"></div>جاري التحميل...</div>  
-    </div>  
-  </div>  </section>  <!-- =====================================================  
-     ADMIN WALLET REQUESTS  
-===================================================== -->  <section id="adminWalletScreen" class="screen">    <div class="topbar">  
-    <span class="back" onclick="showScreen('adminScreen')">→ رجوع</span>  
-    <span class="page-title">طلبات شحن المحفظة</span>  
-    <span></span>  
-  </div>    <div class="section">  
-    <div id="adminWalletList">  
-      <div class="loading"><div class="spinner"></div>جاري التحميل...</div>  
-    </div>  
-  </div>  </section>  <!-- =====================================================  
-     JAVASCRIPT  
-===================================================== -->  <script>  
-  
-/* ======================================================  
-   SUPABASE  
-====================================================== */  
-  
-const SUPABASE_URL = "https://cgqkkfocgkiyxsshddxv.supabase.co";  
-const SUPABASE_KEY = "sb_publishable_3XImpdl41nPKfpPgmatvNg_ldTFmULV";  
-  
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);  
-  
-  
-/* ======================================================  
-   GLOBAL STATE  
-====================================================== */  
-  
-let currentUser = null;  
-let currentProfile = null;  
-let allProducts = [];  
-let selectedPayment = null;  
-let editingProductId = null;  
-  
-  
-/* ======================================================  
-   SCREEN SYSTEM  
-====================================================== */  
-  
-function showScreen(id){  
-  document.querySelectorAll('.screen').forEach(screen=>{  
-    screen.classList.remove('active');  
-  });  
-  const target = document.getElementById(id);  
-  if(target){  
-    target.classList.add('active');  
-  }  
-  window.scrollTo({ top:0, behavior:'instant' });  
-}  
-  
-  
-/* ======================================================  
-   MESSAGES  
-====================================================== */  
-  
-function showMsg(id,text,type='info'){  
-  const el = document.getElementById(id);  
-  if(!el) return;  
-  el.textContent = text;  
-  el.className = 'msg show ' + type;  
-}  
-  
-function hideMsg(id){  
-  const el = document.getElementById(id);  
-  if(!el) return;  
-  el.className='msg';  
-  el.textContent='';  
-}  
-  
-  
-/* ======================================================  
-   AUTH  
-====================================================== */  
-  
-async function signup(){  
-  const name = document.getElementById('signupName').value.trim();  
-  const email = document.getElementById('signupEmail').value.trim();  
-  const phone = document.getElementById('signupPhone').value.trim();  
-  const role = document.getElementById('signupRole').value;  
-  const password = document.getElementById('signupPassword').value;  
-  
-  if(!name || !email || !password){  
-    showMsg('signupMsg','الرجاء تعبئة الحقول المطلوبة.','error');  
-    return;  
-  }  
-  
-  if(password.length < 6){  
-    showMsg('signupMsg','كلمة المرور يجب أن تكون 6 أحرف على الأقل.','error');  
-    return;  
-  }  
-  
-  const btn = document.getElementById('signupBtn');  
-  btn.disabled=true;  
-  btn.textContent='جاري إنشاء الحساب...';  
-  
-  try{  
-    const { data, error } = await sb.auth.signUp({  
-      email,  
-      password,  
-      options:{ data:{ full_name:name, phone:phone, role:role } }  
-    });  
-  
-    if(error){ throw error; }  
-  
-    if(data.session){  
-      await loadUser(data.session.user);  
-    }else{  
-      showMsg('signupMsg','تم إنشاء الحساب. تحقق من بريدك الإلكتروني إذا كان تأكيد البريد مفعّلًا.','success');  
-    }  
-  
-  }catch(error){  
-    showMsg('signupMsg','تعذر إنشاء الحساب: ' + error.message,'error');  
-  }finally{  
-    btn.disabled=false;  
-    btn.textContent='إنشاء الحساب';  
-  }  
-}  
-  
-  
-async function login(){  
-  const email = document.getElementById('loginEmail').value.trim();  
-  const password = document.getElementById('loginPassword').value;  
-  
-  if(!email || !password){  
-    showMsg('loginMsg','أدخل البريد الإلكتروني وكلمة المرور.','error');  
-    return;  
-  }  
-  
-  const btn = document.getElementById('loginBtn');  
-  btn.disabled=true;  
-  btn.textContent='جاري الدخول...';  
-  
-  try{  
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });  
-    if(error){ throw error; }  
-    await loadUser(data.user);  
-  }catch(error){  
-    showMsg('loginMsg','تعذر تسجيل الدخول: ' + error.message,'error');  
-  }finally{  
-    btn.disabled=false;  
-    btn.textContent='تسجيل الدخول';  
-  }  
-}  
-  
-  
-async function logout(){  
-  await sb.auth.signOut();  
-  currentUser=null;  
-  currentProfile=null;  
-  showScreen('loginScreen');  
-}  
-  
-  
-/* ======================================================  
-   LOAD USER  
-====================================================== */  
-  
-async function loadUser(user){  
-  currentUser=user;  
-  
-  const { data:profile } = await sb.from('profiles').select('*').eq('id',user.id).maybeSingle();  
-  
-  currentProfile=profile || {  
-    id:user.id,  
-    full_name: user.user_metadata?.full_name || 'مستخدم',  
-    phone: user.user_metadata?.phone || '',  
-    address:'',  
-    role: user.user_metadata?.role || 'customer'  
-  };  
-  
-  updateUserUI();  
-  showScreen('homeScreen');  
-  loadHomeProducts();  
-  checkNotifications();  
-}  
-  
-  
-/* ======================================================  
-   USER UI  
-====================================================== */  
-  
-const ROLE_LABELS = {  
-  customer:'عميل',  
-  professional:'مهني',  
-  seller:'بائع / متجر',  
-  provider:'مقدم خدمة',  
-  admin:'إدارة',  
-  super_admin:'إدارة عليا'  
-};  
-  
-function updateUserUI(){  
-  const name = currentProfile?.full_name || currentUser?.user_metadata?.full_name || 'مستخدم';  
-  const email = currentUser?.email || '';  
-  
-  const welcome = document.getElementById('welcomeName');  
-  if(welcome){ welcome.textContent = 'مرحبًا، ' + name; }  
-  
-  const accountName = document.getElementById('accountName');  
-  if(accountName){ accountName.textContent=name; }  
-  
-  const accountEmail = document.getElementById('accountEmail');  
-  if(accountEmail){ accountEmail.textContent=email; }  
-  
-  const avatarEl = document.getElementById('accountAvatar');  
-  if(avatarEl){  
-    avatarEl.innerHTML = currentProfile?.avatar_url  
-      ? `<img src="${escapeHtml(currentProfile.avatar_url)}" alt="${escapeHtml(name)}">`  
-      : '👤';  
-  }  
-  
-  const verifiedBadge = document.getElementById('accountVerifiedBadge');  
+</head>
+<body>
+<div class="device">
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+<section id="loginScreen" class="screen active">
+
+  <div class="auth-hero">
+    <div class="brand">
+      <div class="brand-icon">
+        <img
+          src="bbm-icon.png"
+          alt="BBM"
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"
+        >
+      </div>
+      <div class="brand-name">
+        BBM STORE
+      </div>
+    </div>
+
+    <div class="auth-title">
+      كل ما تحتاجه،<br>
+      أقرب إليك.
+    </div>
+
+    <div class="auth-sub">
+      منصة BBM STORE للخدمات والتجارة المحلية
+    </div>
+  </div>
+
+  <div class="card auth-box">
+    <div id="loginMsg" class="msg"></div>
+
+    <div class="field">
+      <label>البريد الإلكتروني</label>
+      <input id="loginEmail" type="email" placeholder="example@email.com" autocomplete="email">
+    </div>
+
+    <div class="field">
+      <label>كلمة المرور</label>
+      <input id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button id="loginBtn" class="btn btn-primary" onclick="login()">
+      تسجيل الدخول
+    </button>
+
+    <div class="divider">أو</div>
+
+    <button class="btn btn-secondary" onclick="showScreen('signupScreen')">
+      إنشاء حساب جديد
+    </button>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     SIGNUP
+===================================================== -->
+<section id="signupScreen" class="screen">
+
+  <div class="auth-hero">
+    <div class="brand">
+      <div class="brand-icon">
+        <img
+          src="bbm-icon.png"
+          alt="BBM"
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"
+        >
+      </div>
+      <div class="brand-name">
+        BBM STORE
+      </div>
+    </div>
+
+    <div class="auth-title">إنشاء حساب</div>
+    <div class="auth-sub">أنشئ حسابك وابدأ باستخدام BBM STORE</div>
+  </div>
+
+  <div class="card auth-box">
+    <div id="signupMsg" class="msg"></div>
+
+    <div class="field">
+      <label>الاسم الكامل</label>
+      <input id="signupName" type="text" placeholder="اسمك الكامل">
+    </div>
+
+    <div class="field">
+      <label>البريد الإلكتروني</label>
+      <input id="signupEmail" type="email" placeholder="example@email.com">
+    </div>
+
+    <div class="field">
+      <label>رقم الهاتف</label>
+      <input id="signupPhone" type="tel" placeholder="05XXXXXXXX">
+    </div>
+
+    <div class="field">
+      <label>نوع الحساب</label>
+      <select id="signupRole">
+        <option value="customer">عميل</option>
+        <option value="professional">مهني</option>
+        <option value="seller">بائع / متجر</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>كلمة المرور</label>
+      <input id="signupPassword" type="password" placeholder="6 أحرف على الأقل">
+    </div>
+
+    <button id="signupBtn" class="btn btn-primary" onclick="signup()">
+      إنشاء الحساب
+    </button>
+
+    <div class="switch">
+      لديك حساب بالفعل؟
+      <b onclick="showScreen('loginScreen')">تسجيل الدخول</b>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+<section id="homeScreen" class="screen">
+
+  <div class="home-head">
+    <div class="brand">
+      <div class="brand-icon">
+        <img
+          src="bbm-icon.png"
+          alt="BBM"
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'brand-fallback\'>BBM</span>'"
+        >
+      </div>
+      <div class="brand-name">BBM STORE</div>
+    </div>
+
+    <button class="notification-btn" onclick="openNotifications()">
+      🔔
+      <span id="notificationDot" class="notification-dot"></span>
+    </button>
+  </div>
+
+  <div class="welcome">
+    <h1 id="welcomeName">مرحبًا بك</h1>
+    <p>ابحث عن ما تحتاجه بالقرب منك</p>
+  </div>
+
+  <div class="search-row">
+    <div class="search" onclick="openSearch()">
+      🔎 ابحث عن خدمة أو منتج أو متجر...
+    </div>
+    <button class="filter-btn" onclick="showScreen('filterScreen')">⚙️</button>
+  </div>
+
+  <button class="location-chip" onclick="openWilayaScreen()">
+    📍
+    <span id="locationLabel">تحديد موقعي الحالي</span>
+  </button>
+
+  <div class="home-section">
+    <div class="section-head">
+      <h2>الأقسام</h2>
+      <span onclick="openAllServices()">عرض الكل</span>
+    </div>
+
+    <div class="categories">
+      <div class="card category" onclick="openProducts('all')">
+        <span class="category-status ready">جاهز للتعبئة</span>
+        <div class="category-icon">🛍️</div>
+        <div class="category-title">المنتجات</div>
+        <div class="category-desc">المنتجات التي تضيفها أنت</div>
+      </div>
+
+      <div class="card category" onclick="openServices()">
+        <span class="category-status empty2">فارغ حاليًا</span>
+        <div class="category-icon">👨‍🔧</div>
+        <div class="category-title">الخدمات</div>
+        <div class="category-desc">الخدمات التي تضيفها لاحقًا</div>
+      </div>
+
+      <div class="card category disabled">
+        <span class="category-status soon2">قريبًا</span>
+        <div class="category-icon">🏪</div>
+        <div class="category-title">المتاجر</div>
+      </div>
+
+      <div class="card category disabled">
+        <span class="category-status soon2">قريبًا</span>
+        <div class="category-icon">🍔</div>
+        <div class="category-title">المطاعم</div>
+      </div>
+
+      <div class="card category disabled">
+        <span class="category-status soon2">قريبًا</span>
+        <div class="category-icon">☕</div>
+        <div class="category-title">المقاهي</div>
+      </div>
+
+      <div class="card category disabled">
+        <span class="category-status soon2">قريبًا</span>
+        <div class="category-icon">🚗</div>
+        <div class="category-title">النقل</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-section">
+    <div class="card partner-banner">
+      <div class="kicker">✨ فرصة تجارية</div>
+      <h3>كن شريكًا معنا في BBM STORE</h3>
+      <p>انضم كتاجر أو مزود خدمة معتمد لتوسيع نطاق أعمالك مع لوحة تحكم خاصة بك.</p>
+      <button class="btn btn-primary" style="margin-top:14px;" onclick="showScreen('becomeProviderScreen')">
+        انضم الآن كتاجر أو مزود خدمة
+      </button>
+    </div>
+  </div>
+
+  <div class="home-section">
+    <div class="section-head">
+      <h2>المنتجات</h2>
+      <span onclick="openProducts('all')">عرض الكل</span>
+    </div>
+
+    <div id="homeProducts">
+      <div class="empty">
+        <div class="empty-icon">🛒</div>
+        <div class="empty-title">لا توجد منتجات بعد</div>
+        <div class="empty-text">ستظهر هنا المنتجات التي تتم إضافتها إلى BBM STORE.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="showScreen('homeScreen')">
+      <span class="nav-icon">🏠</span>
+      الرئيسية
+    </div>
+    <div class="nav-item" onclick="openSearch()">
+      <span class="nav-icon">🔎</span>
+      البحث
+    </div>
+    <div class="nav-item" onclick="openOrders()">
+      <span class="nav-icon">📋</span>
+      طلباتي
+    </div>
+    <div class="nav-item" onclick="openWallet()">
+      <span class="nav-icon">💰</span>
+      المحفظة
+    </div>
+    <div class="nav-item" onclick="openAccount()">
+      <span class="nav-icon">👤</span>
+      حسابي
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     ALL SERVICES
+===================================================== -->
+<section id="servicesScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">الخدمات</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="servicesList">
+      <div class="empty">
+        <div class="empty-icon">👨‍🔧</div>
+        <div class="empty-title">لا توجد خدمات بعد</div>
+        <div class="empty-text">لم تتم إضافة أي خدمة حتى الآن.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     PRODUCTS
+===================================================== -->
+<section id="productsScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">المنتجات</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div class="field">
+      <input id="productSearch" type="search" placeholder="ابحث عن منتج..." oninput="filterProducts()">
+    </div>
+
+    <div id="productsList">
+      <div class="empty">
+        <div class="empty-icon">🛒</div>
+        <div class="empty-title">لا توجد منتجات</div>
+        <div class="empty-text">ستظهر المنتجات هنا بعد إضافتها.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     ADD PRODUCT
+===================================================== -->
+<section id="addProductScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openMyProducts()">→ رجوع</span>
+    <span class="page-title">إضافة منتج</span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <div id="productMsg" class="msg"></div>
+
+    <div class="card" style="padding:18px;">
+      <div class="field">
+        <label>اسم المنتج *</label>
+        <input id="productName" type="text" placeholder="اسم المنتج">
+      </div>
+
+      <div class="field">
+        <label>وصف المنتج</label>
+        <textarea id="productDescription" placeholder="وصف المنتج"></textarea>
+      </div>
+
+      <div class="field">
+        <label>السعر بالدينار الجزائري *</label>
+        <input id="productPrice" type="number" min="0" step="0.01" placeholder="0">
+      </div>
+
+      <div class="field">
+        <label>الكمية</label>
+        <input id="productStock" type="number" min="0" step="1" value="0">
+      </div>
+
+      <div class="field">
+        <label>التصنيف</label>
+        <input id="productCategory" type="text" placeholder="مثال: إلكترونيات">
+      </div>
+
+      <div class="field">
+        <label>صورة المنتج</label>
+        <label class="upload-box">
+          📷<br>
+          اضغط لاختيار صورة
+          <input id="productImage" type="file" accept="image/*" hidden onchange="previewProductImage(event)">
+        </label>
+        <div id="imagePreview" class="preview"></div>
+      </div>
+
+      <div class="field">
+        <label>حالة المنتج</label>
+        <select id="productActive">
+          <option value="true">ظاهر</option>
+          <option value="false">مخفي</option>
+        </select>
+      </div>
+
+      <button id="saveProductBtn" class="btn btn-primary" onclick="saveProduct()">
+        إضافة المنتج
+      </button>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     MY PRODUCTS
+===================================================== -->
+<section id="myProductsScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openAccount()">→ رجوع</span>
+    <span class="page-title">منتجاتي</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div class="admin-tools">
+      <button class="btn btn-primary" onclick="openAddProduct()">＋ إضافة منتج</button>
+    </div>
+
+    <div id="myProductsList">
+      <div class="empty">
+        <div class="empty-icon">📦</div>
+        <div class="empty-title">لا توجد منتجات</div>
+        <div class="empty-text">أضف أول منتج لك.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+<section id="searchScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">البحث</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div class="field">
+      <input id="globalSearch" type="search" placeholder="ابحث عن منتج أو خدمة..." oninput="globalSearch()">
+    </div>
+
+    <div id="searchResults">
+      <div class="empty">
+        <div class="empty-icon">🔎</div>
+        <div class="empty-title">ابدأ البحث</div>
+        <div class="empty-text">اكتب ما تبحث عنه.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     ORDERS
+===================================================== -->
+<section id="ordersScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">طلباتي</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="ordersList">
+      <div class="empty">
+        <div class="empty-icon">📋</div>
+        <div class="empty-title">لا توجد طلبات</div>
+        <div class="empty-text">ستظهر طلباتك هنا.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     WALLET
+===================================================== -->
+<section id="walletScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">المحفظة</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div class="card balance">
+      <div class="balance-label">الرصيد المتاح</div>
+      <div id="walletBalance" class="balance-number">0.00 دج</div>
+    </div>
+
+    <div id="walletMsg" class="msg"></div>
+
+    <div class="section-head">
+      <h2>شحن المحفظة</h2>
+    </div>
+
+    <div class="payment-method" onclick="selectPayment(this,'BaridiMob')">
+      📱 <span>BaridiMob</span>
+    </div>
+
+    <div class="payment-method" onclick="selectPayment(this,'CCP')">
+      🏦 <span>CCP</span>
+    </div>
+
+    <div class="payment-method" onclick="selectPayment(this,'Flexy')">
+      💳 <span>Flexy</span>
+    </div>
+
+    <div class="payment-method" onclick="selectPayment(this,'cash')">
+      🏢 <span>الدفع لدى الإدارة</span>
+    </div>
+
+    <div class="field">
+      <label>المبلغ بالدينار</label>
+      <input id="walletAmount" type="number" min="1" placeholder="مثال: 1000">
+    </div>
+
+    <button class="btn btn-primary" onclick="requestWalletRecharge()">
+      إرسال طلب الشحن
+    </button>
+
+    <div id="walletHistory" style="margin-top:20px;"></div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     ACCOUNT
+===================================================== -->
+<section id="accountScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">حسابي</span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <div class="card profile-card">
+      <div class="avatar-wrap">
+        <div id="accountAvatar" class="avatar-lg">👤</div>
+        <div class="avatar-edit-btn" onclick="openEditProfile()">✏️</div>
+      </div>
+
+      <div class="name-row">
+        <div id="accountName" class="profile-name">مستخدم</div>
+        <span id="accountVerifiedBadge" class="verified-badge" style="display:none;">✔️</span>
+      </div>
+
+      <div id="accountEmail" class="profile-email"></div>
+
+      <div id="accountBadgeRow" class="badge-row"></div>
+
+      <div id="accountBio" class="profile-bio" style="display:none;"></div>
+
+      <div class="stat-row">
+        <div class="stat-chip">
+          <div id="statPoints" class="num">0</div>
+          <div class="lbl">نقاط BBM</div>
+        </div>
+        <div class="stat-chip">
+          <div id="statRating" class="num">—</div>
+          <div class="lbl">التقييم</div>
+        </div>
+        <div class="stat-chip">
+          <div id="statOrders" class="num">0</div>
+          <div class="lbl">الطلبات</div>
+        </div>
+      </div>
+
+      <div class="referral-box">
+        <span>كود الإحالة</span>
+        <span id="referralCode" class="referral-code">—</span>
+      </div>
+    </div>
+
+    <div id="accountBusinessLinks"></div>
+
+    <div class="card profile-item" onclick="openMyProducts()">
+      <span>📦 منتجاتي</span><span>‹</span>
+    </div>
+
+    <div class="card profile-item" onclick="openOrders()">
+      <span>📋 طلباتي</span><span>‹</span>
+    </div>
+
+    <div class="card profile-item" onclick="openWallet()">
+      <span>💰 المحفظة</span><span>‹</span>
+    </div>
+
+    <div class="card profile-item" onclick="openEditProfile()">
+      <span>✏️ تعديل الملف</span><span>‹</span>
+    </div>
+
+    <div class="card profile-item" onclick="openNotifications()">
+      <span>🔔 الإشعارات</span><span>‹</span>
+    </div>
+
+    <button class="btn btn-danger" style="width:100%;margin-top:15px;" onclick="logout()">
+      تسجيل الخروج
+    </button>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     EDIT PROFILE
+===================================================== -->
+<section id="editProfileScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openAccount()">→ رجوع</span>
+    <span class="page-title">تعديل الملف</span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <div id="profileMsg" class="msg"></div>
+
+    <div class="card" style="padding:18px;">
+      <div class="avatar-upload-row">
+        <div id="editAvatarPreview" class="avatar-upload-preview">👤</div>
+        <label class="btn btn-secondary avatar-upload-btn" style="text-align:center;">
+          📷 تغيير الصورة
+          <input id="editAvatarFile" type="file" accept="image/*" hidden onchange="previewAvatarImage(event)">
+        </label>
+      </div>
+
+      <div class="field">
+        <label>الاسم</label>
+        <input id="editName" type="text">
+      </div>
+
+      <div class="field">
+        <label>نبذة عني</label>
+        <textarea id="editBio" placeholder="عرّف بنفسك أو بنشاطك في جملة أو جملتين"></textarea>
+      </div>
+
+      <div class="field">
+        <label>رقم الهاتف</label>
+        <input id="editPhone" type="tel">
+      </div>
+
+      <div class="field">
+        <div class="field-row2">
+          <div>
+            <label>الجنس</label>
+            <select id="editGender">
+              <option value="">غير محدد</option>
+              <option value="male">ذكر</option>
+              <option value="female">أنثى</option>
+            </select>
+          </div>
+          <div>
+            <label>تاريخ الميلاد</label>
+            <input id="editBirthDate" type="date">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-row2">
+          <div>
+            <label>الولاية</label>
+            <input id="editWilaya" type="text" placeholder="مثال: برج باجي مختار" readonly onclick="openWilayaScreen()">
+          </div>
+          <div>
+            <label>البلدية</label>
+            <input id="editCommune" type="text" placeholder="مثال: برج باجي مختار">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>العنوان</label>
+        <input id="editAddress" type="text">
+      </div>
+
+      <div class="location-status">
+        <span>📍 الموقع الجغرافي: <b id="editLocationStatus">لم يُحدَّد بعد</b></span>
+        <button class="btn btn-secondary btn-small" type="button" onclick="captureProfileLocation()">تحديد</button>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveProfile()">
+        حفظ التغييرات
+      </button>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     NOTIFICATIONS
+===================================================== -->
+<section id="notificationsScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">الإشعارات</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="notificationsList">
+      <div class="empty">
+        <div class="empty-icon">🔔</div>
+        <div class="empty-title">لا توجد إشعارات</div>
+        <div class="empty-text">ستظهر الإشعارات هنا.</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     LOCATION / MAP
+===================================================== -->
+<section id="mapScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">موقعي</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="mapContainer" class="map-placeholder">
+      <div>
+        <div style="font-size:40px;">📍</div>
+        <div style="margin-top:10px;">سيتم عرض موقعك هنا.</div>
+      </div>
+    </div>
+
+    <div class="card route-info">
+      <div style="font-weight:900;">موقعك الحالي</div>
+      <div id="coordinates" style="color:var(--muted);font-size:12px;margin-top:6px;">لم يتم تحديد الموقع.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     WILAYA (LOCATION SCOPE)
+===================================================== -->
+<section id="wilayaScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">تحديد النطاق الجغرافي</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div class="field">
+      <input id="wilayaSearch" type="search" placeholder="ابحث عن ولاية..." oninput="filterWilayas()">
+    </div>
+    <div id="wilayaList"></div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     FILTER
+===================================================== -->
+<section id="filterScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('homeScreen')">→ رجوع</span>
+    <span class="page-title">خيارات التصفية والفرز</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div class="card" style="padding:18px;">
+      <label style="display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:10px;">
+        ترتيب النتائج
+      </label>
+
+      <div class="chip-toggle-row">
+        <div id="sortNearest" class="chip-toggle active" onclick="setSortMode('nearest',this)">الأقرب لموقعي</div>
+        <div id="sortRating" class="chip-toggle" onclick="setSortMode('rating',this)">الأعلى تقييمًا</div>
+      </div>
+
+      <button class="btn btn-primary" onclick="showScreen('productsScreen')">تطبيق التصفية</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     BECOME PROVIDER
+===================================================== -->
+<section id="becomeProviderScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openAccount()">→ رجوع</span>
+    <span class="page-title">تفعيل حساب الشريك التجاري</span>
+    <span></span>
+  </div>
+
+  <div class="container">
+    <div id="providerMsg" class="msg"></div>
+
+    <div class="card" style="padding:18px;">
+      <p style="color:var(--muted);font-size:12px;line-height:1.8;margin-bottom:18px;">
+        أدخل بيانات نشاطك التجاري لبدء استلام الطلبات وحجز مساحتك في BBM STORE.
+      </p>
+
+      <label style="display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:10px;">
+        نوع النشاط
+      </label>
+
+      <div class="chip-toggle-row">
+        <div id="typeSeller" class="chip-toggle active" onclick="setProviderType('seller',this)">متجر / بيع منتجات</div>
+        <div id="typeService" class="chip-toggle" onclick="setProviderType('service',this)">مزود خدمة / حرفي</div>
+      </div>
+
+      <div class="field">
+        <label>اسم المتجر أو العلامة التجارية</label>
+        <input id="providerBusinessName" type="text" placeholder="مثال: بوتيك الأناقة BBM">
+      </div>
+
+      <div class="field">
+        <label>التصنيف</label>
+        <input id="providerCategory" type="text" placeholder="مثال: إلكترونيات، سباكة، أزياء...">
+      </div>
+
+      <div class="field">
+        <label>رقم الهاتف للتواصل</label>
+        <input id="providerPhone" type="tel" placeholder="05 / 06 / 07 XX XX XX">
+      </div>
+
+      <button id="providerSubmitBtn" class="btn btn-primary" onclick="submitBecomeProvider()">
+        تأكيد وإرسال طلب الشراكة
+      </button>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     PROVIDER DASHBOARD
+===================================================== -->
+<section id="providerDashboardScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openAccount()">→ رجوع</span>
+    <span class="page-title">لوحة التاجر</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div class="stat-row" style="grid-template-columns:1fr 1fr;">
+      <div class="card stat-chip" style="padding:16px;">
+        <div id="providerProductCount" class="num" style="font-size:20px;">0</div>
+        <div class="lbl">منتجاتي</div>
+      </div>
+      <div class="card stat-chip" style="padding:16px;">
+        <div id="providerOrderCount" class="num" style="font-size:20px;">0</div>
+        <div class="lbl">الطلبات الواردة</div>
+      </div>
+    </div>
+
+    <div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:15px;">
+      <div class="card profile-item" onclick="openMyProducts()">
+        <span>📦 إدارة منتجاتي</span><span>‹</span>
+      </div>
+      <div class="card profile-item" onclick="openOrders()">
+        <span>📋 الطلبات</span><span>‹</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     ADMIN DASHBOARD
+===================================================== -->
+<section id="adminScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="openAccount()">→ رجوع</span>
+    <span class="page-title">لوحة الإدارة</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="adminStats" class="stat-row" style="grid-template-columns:1fr 1fr;">
+      <div class="loading" style="grid-column:1/-1;"><div class="spinner"></div>جاري تحميل الإحصائيات...</div>
+    </div>
+
+    <div class="dash-links" style="display:flex;flex-direction:column;gap:9px;margin-top:18px;">
+      <div class="card profile-item" onclick="openAdminUsers()">
+        <span>👥 المستخدمون والشركاء</span><span>‹</span>
+      </div>
+      <div class="card profile-item" onclick="openAdminWallet()">
+        <span>💳 طلبات شحن المحفظة</span><span>‹</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     ADMIN USERS
+===================================================== -->
+<section id="adminUsersScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('adminScreen')">→ رجوع</span>
+    <span class="page-title">المستخدمون والشركاء</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="adminUsersList">
+      <div class="loading"><div class="spinner"></div>جاري التحميل...</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     ADMIN WALLET REQUESTS
+===================================================== -->
+<section id="adminWalletScreen" class="screen">
+
+  <div class="topbar">
+    <span class="back" onclick="showScreen('adminScreen')">→ رجوع</span>
+    <span class="page-title">طلبات شحن المحفظة</span>
+    <span></span>
+  </div>
+
+  <div class="section">
+    <div id="adminWalletList">
+      <div class="loading"><div class="spinner"></div>جاري التحميل...</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+<script>
+
+/* ======================================================
+   SUPABASE
+====================================================== */
+
+const SUPABASE_URL = "https://cgqkkfocgkiyxsshddxv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3XImpdl41nPKfpPgmatvNg_ldTFmULV";
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+/* ======================================================
+   GLOBAL STATE
+====================================================== */
+
+let currentUser = null;
+let currentProfile = null;
+let allProducts = [];
+let selectedPayment = null;
+let editingProductId = null;
+
+
+/* ======================================================
+   SCREEN SYSTEM
+====================================================== */
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(screen=>{
+    screen.classList.remove('active');
+  });
+  const target = document.getElementById(id);
+  if(target){
+    target.classList.add('active');
+  }
+  window.scrollTo({ top:0, behavior:'instant' });
+}
+
+
+/* ======================================================
+   MESSAGES
+====================================================== */
+
+function showMsg(id,text,type='info'){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.textContent = text;
+  el.className = 'msg show ' + type;
+}
+
+function hideMsg(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.className='msg';
+  el.textContent='';
+}
+
+
+/* ======================================================
+   AUTH
+====================================================== */
+
+async function signup(){
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const phone = document.getElementById('signupPhone').value.trim();
+  const role = document.getElementById('signupRole').value;
+  const password = document.getElementById('signupPassword').value;
+
+  if(!name || !email || !password){
+    showMsg('signupMsg','الرجاء تعبئة الحقول المطلوبة.','error');
+    return;
+  }
+
+  if(password.length < 6){
+    showMsg('signupMsg','كلمة المرور يجب أن تكون 6 أحرف على الأقل.','error');
+    return;
+  }
+
+  const btn = document.getElementById('signupBtn');
+  btn.disabled=true;
+  btn.textContent='جاري إنشاء الحساب...';
+
+  try{
+    const { data, error } = await sb.auth.signUp({
+      email,
+      password,
+      options:{ data:{ full_name:name, phone:phone, role:role } }
+    });
+
+    if(error){ throw error; }
+
+    if(data.session){
+      await loadUser(data.session.user);
+    }else{
+      showMsg('signupMsg','تم إنشاء الحساب. تحقق من بريدك الإلكتروني إذا كان تأكيد البريد مفعّلًا.','success');
+    }
+
+  }catch(error){
+    showMsg('signupMsg','تعذر إنشاء الحساب: ' + error.message,'error');
+  }finally{
+    btn.disabled=false;
+    btn.textContent='إنشاء الحساب';
+  }
+}
+
+
+async function login(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+
+  if(!email || !password){
+    showMsg('loginMsg','أدخل البريد الإلكتروني وكلمة المرور.','error');
+    return;
+  }
+
+  const btn = document.getElementById('loginBtn');
+  btn.disabled=true;
+  btn.textContent='جاري الدخول...';
+
+  try{
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if(error){ throw error; }
+    await loadUser(data.user);
+  }catch(error){
+    showMsg('loginMsg','تعذر تسجيل الدخول: ' + error.message,'error');
+  }finally{
+    btn.disabled=false;
+    btn.textContent='تسجيل الدخول';
+  }
+}
+
+
+async function logout(){
+  await sb.auth.signOut();
+  currentUser=null;
+  currentProfile=null;
+  showScreen('loginScreen');
+}
+
+
+/* ======================================================
+   LOAD USER
+====================================================== */
+
+async function loadUser(user){
+  currentUser=user;
+
+  const { data:profile } = await sb.from('profiles').select('*').eq('id',user.id).maybeSingle();
+
+  currentProfile=profile || {
+    id:user.id,
+    full_name: user.user_metadata?.full_name || 'مستخدم',
+    phone: user.user_metadata?.phone || '',
+    address:'',
+    role: user.user_metadata?.role || 'customer'
+  };
+
+  updateUserUI();
+  showScreen('homeScreen');
+  loadHomeProducts();
+  checkNotifications();
+}
+
+
+/* ======================================================
+   USER UI
+=
